@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>灏天阁</title>
+    <link>/</link>
+    <description>Recent content on 灏天阁</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
+    <lastBuildDate>Sun, 27 Aug 2023 22:32:16 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>08</title>
+      <link>/posts/08/</link>
+      <pubDate>Sun, 27 Aug 2023 22:32:16 +0800</pubDate>
+      
+      <guid>/posts/08/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>07</title>
+      <link>/posts/07/</link>
+      <pubDate>Sun, 27 Aug 2023 22:28:42 +0800</pubDate>
+      
+      <guid>/posts/07/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>06</title>
+      <link>/posts/06/</link>
+      <pubDate>Sun, 27 Aug 2023 22:28:40 +0800</pubDate>
+      
+      <guid>/posts/06/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>05</title>
+      <link>/posts/05/</link>
+      <pubDate>Sun, 27 Aug 2023 22:28:37 +0800</pubDate>
+      
+      <guid>/posts/05/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ES2016到ES2023新特性</title>
+      <link>/posts/04/</link>
+      <pubDate>Sun, 27 Aug 2023 22:28:35 +0800</pubDate>
+      
+      <guid>/posts/04/</guid>
+      <description>ES2016 Array.prototype.includes() 这个方法用于检查数组是否包含特定元素，如果包含则返回 true，否则返回 false
+// 我有一个水果篮子 const fruitBasket = [&amp;#34;apple&amp;#34;, &amp;#34;banana&amp;#34;, &amp;#34;orange&amp;#34;, &amp;#34;grape&amp;#34;]; // 我要检查篮子里是否有橙子 const hasOrange = fruitBasket.includes(&amp;#34;orange&amp;#34;); console.log(hasOrange); // 输出: true // 我还想知道篮子里是否有葡萄 const hasGrape = fruitBasket.includes(&amp;#34;grape&amp;#34;); console.log(hasGrape); // 输出: true // 现在我要检查篮子里是否有西瓜 const hasWatermelon = fruitBasket.includes(&amp;#34;watermelon&amp;#34;); console.log(hasWatermelon); // 输出: false 求幂运算符 求幂运算符： 这是一个新的算术运算符，用于计算一个数的幂
+// 我要计算 2 的 3 次幂 const result = 2 ** 3; console.log(result); // 输出: 8 ES2017 Object.values / Object.entries const person = { name: &amp;#34;Alice&amp;#34;, age: 25, city: &amp;#34;New York&amp;#34;, }; const values = Object.</description>
+    </item>
+    
+    <item>
+      <title>工厂方法模式</title>
+      <link>/posts/03/</link>
+      <pubDate>Sun, 27 Aug 2023 22:28:33 +0800</pubDate>
+      
+      <guid>/posts/03/</guid>
+      <description>安全工厂方法 // 安全模式创建的工厂类 var Factory = function (type, content) { if (this instanceof Factory) { var s = new this[type](content); return s; } else { return new Factory(type, content); } }; // 工厂原型中设置创建所有类型数据对象的基类 Factory.prototype = { Java: function (content) { //... }, JavaScript: function (content) { //... }, UI: function (content) { this.content = content; (function (content) { var div = document.createElement(&amp;#34;div&amp;#34;); div.innerHTML = content; div.style.border = &amp;#34;1px solid red&amp;#34;; document.</description>
+    </item>
+    
+    <item>
+      <title>简单工厂模式</title>
+      <link>/posts/02/</link>
+      <pubDate>Sun, 27 Aug 2023 22:28:30 +0800</pubDate>
+      
+      <guid>/posts/02/</guid>
+      <description>又叫静态工厂方法，由一个工厂对象决定创建某一种产品对象类的实例，主要用来创建用一类对象。
+工作中的一次需求 var LoginAlert = function (text) { this.content = text; }; LoginAlert.prototype.show = function () { // 显示警示框 }; var userNameAlert = new LoginAlert(&amp;#34;用户名不能多于 16 个字母或数字&amp;#34;); userNameAlert.show(); 上面的类，如果对于多种场景，就不那么适用了；可能要需要定义多个类。
+如果类太多，那么提供一个 // 篮球基类 var Basketball = function () { this.intro = &amp;#34;篮球盛行于美国&amp;#34;; }; Basketball.prototype = { getMember: function () { console.log(&amp;#34;每个队伍需要5名队员&amp;#34;); }, getBallSize: function () { console.log(&amp;#34;篮球很大&amp;#34;); }, }; // 足球基类 var Football = function () { this.intro = &amp;#34;足球在世界范围内很流行&amp;#34;; }; Football.</description>
+    </item>
+    
+    <item>
+      <title>面向对象编程</title>
+      <link>/posts/01/</link>
+      <pubDate>Sun, 27 Aug 2023 22:28:28 +0800</pubDate>
+      
+      <guid>/posts/01/</guid>
+      <description>封装 创建一个类 var Book = function (id, bookname, price) { this.id = id; this.bookname = bookname; this.price = price; }; 也可以通过在类的原型上添加属性和方法 Book.prototype.display = function () { // 展示这本书 }; // 或者 Book.prototype = { display: function () { // 展示这本书 }, }; 实例化使用类 var book = new Book(10, &amp;#34;JavaScript 设计模式&amp;#34;, 50); console.log(book.bookname); 属性与方法封装 var Book = function (id, name, price) { // 私有属性 var num = 1; // 私有方法 function checkId() {} // 特权方法 this.</description>
+    </item>
+    
+  </channel>
+</rss>
