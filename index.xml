@@ -7,7 +7,26 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Sun, 27 Aug 2023 22:32:16 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 29 Aug 2023 10:14:46 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ES6到ES12常用新特性</title>
+      <link>/posts/10/</link>
+      <pubDate>Tue, 29 Aug 2023 10:14:46 +0800</pubDate>
+      
+      <guid>/posts/10/</guid>
+      <description>ES 是什么？ ES 是 ECMAScript 的缩写，也就是 JavaScript 的标准化规范。ECMAScript 是一种由 Ecma 国际组织制定的脚本语言标准，它定义了 JavaScript 的语法、类型、操作符、对象和函数等基本组件。ES6（也称为 ES2015）是 ECMAScript 的第六个版本，引入了许多新的语言特性和改进，如箭头函数、模板字面量、解构赋值等。随后的版本（如 ES7、ES8 等）也引入了许多新的功能和语法糖，以进一步改进和扩展 JavaScript。
+各版本特性总结 版本 特性 描述 ES6 let 和 const 关键字 引入了块级作用域声明变量的关键字 let 和常量声明变量的关键字 const ES6 函数参数默认值 允许在函数定义时为参数设置默认值 ES6 箭头函数 使用箭头 (=&amp;gt;) 定义函数，简化了函数的写法，并且自动绑定了当前作用域的 this ES6 模板字符串 使用反引号 (`) 来定义字符串，可以在字符串中插入变量或表达式，并支持多行字符串 ES6 扩展操作符 使用扩展操作符 (&amp;hellip;) 可以将数组或对象展开为单独的元素 ES6 解构赋值 可以从数组或对象中提取值并赋给变量 ES6 对象字面量简化 简化了对象的定义和属性的赋值方式 ES6 类 引入了类和继承的概念，使得 JavaScript 更像面向对象编程语言 ES6 模块化 支持使用 import 和 export 关键字进行模块化开发，可以方便地导入和导出模块 ES6 Promise 提供了一种更优雅的方式来处理异步操作，解决了回调地狱的问题 ES6 Symbol 引入了一种新的原始数据类型 Symbol，可以用来创建唯一的标识符 ES6 Map/WeakMap 和 Set/WeakSet 数据结构 提供了更灵活和高效的数据结构，Map 是一种键值对的集合，Set 是一种无重复值的集合，WeakMap 和 WeakSet 是弱引用版本，可以更好地处理内存和垃圾回收的问题 ES6 迭代器（Iterator）和 for&amp;hellip;of 迭代器提供了一种遍历集合的方式，for&amp;hellip;of 循环可以直接遍历可迭代对象 ES6 生成器（Generator） 可以生成多个值的函数，使用 function* 和 yield 关键字定义，可以暂停和恢复函数的执行 ES6 Proxy 提供了拦截和自定义操作的机制，可以代理对目标对象的访问和修改操作 ES6 Reflect 提供了一组静态方法来操作对象，比如获取对象的属性描述符、动态调用对象的方法等 ES6 数组对象扩展 引入了一些新的方法和属性，比如 Array.</description>
+    </item>
+    
+    <item>
+      <title>50个JS高级知识点</title>
+      <link>/posts/09/</link>
+      <pubDate>Tue, 29 Aug 2023 09:30:43 +0800</pubDate>
+      
+      <guid>/posts/09/</guid>
+      <description>知识点 1、undeclared 与 undefined 的区别？ undefined：声明了变量，但是没有赋值 undeclared：没有声明变量就直接使用 var a; //undefined b; // b is not defined 2、let &amp;amp; const 与 var 的区别？ var 存在变量提升，可重复声明同一变量，声明的变量均可改 let 没有变量提升，不可重复声明同一变量，声明的变量均可改 const 没有变量提升，不可重复声明同一变量，声明的基本数据类型不可改，引用类型可改属性，不可只声明变量而不赋值 3、暂时性死区问题 var a = 100; if (1) { a = 10; //在当前块作用域中存在a使用let/const声明的情况下，给a赋值10时，只会在当前作用域找变量a， // 而这时，还未到声明时候，所以控制台Error:a is not defined let a = 1; } 4、获取 DOM 元素有哪些方法 方法 描述 返回类型 document.getElementById(id) 通过 id 获取 dom 符合条件的 dom 对象 document.getElementsByTagName(tagName) 通过标签名获取 dom 符合条件的所有 dom 对象组成的类数组 document.</description>
+    </item>
+    
     <item>
       <title>真正理解Promise</title>
       <link>/posts/08/</link>
