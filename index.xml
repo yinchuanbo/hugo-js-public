@@ -9,39 +9,45 @@
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
     <lastBuildDate>Sun, 27 Aug 2023 22:32:16 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>08</title>
+      <title>真正理解Promise</title>
       <link>/posts/08/</link>
       <pubDate>Sun, 27 Aug 2023 22:32:16 +0800</pubDate>
       
       <guid>/posts/08/</guid>
-      <description></description>
+      <description>Promise 的简单介绍 Promise 是用来进行异步编程的。在 Promise 出现之前，传统的异步编程靠的是监听事件和回调函数，比如：
+const xhr = new XMLHttpRequest(); xhr.addEventListener(&amp;#34;load&amp;#34;, function (data) { console.log(data); }); xhr.open(&amp;#34;GET&amp;#34;, &amp;#34;http://www.example.com/&amp;#34;); xhr.send(); 这种方式有一个致命的缺点，那就是回调地狱，如果我们想在第一个请求成功返回数据之后，再发送第二个请求，那就只能在第一个请求成功的回调函数中发送，以此类推，还想再发送下一个请求时，就只能在上一个请求成功的回调函数中发送：
+const xhr = new XMLHttpRequest(); xhr.addEventListener(&amp;#34;load&amp;#34;, function (data) { console.log(data); const xhr1 = new XMLHttpRequest(); xhr1.open(&amp;#34;GET&amp;#34;, &amp;#34;http://www.example.com/&amp;#34;); xhr1.send(); xhr1.addEventListener(&amp;#34;load&amp;#34;, function (data1) { console.log(data1); //... 发送第三个请求 }); }); xhr.open(&amp;#34;GET&amp;#34;, &amp;#34;http://www.example.com/&amp;#34;); xhr.send(); 这种代码不仅看起来很痛苦，写起来也非常痛苦。而 Promise 就是用来解决这个问题的，可以把 Promise 理解成一个容器，里面保存着某个未来才会结束的事件的结果（也就是异步操作的结果），它有三种状态：pending（进行中）、fulfilled（已成功）和 rejected（已失败），状态改变只有两种：从 pending 变为 fulfilled 或从 pending 变为 rejected ，一旦状态改变，就不会再变了。一般情况下，可以分别通过 resolve 函数使得状态变为 fulfilled，reject 函数使得状态变为 rejected。</description>
     </item>
     
     <item>
-      <title>07</title>
+      <title>10种JavaScript快乐写法</title>
       <link>/posts/07/</link>
       <pubDate>Sun, 27 Aug 2023 22:28:42 +0800</pubDate>
       
       <guid>/posts/07/</guid>
-      <description></description>
+      <description>数组去重 方式一 const arr = [ &amp;#34;justin1go&amp;#34;, &amp;#34;justin2go&amp;#34;, &amp;#34;justin2go&amp;#34;, &amp;#34;justin3go&amp;#34;, &amp;#34;justin3go&amp;#34;, &amp;#34;justin3go&amp;#34;, ]; const uniqueArr = Array.from(new Set(arr)); // const uniqueArr = [...new Set(arr)]; 方式二 const arr = [ &amp;#34;justin1go&amp;#34;, &amp;#34;justin2go&amp;#34;, &amp;#34;justin2go&amp;#34;, &amp;#34;justin3go&amp;#34;, &amp;#34;justin3go&amp;#34;, &amp;#34;justin3go&amp;#34;, ]; const uniqueArr = []; arr.forEach((item) =&amp;gt; { // 或者!uniqueArr.includes(item) if (uniqueArr.indexOf(item) === -1) { uniqueArr.push(item); } }); const arr = [ &amp;#34;justin1go&amp;#34;, &amp;#34;justin2go&amp;#34;, &amp;#34;justin2go&amp;#34;, &amp;#34;justin3go&amp;#34;, &amp;#34;justin3go&amp;#34;, &amp;#34;justin3go&amp;#34;, ]; const uniqueArr = arr.filter((item, index) =&amp;gt; { return arr.</description>
     </item>
     
     <item>
-      <title>06</title>
+      <title>建造者模式</title>
       <link>/posts/06/</link>
       <pubDate>Sun, 27 Aug 2023 22:28:40 +0800</pubDate>
       
       <guid>/posts/06/</guid>
-      <description></description>
+      <description>建造者模式：将一个复杂对象的构建层与其表示层相互分离，同样的构建过程可采用不用的表示。
+创建对象的另一种形式 // 创建一位人类 var Human = function (param) { // 技能 this.skill = (param &amp;amp;&amp;amp; param.skill) || &amp;#34;保密&amp;#34;; // 兴趣爱好 this.hobby = (param &amp;amp;&amp;amp; param.hobby) || &amp;#34;保密&amp;#34;; }; // 类人原型方法 Human.prototype = { getSkill: function () { return this.skill; }, getHobby: function () { return this.hobby; }, }; // 实例化姓名类 var Named = function (name) { var that = this; // 构造器 // 构造函数解析姓名的姓与名 (function (name, that) { that.</description>
     </item>
     
     <item>
-      <title>05</title>
+      <title>抽象工厂模式</title>
       <link>/posts/05/</link>
       <pubDate>Sun, 27 Aug 2023 22:28:37 +0800</pubDate>
       
       <guid>/posts/05/</guid>
-      <description></description>
+      <description>抽象类 是一种声明了但不能使用的类，当你使用的时候就会报错。
+// 汽车抽象类，当使用其实例对象的方法时会抛出错误 var Car = function () {}; Car.prototype = { getPrice: function () { return new Error(&amp;#34;抽象方法不能调用&amp;#34;); }, getSpeed: function () { return new Error(&amp;#34;抽象方法不能调用&amp;#34;); }, }; 如上，创建这个 Car 类其实什么都不用做，创建时没有任何属性，然后其原型上方法也不能使用，否则会报错。但在继承上很有用，因为定义了一种类，并定义了该类所必备的方法，如果在子类中没有重写这些方法，那调用的时候就会报错。
+抽象工厂模式 直接赋值是无法实现正确的继承关系的。如果直接将子类的原型设置为父类的实例，那么子类的原型对象将直接引用父类的实例对象，这样在修改子类的原型时会直接影响到父类的实例。而使用 F 函数作为中转，可以通过 F 函数的实例来实现子类对父类的继承，同时保持子类和父类的独立性，避免相互影响。这样子类可以自由地修改自己的原型对象，而不会影响到父类或其他子类的实例。因此，使用 F 函数作为中转是为了正确实现继承关系和保持对象的独立性。
+// 抽象工厂方法 var VehicleFactory = function (subType, superType) { // 判断抽象工厂中是否有该抽象类 if (typeof VehicleFactory[superType] === &amp;#34;function&amp;#34;) { // 缓存类 function F() {} // 继承父类属性和方法 F.prototype = new VehicleFactory[superType](); // 将子类 constructor 指向子类 superType.</description>
     </item>
     
     <item>
