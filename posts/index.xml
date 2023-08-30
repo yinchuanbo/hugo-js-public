@@ -7,7 +7,32 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Tue, 29 Aug 2023 21:32:16 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 30 Aug 2023 13:07:35 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CSS will-change</title>
+      <link>/posts/17/</link>
+      <pubDate>Wed, 30 Aug 2023 13:07:35 +0800</pubDate>
+      
+      <guid>/posts/17/</guid>
+      <description>一、什么是 will-change？ will-change是一个 CSS 属性，它可以告诉浏览器某个元素将要发生的变化。通过明确指定这些变化，浏览器可以事先分配和优化相应的资源，从而提升渲染的性能。
+二、will-change 的使用方法 要使用will-change，只需将它应用于你要进行性能优化的元素上。
+.element { will-change: transform; } 在上述示例中，我们告诉浏览器，该元素即将发生变换（transform），以便浏览器在渲染时提前分配所需的资源。
+值得注意的是，因为will-change是为了性能优化而设计的，滥用它可能会带来负面影响。只在需要优化的元素上使用will-change，避免对所有元素都进行指定。
+三、will-change 的原理 要理解will-change的原理，我们需要了解浏览器渲染流程的基本概念。
+1. 渲染流程简介 浏览器在渲染网页时，会经历一系列的步骤，如样式计算、布局、绘制和合成。为了提高性能，浏览器会尽量避免进行不必要的计算和操作。
+2. will-change 的作用 will-change的作用就是告诉浏览器某个元素将要发生的变化，从而使浏览器在渲染过程中提前分配和优化相应的资源。
+例如，当我们设置了will-change: transform时，浏览器会为该元素创建一个独立的图层，将这个图层标记为“即将变换”。这样，在进行布局和绘制时，浏览器就可以更高效地处理这个元素，而无需重新计算整个渲染树。
+加入 will-change 后，通过观察复合层，如图下
+加入 will-change 后，元素会被提升到单独的复合层，动画（重绘、重排）的操作只会在单独复合层上进行，减少了原来的页面层重绘和重排的行为 注：每一个元素单独加入 will-change 都会单独创建一个复合层，如果给大量的元素加上 will-change 就会创建大量的复合层，反而会影响性能
+3. will-change的优化效果 使用will-change可以带来以下优化效果：
+减少渲染阻塞：浏览器可以提前分配和优化资源，减少渲染阻塞时间，提高页面的响应速度。 减少重绘和重排：浏览器可以更好地管理渲染过程，避免不必要的重绘和重排，从而提高渲染性能。 硬件加速：某些浏览器对will-change属性会进行硬件加速，进一步提升性能。 4. will-change使用的时机 在很多关于 will-change 的描述，都能够看到类似下面的一段话
+在实际更改的元素上将 will-change 设置为您将实际更改的属性。并在他们停止时将其删除。- Tab Atkins Jr.（规范编辑者）
+至于为什么？大部分的描述都是因为 will-change 会消耗浏览器 GPU 资源
+当元素有 will-change 时，将元素提升到它们自己的“GPU 层”的浏览器。但有太多元素声明时，浏览器将忽略声明，以避免耗尽 GPU 内存
+所以对于 will-change 的使用应该控制时机
+在适当的时机移除 will-change 就是减少浏览器的复合层，避免过度使用 will-change 带来性能问题</description>
+    </item>
+    
     <item>
       <title>单例模式</title>
       <link>/posts/16/</link>
