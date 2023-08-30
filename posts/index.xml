@@ -7,7 +7,48 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Wed, 30 Aug 2023 13:07:35 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 30 Aug 2023 22:06:48 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>桥接模式</title>
+      <link>/posts/21/</link>
+      <pubDate>Wed, 30 Aug 2023 22:06:48 +0800</pubDate>
+      
+      <guid>/posts/21/</guid>
+      <description>多元化对象 // 多维变量类 // 运动单元 function Speed(x, y) { this.x = x; this.y = y; } Speed.prototype.run = function () { console.log(&amp;#34;运动起来&amp;#34;); }; // 着色单元 function Color(cl) { this.color = cl; } Color.prototype.draw = function () { console.log(&amp;#34;绘制色彩&amp;#34;); }; // 变形单元 function Shape(sp) { this.shape = sp; } Shape.prototype.change = function () { console.log(&amp;#34;改变形状&amp;#34;); }; // 说话单元 function Speek(wd) { this.word = wd; } Speek.prototype.say = function () { console.log(&amp;#34;书写字体&amp;#34;); }; 我们想创建一个球类，并且它可以运动，可以着色。</description>
+    </item>
+    
+    <item>
+      <title>装饰者模式</title>
+      <link>/posts/20/</link>
+      <pubDate>Wed, 30 Aug 2023 21:55:19 +0800</pubDate>
+      
+      <guid>/posts/20/</guid>
+      <description> 在不改变原对象的基础上，通过对其进行包装拓展使原有对象可以满足用户的更复杂需求。
+// 装饰者 var decorator = function (input, fn) { var input = document.getElementById(input); if (typeof input.onclick === &amp;#34;function&amp;#34;) { var oldClickFn = input.onclick; input.onclick = function () { oldClickFn(); fn(); }; } else { input.onclick = fn; } }; // 使用 decorator(&amp;#34;tel_input&amp;#34;, function () { document.getElementById(&amp;#34;tel_demo_text&amp;#34;).style.display = &amp;#34;none&amp;#34;; }); decorator(&amp;#34;name_input&amp;#34;, function () { document.getElementById(&amp;#34;name_demo_text&amp;#34;).style.display = &amp;#34;none&amp;#34;; }); decorator(&amp;#34;address_input&amp;#34;, function () { document.getElementById(&amp;#34;address_demo_text&amp;#34;).style.display = &amp;#34;none&amp;#34;; }); </description>
+    </item>
+    
+    <item>
+      <title>适配器模式</title>
+      <link>/posts/19/</link>
+      <pubDate>Wed, 30 Aug 2023 21:18:21 +0800</pubDate>
+      
+      <guid>/posts/19/</guid>
+      <description>将一个类（对象）的接口（方法或属性）转化成另外一个接口，以满足用户需求，使类（对象）之间接口的不兼容问题通过适配器得以解决。
+以前所写的功能代码 A(function () { A(&amp;#34;button&amp;#34;).on(&amp;#34;click&amp;#34;, function (e) { //... }); }); jQuery 适配器 公司 A 框架代码书写格式是不是与 jQuery 代码书写格式很像，所以需要在加载完 jQuery 框架后写一个适配器，将我们已有的功能适配到 jQuery。适配器主要的任务是适配两种代码库中不兼容的代码，所以首当其冲的就是全局对象 A 与 jQuery 了，所以可以像下面这样轻松的实现。
+window.A = A = jQuery; 适配异类框架 公司的整个轻量级 A 框架太像 jQuery 了，我们可以将两种框架看成是相似框架，但是如果一个框架与 jQuery 血缘远一点，那么对于这种异类框架适配情况就复杂多了，举个例子:
+// 定义框架 var A = A || {}; A.g = function (id) { return document.getElementById(id); }; // 为元素绑定事件 A.on = function (id, type, fn) { var dom = typeof id === &amp;#34;string&amp;#34; ?</description>
+    </item>
+    
+    <item>
+      <title>外观模式</title>
+      <link>/posts/18/</link>
+      <pubDate>Wed, 30 Aug 2023 20:47:36 +0800</pubDate>
+      
+      <guid>/posts/18/</guid>
+      <description>添加一个点击事件 document.onclick = function (e) { e.preventDefault(); if (e.target !== document.getElementById(&amp;#34;myinput&amp;#34;)) { hidePageAlert(); } }; function hidePageAlert() { // 隐藏提示框 } 兼容模式 套餐，定制，简化复杂请求，统一封装，外观模式封装
+// 外观模式实现 function addEvent(dom, type, fn) { if (dom.addEventListener) { dom.addEventListener(type, fn, false); } else if (dom.attachEvent) { dom.attachEvent(&amp;#34;on&amp;#34; + type, fn); } else { dom[&amp;#34;on&amp;#34; + type] = fn; } } // 使用 var myInput = document.getElementById(&amp;#34;myinput&amp;#34;); addEvent(myInput, &amp;#34;click&amp;#34;, function () { console.log(&amp;#34;绑定第一个事件&amp;#34;); }); addEvent(myInput, &amp;#34;click&amp;#34;, function () { console.</description>
+    </item>
+    
     <item>
       <title>CSS will-change</title>
       <link>/posts/17/</link>
