@@ -7,7 +7,32 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Tue, 29 Aug 2023 17:05:52 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 29 Aug 2023 21:32:16 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>单例模式</title>
+      <link>/posts/16/</link>
+      <pubDate>Tue, 29 Aug 2023 21:32:16 +0800</pubDate>
+      
+      <guid>/posts/16/</guid>
+      <description>单例模式：是只允许实例化一次的对象类。
+命名空间的管理员 单例模式常用来定义命名空间
+var Ming = { g: function (id) { return document.getElementById(id); }, css: function (id, key, value) { this.g(id).style[key] = value; }, }; 模块分明 单例模式除了定义命名空间外，还有一个作用，就是通过单例模式来管理代码库的各个模块，
+baidu.dom.addClass #添加元素类 baidu.dom.append #插入元素 baidu.event.stopPropagation #阻止冒泡 baidu.event.preventDefault #阻止默认行为 baidu.event.trim #去除字符串收尾空白符 baidu.string.encodeHTML #将字符串进行html编码 创建一个小型代码库 我们也可以用单例模式来规范我们自己代码库的各个模块，比如我们有一个 A 库，它包含公用模块、工具模块、ajax 模块和其他模块，我们就可以自己定制一个如下的小型代码库。
+var A = { Util: { util_method1: function () {}, util_method2: function () {}, //... }, Tool: { tool_method1: function () {}, tool_method2: function () {}, //.</description>
+    </item>
+    
+    <item>
+      <title>原型模式</title>
+      <link>/posts/15/</link>
+      <pubDate>Tue, 29 Aug 2023 17:16:23 +0800</pubDate>
+      
+      <guid>/posts/15/</guid>
+      <description>创建一个焦点图 假设页面中有很多焦点图，那么我们要实现这些焦点图最好的方式就是通过创建对象来一一实现。我们就需要有一个焦点类，比如我们把这个类定义为 LoopImages。
+// 图片轮播类 var LoopImages = function (imgArr, container) { this.imagesArray = imgArr; this.container = container; this.createImage = function () {}; this.changeImage = function () {}; }; 如果一个页面中有多个焦点图，其切换动画一般是多样化的，有的可能是上下切换，有的可能是左右切换，有的可能是渐隐渐现，有的可能是放缩切换，等等。因此创建的轮播图片结构应该是多样化的，同样切换的效果也应该是多样化的，因此我们应该抽象出一个基类，让不同特效去继承这个基类，然后对于差异化的需求通过重写这些继承下来的属性或方法来解决。
+比如，有一个包含左右切换箭头，如下：
+// 上下滑动切换类 var SlideLoopImg = function (imgArr, container) { LoopImages.call(this, imgArr, container); this.changeImage = function () { console.log(&amp;#34;SlideLoopImg changeImage function&amp;#34;); }; }; // 渐隐切换类 var FadeLoopImg = function (imgArr, container, arrow) { LoopImages.call(this, imgArr, container); this.arrow = arrow; this.changeImage = function () { console.</description>
+    </item>
+    
     <item>
       <title>前端异常监控解决方案研究</title>
       <link>/posts/14/</link>
