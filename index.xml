@@ -7,7 +7,99 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Wed, 30 Aug 2023 22:06:48 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 03 Sep 2023 11:00:57 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>观察者模式</title>
+      <link>/posts/29/</link>
+      <pubDate>Sun, 03 Sep 2023 11:00:57 +0800</pubDate>
+      
+      <guid>/posts/29/</guid>
+      <description>又被称为发布-订阅模式或消息机制，定义了一种依赖关系，解决了主体对象与观察者之间功能的耦合。
+我们需要把观察者对象创建出来，他有一个消息容器，和三个方法，分别是订阅消息方法、取消订阅的消息方法、发送订阅消息的方法。
+// 将观察者放在闭包中，当页面加载就立即执行 var Observer = (function () { // 防止消息队列暴漏而被篡改故将消息容器作为静态私有变量保存 var _messages = {}; return { // 注册信息接口 regist: function (type, fn) { // 如果消息不存在则应该创建一个该消息类型 if (typeof _messages[type] === &amp;#34;undefined&amp;#34;) { // 将动作推入到该消息对应的动作执行队列中 _messages[type] = [fn]; } else { // 如果信息存在 // 将动作方法推入该消息对应的动作执行序列中 _messages[type].push(fn); } }, // 发布信息接口 fire: function (type, args) { // 如果该消息没有被注册，则返回 if (!_messages[type]) { return; } // 定义消息类型 var events = { type, // 消息类型 args: args || {}, // 消息携带数据 }, i = 0, // 消息动作循环变量 len = _messages[type].</description>
+    </item>
+    
+    <item>
+      <title>VSCODE 快捷键</title>
+      <link>/posts/28/</link>
+      <pubDate>Sun, 03 Sep 2023 09:45:34 +0800</pubDate>
+      
+      <guid>/posts/28/</guid>
+      <description>VSCODE 快捷键 </description>
+    </item>
+    
+    <item>
+      <title>模板方法模式</title>
+      <link>/posts/27/</link>
+      <pubDate>Sat, 02 Sep 2023 18:56:18 +0800</pubDate>
+      
+      <guid>/posts/27/</guid>
+      <description>父类中定义一组操作算法骨架，而将一些实现步骤延迟到子类中，使得子类可以不改变父类的算法结构的同时可重新定义算法中某些步骤。
+创建基本提示框 首先要做的就是创建一个基本提示框基类，然后其他提示框类只需要在继承基础上，拓展自己所需即可。
+// 模板类 基础提示框 data 渲染数据 var Alert = function (data) { // 没有数据则返回，防止后面程序执行 if (!data) { return; } // 设置内容 this.content = data.content; // 创建提示框面板 this.panel = document.createElement(&amp;#34;div&amp;#34;); // 创建提示内容组件 this.contentNode = document.createElement(&amp;#34;p&amp;#34;); // 创建确定按钮组件 this.confirmBtn = document.createElement(&amp;#34;span&amp;#34;); // 创建关闭按钮组件 this.closeBtn = document.createElement(&amp;#34;b&amp;#34;); // 为提示框面板添加类 this.panel.className = &amp;#34;alert&amp;#34;; // 为关闭按钮添加类 this.closeBtn.className = &amp;#34;a-close&amp;#34;; // 为确定按钮添加类 this.confirmBtn.className = &amp;#34;a-confirm&amp;#34;; // 为确定按钮添加文件 this.confirmBtn.innerHTML = data.confirm || &amp;#34;确认&amp;#34;; // 为提示内容添加文本 this.</description>
+    </item>
+    
+    <item>
+      <title>reset.css 知多少</title>
+      <link>/posts/26/</link>
+      <pubDate>Sat, 02 Sep 2023 12:23:14 +0800</pubDate>
+      
+      <guid>/posts/26/</guid>
+      <description>大部分的时候，作为前端，我们在写 CSS 样式之前，都知道需要添加一份 reset.css ，但是有深究过 reset.css 每一句的人恐怕不多，其实其中也是有很多学问的，知己知彼，真正厘清它，对提高 CSS 大有裨益。
+reset.css 先来看看早先 YUI 的一个版本的 reset.css，这是一份历史比较悠久的 RESET 方案:
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td { margin: 0; padding: 0; } table { border-collapse: collapse; border-spacing: 0; } fieldset, img { border: 0; } address, caption, cite, code, dfn, em, strong, th, var { font-style: normal; font-weight: normal; } ol, ul { list-style: none; } caption, th { text-align: left; } h1, h2, h3, h4, h5, h6 { font-size: 100%; font-weight: normal; } q:before, q:after { content: &amp;#34;&amp;#34;; } abbr, acronym { border: 0; } 首先，我们要知道 CSS RESET 的目的是什么？是为了消除不同的浏览器在默认样式上不同表现，但是到今天，现代浏览器在这方面的差异已经小了很多。</description>
+    </item>
+    
+    <item>
+      <title>现代 CSS 解决方案:CSS 数学函数</title>
+      <link>/posts/25/</link>
+      <pubDate>Sat, 02 Sep 2023 11:41:00 +0800</pubDate>
+      
+      <guid>/posts/25/</guid>
+      <description>在 CSS 中，其实存在各种各样的函数。具体分为：
+Transform functions Math functions Filter functions Color functions Image functions Counter functions Font functions Shape functions Reference functions CSS grid functions 本文，将具体介绍其中的 CSS 数学函数（Math functions）中，已经被浏览器大规模支持的 4 个：
+calc() min() max() clamp() 为什么说是被浏览器大规模支持的？因为除了这 4 个目前已经得到大规模支持的数学函数外，其实规范 CSS Values and Units Module Level 4 已经定义了诸如三角函数相关 sin()、cos()、tan() 等，指数函数相关 pow()、sqrt() 等等数学函数，只是目前都处于实验室阶段，还没有浏览器支持它们，需要给时间一点时间。
+Calc() calc() 此 CSS 函数允许在声明 CSS 属性值时执行一些计算。
+语法类似于
+{ width: calc(100% - 80px); } 一些需要注意的点：
++ 和 - 运算符的两边必须要有空白字符。比如，calc(50% -8px) 会被解析成为一个无效的表达式，必须写成calc(8px + -50%) * 和 / 这两个运算符前后不需要空白字符，但如果考虑到统一性，仍然推荐加上空白符 用 0 作除数会使 HTML 解析器抛出异常 涉及自动布局和固定布局的表格中的表列、表列组、表行、表行组和表单元格的宽度和高度百分比的数学表达式，auto 可视为已指定。 calc() 函数支持嵌套，但支持的方式是：把被嵌套的 calc() 函数全当成普通的括号。（所以，函数内直接用括号就好了。） calc() 支持与 CSS 变量混合使用 看一个最常见的例子，页面结构如下：</description>
+    </item>
+    
+    <item>
+      <title>21条CSS高级技巧</title>
+      <link>/posts/24/</link>
+      <pubDate>Sat, 02 Sep 2023 10:59:54 +0800</pubDate>
+      
+      <guid>/posts/24/</guid>
+      <description>使用 CSS 复位 CSS 复位可以在不同的浏览器上保持一致的样式风格。您可以使用 CSS reset 库Normalize等，也可以使用一个更简化的复位方法：
+* { box-sizing: border-box; margin: 0; padding: 0; } 现在元素的 margin 和 padding 已为 0，box-sizing可以管理您的 CSS 盒模型布局。 演示 注意：如果你遵循接下来继承 box-sizing讲解的这个技巧, 你不需要在以上代码中添加 box-sizing 属性。
+继承 box-sizing 从 html 元素继承 box-sizing ：
+html { box-sizing: border-box; } *, *:before, *:after { box-sizing: inherit; } 如此在插件或其它组件里改变 box-sizing 变得简单。
+使用 :not() 选择器来决定表单是否显示边框 先为元素添加边框
+/* 添加边框 */ .nav li { border-right: 1px solid #666; } 为最后一个元素去除边框
+/* 去掉边框 */ .</description>
+    </item>
+    
+    <item>
+      <title>享元模式</title>
+      <link>/posts/23/</link>
+      <pubDate>Sat, 02 Sep 2023 09:39:55 +0800</pubDate>
+      
+      <guid>/posts/23/</guid>
+      <description>运用共享技术有效的支持大量的细粒度的对象，避免对象间拥有相同内容造成多余的开销。
+享元模式主要还是对其数据、方法共享分离，它将数据和方法分成内部数据、内部方法和外部数据、外部方法。内部数据、内部方法指的是相似或者共有的数据和方法，所以将一部分提取出来减少开销。
+享元对象 var Flyweight = function () { // 已创建的元素 var created = []; // 创建一个新闻包装容器 function create() { var dom = document.createElement(&amp;#34;div&amp;#34;); // 将容器插入新闻列表容器中 document.getElementById(&amp;#34;container&amp;#34;).appendChild(dom); // 缓存新创建的元素 created.push(dom); // 返回创建的新元素 return dom; } return { // 获取创建新闻元素方法 getDiv: function () { // 如果已创建的元素小于当前页元素的总个数，则创建 if (created.length &amp;lt; 5) { return create(); } else { // 获取第一个元素，并插入最后面 var div = created.shift(); created.push(div); return div; } }, }; }; 实现需求 var paper = 0, num = 5, len = article.</description>
+    </item>
+    
+    <item>
+      <title>组合模式</title>
+      <link>/posts/22/</link>
+      <pubDate>Thu, 31 Aug 2023 21:34:58 +0800</pubDate>
+      
+      <guid>/posts/22/</guid>
+      <description>每个成员要有祖先 var News = function () { // 子组件容器 this.children = []; // 当前组件元素 this.element = null; }; News.prototype = { // 定义而不是实现 init: function () { throw new Error(&amp;#34;请重写你的方法&amp;#34;); }, // 定义而不是实现 add: function () { throw new Error(&amp;#34;请重写你的方法&amp;#34;); }, // 定义而不是实现 getElement: function () { throw new Error(&amp;#34;请重写你的方法&amp;#34;); }, }; 组合要有容器类 // 容器类构造函数 var Container = function (id, parent) { // 构造函数继承父类 News.call(this); // 模块 id this.id = id; // 模块的父容器 this.</description>
+    </item>
+    
     <item>
       <title>桥接模式</title>
       <link>/posts/21/</link>
