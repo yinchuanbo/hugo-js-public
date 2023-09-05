@@ -7,7 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Tue, 05 Sep 2023 09:24:15 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 05 Sep 2023 11:58:20 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>策略模式</title>
+      <link>/posts/31/</link>
+      <pubDate>Tue, 05 Sep 2023 11:58:20 +0800</pubDate>
+      
+      <guid>/posts/31/</guid>
+      <description>将定义的一组算法封装起来，使其相互之间可以替换。封装的算法具有一定的独立性，不会随客户端变化而变化。
+策略对象 // 价格策略 var PriceStrategy = (function () { // 内部算法对象 var strategy = { return30: function (price) { // +price 转化为数字类型 return +price + parseInt(price / 100) * 30; }, return50: function (price) { return +price + parseInt(price / 100) * 50; }, percent90: function (price) { // js 处理小数乘法有 bug return (price * 100 * 90) / 10000; }, percent80: function (price) { return (price * 100 * 80) / 10000; }, percent50: function (price) { return (price * 100 * 50) / 10000; }, }; // 策略算法调用接口 return function (algorithm, price) { return strategy[algorithm] &amp;amp;&amp;amp; strategy[algorithm](price); }; })(); // 使用 var price = PriceStrategy(&amp;#34;return50&amp;#34;, &amp;#34;314.</description>
+    </item>
+    
     <item>
       <title>状态模式</title>
       <link>/posts/30/</link>
