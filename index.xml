@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Sun, 03 Sep 2023 11:00:57 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 05 Sep 2023 09:24:15 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>状态模式</title>
+      <link>/posts/30/</link>
+      <pubDate>Tue, 05 Sep 2023 09:24:15 +0800</pubDate>
+      
+      <guid>/posts/30/</guid>
+      <description>状态对象的实现 var ResultState = function () { var State = { state0: function () { console.log(&amp;#34;这是第一种情况&amp;#34;); }, state1: function () { console.log(&amp;#34;这是第二种情况&amp;#34;); }, state2: function () { console.log(&amp;#34;这是第三种情况&amp;#34;); }, state3: function () { console.log(&amp;#34;这是第四种情况&amp;#34;); }, }; function show(result) { State[&amp;#34;state&amp;#34; + result] &amp;amp;&amp;amp; State[&amp;#34;state&amp;#34; + result](); } return { show, }; }; 状态对象的演练 ResultState.show(3); 状态的优化 // 创建超级玛丽状态类 var MarryState = function () { // 内部状态私有变量 var _currentState = {}, states = { jump: function () { // 跳跃 console.</description>
+    </item>
+    
     <item>
       <title>观察者模式</title>
       <link>/posts/29/</link>
