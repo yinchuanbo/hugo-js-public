@@ -7,7 +7,40 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Tue, 05 Sep 2023 21:35:45 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 06 Sep 2023 14:04:59 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>链模式</title>
+      <link>/posts/36/</link>
+      <pubDate>Wed, 06 Sep 2023 14:04:59 +0800</pubDate>
+      
+      <guid>/posts/36/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>迭代器模式</title>
+      <link>/posts/35/</link>
+      <pubDate>Wed, 06 Sep 2023 10:30:47 +0800</pubDate>
+      
+      <guid>/posts/35/</guid>
+      <description>在不暴露对象内部结构的同时，可以顺序的访问聚合对象内部的元素。
+迭代器 迭代器就是用来顺序的访问一个聚合对象内部的元素，可以简化遍历操作，
+焦点图的例子中，那些图片元素对象其实就是一组聚合对象，然后你要做的就是创建一个迭代器，专门用来访问这些图片数据的，比如前一张、后一张、第一张、最后一张，对每一张图片的处理，对当前图片处理等等。
+// 迭代器 var Iterator = function (items, container) { // 父容器 var container = (container &amp;amp;&amp;amp; document.getElementById(container)) || document, // 获取元素 items = container.getElementsByTagName(items), length = items.length, index = 0; // 缓存原生数组的 splice 方法 var splice = [].splice; return { // 获取第一个元素 first: function () {}, // 获取最后一个元素 second: function () {}, // 获取前一个元素 pre: function () {}, // 获取后一个元素 next: function () {}, // 获取某一个元素 get: function () {}, // 对每一个元素执行某一个方法 dealEach: function () {}, // 对某一个元素执行某一个方法 dealItem: function () {}, // 排他方式处理某一个元素 exclusive: function () {}, }; }; 实现迭代器 // 获取第一个元素 first: function() { index = 0; return items[index] }, // 获取最后一个元素 second: function() { index = length - 1; return items[index]; }, // 获取前一个元素 pre: function() { if(--index &amp;gt; 0) { return items[index] } else { index = 0; return null } }, // 获取后一个元素 next: function() { if(++index &amp;lt; length) { return items[index] } else { index = length - 1; return null; } }, // 获取某一个元素 get: function(num) { index = num &amp;gt;= 0 ?</description>
+    </item>
+    
+    <item>
+      <title>中介者模式</title>
+      <link>/posts/34/</link>
+      <pubDate>Wed, 06 Sep 2023 09:59:07 +0800</pubDate>
+      
+      <guid>/posts/34/</guid>
+      <description>通过中介对象封装一系列对象之间的交互，使对象之间不再相互引用，降低他们之间的耦合，有时候中介者对象也可以改变对象之间的交互。
+中介者模式和观察者模式的区别？ 首先他们都是通过消息的收发机制实现的，不过在观察者模式中，一个对象既可以是消息的发送者也可以是消息的接受者，他们之间信息交流依托于消息系统实现的解耦。而中介者模式中消息的发送方只有一个，就是中介对象，而且中介对象不能订阅消息，只有那些活跃对象（订阅者）才可以订阅中介者的消息，观察者模式需要写一个消息系统，增加了开发成本。
+如果使用中介者模式，那么设置层模块对象就应该是一个中介者对象，它负责向各个导航模块对象发送用户设置的消息，而各个导航模块则应该作为消息的订阅者存在。
+创建中介者对象 // 中介者对象 var Mediator = function () { // 消息对象 var _msg = {}; return { // 订阅消息方法 register: function (type, action) { // 如果消息存在 if (_msg[type]) { // 存入回调函数 _msg[type].push(action); } else { // 不存在，则建立消息容器 _msg[type] = []; // 存入回调函数 _msg[type].push(action); } }, // 发布消息方法 send: function (type) { // 如果该消息已经被订阅 if (_msg[type]) { for (var i = 0, len = _msg[type].length; i &amp;lt; len; i++) { _msg[type][i] &amp;amp;&amp;amp; _msg[type][i](); } } }, }; }; 试试看，可否一用 // 单元测试 // 订阅消息 Mediator.</description>
+    </item>
+    
     <item>
       <title>命令模式</title>
       <link>/posts/33/</link>
