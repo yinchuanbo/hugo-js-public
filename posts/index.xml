@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Tue, 05 Sep 2023 19:33:22 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 05 Sep 2023 21:35:45 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>命令模式</title>
+      <link>/posts/33/</link>
+      <pubDate>Tue, 05 Sep 2023 21:35:45 +0800</pubDate>
+      
+      <guid>/posts/33/</guid>
+      <description>命令对象 // 模块的实现 var viewCommand = (function () { // 方法集合 var Action = { // 创建方法 create: function () {}, // 展示方法 display: function () {}, }; // 命令接口 return function excute() {}; })(); 视图创建 // 模块的实现 var viewCommand = (function () { var tpl = { product: [ &amp;#34;&amp;lt;div&amp;gt;&amp;#34;, &amp;#39;&amp;lt;img src=&amp;#34;{#src#}&amp;#34;/&amp;gt;&amp;#39;, &amp;#34;&amp;lt;p&amp;gt;{#text#}&amp;lt;/p&amp;gt;&amp;#34;, &amp;#34;&amp;lt;/div&amp;gt;&amp;#34;, ].join(&amp;#34;&amp;#34;), title: [ &amp;#39;&amp;lt;div class=&amp;#34;title&amp;#34;&amp;gt;&amp;#39;, &amp;#39;&amp;lt;div class=&amp;#34;main&amp;#34;&amp;gt;&amp;#39;, &amp;#34;&amp;lt;h2&amp;gt;{#title#}&amp;lt;/h2&amp;gt;&amp;#34;, &amp;#34;&amp;lt;p&amp;gt;{#tips#}&amp;lt;/p&amp;gt;&amp;#34;, &amp;#34;&amp;lt;/div&amp;gt;&amp;#34;, &amp;#34;&amp;lt;/div&amp;gt;&amp;#34;, ].join(&amp;#34;&amp;#34;), }, html = &amp;#34;&amp;#34;; function formateString(str, obj) { return str.</description>
+    </item>
+    
     <item>
       <title>职责链模式</title>
       <link>/posts/32/</link>
