@@ -7,7 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Thu, 07 Sep 2023 22:48:24 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 11 Sep 2023 11:06:14 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>链模式</title>
+      <link>/posts/38/</link>
+      <pubDate>Mon, 11 Sep 2023 11:06:14 +0800</pubDate>
+      
+      <guid>/posts/38/</guid>
+      <description>通过在对象方法中将当前对象返回，实现对同一个对象多个方法的链式调用。
+找位助手 var A = function () { return A.fn(); }; A.fn = A.prototype = {}; 获取元素 var A = function (selector) { return A.fn.init(selector); }; A.fn = A.prototype = { init: function (selector) { return document.getElementById(selector); }, length: 2, size: function () { return this.length; }, }; console.log(A(&amp;#34;demo&amp;#34;)); 一个大问题 现在，我还想让 A 对象返回的结果还能够拥有 A.fn 中的方法，如 size 等，现在的设计是办不到的，
+var A = function (selector) { return A.fn.init(selector); }; A.fn = A.prototype = { init: function (selector) { // this === A.</description>
+    </item>
+    
     <item>
       <title>惰性模式</title>
       <link>/posts/37/</link>
