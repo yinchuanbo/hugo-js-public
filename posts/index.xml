@@ -7,7 +7,51 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Mon, 11 Sep 2023 11:06:14 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 11 Sep 2023 18:36:17 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>裁剪的3种方式，CSS 如何隐藏移动端的滚动条？</title>
+      <link>/posts/40/</link>
+      <pubDate>Mon, 11 Sep 2023 18:36:17 +0800</pubDate>
+      
+      <guid>/posts/40/</guid>
+      <description>在移动端开发中，经常会碰到需要横向滚动的场景，例如这样的
+但很多时候是不需要展示这个滚动条的，也就是这样的效果，如下
+你可能想到直接设置滚动条样式就可以了，就像这样
+::-webkit-scrollbar { display: none; } 目前来看好像没什么问题，但在某些版本的 iOS 上却无效（具体待测试），滚动条仍然出现。
+那有没有其他方式可以解决这个问题呢？下面介绍几个方法
+一、通过 overflow 隐藏 既然有时候修改滚动条样式无法解决，我们可以想办法把它隐藏。
+下面是一个横向滚动列表
+&amp;lt;div class=&amp;#34;list&amp;#34;&amp;gt; &amp;lt;div class=&amp;#34;item&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;item&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;item&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;item&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;item&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;item&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;item&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; 简单修饰一下，让这个列表可以横向滚动
+.list { display: flex; overflow: auto; gap: 10px; padding: 10px; } .item { width: 100px; height: 100px; background: royalblue; border-radius: 8px; flex-shrink: 0; } 效果如下
+通过**「overflow」**隐藏的方式很简单，我们需要一个父级
+&amp;lt;div class=&amp;#34;wrap&amp;#34;&amp;gt; &amp;lt;div class=&amp;#34;list&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; 然后，将列表底部padding设置的稍微大一些，比如
+.list { /**/ padding-bottom: 20px; } 可以看到列表下方的距离变大了，滚动条也更靠下了，效果如下</description>
+    </item>
+    
+    <item>
+      <title>当你的网站有新内容，如何立即通知你的用户呢？</title>
+      <link>/posts/39/</link>
+      <pubDate>Mon, 11 Sep 2023 17:58:59 +0800</pubDate>
+      
+      <guid>/posts/39/</guid>
+      <description>你有没有遇到过这样的场景：当你在浏览网页时，突然收到一个通知，告诉你有新的内容更新，或者有一条重要的消息通知你查看。
+作为一枚前端开发，你可能会想，这不就是请求轮询吗？
+没错，异步请求通过轮询的方式确实能实现类似的功能，但这不是我们今天要分享的主题 ~
+是什么呢？
+是 Service Worker！
+是的，通过 Service Worker 来实现“推送通知”的功能。Service Worker 是 Web API 的一部分，其功能非常强大。相信通过今天的内容，你肯定会有所收获。
+那么现在，就让我们正式开始吧~
+1. 初识 Service Worker 简单来说，Service Worker 是一种在浏览器背后默默工作的 JS 脚本，它可以在用户没有打开网页的情况下运行，为网页提供了各种强大的功能，比如离线缓存、后台同步等，当然还有我们今天要分享的——推送通知。
+有些网站的推送通知做的相当不错，比如油管（YouTube）。当你关注了油管上的某个 UP 主，当 TA 更新视频后浏览器就会给你推送消息，这时候就算你没有打开浏览器，你也会收到通知。Windows 10 系统上在桌面右下角会弹出一个来自浏览器的消息通知框，通知的内容来自油管那位 UP 主的更新信息；Mac 系统上，在桌面右上角会有一条来自浏览器的通知，通知的内容与 Windows 上的信息一致。
+你可能会问，为什么我们要使用 Service Worker 来实现推送通知呢？
+原因很简单，因为它可以帮助我们更好地与用户进行交互，能提高用户的参与度，甚至在一定程度上可以提高用户的留存率。设想一下，如果你的网站有新的内容更新，你可以立即通过推送通知告诉你的用户。
+这样的话，你的用户就不会错过重要通知了，而通知的内容恰好又戳到了用户的 G 点，那 TA 肯定会点一下消息框，然后瞬间就回到你的网站了。相较于用户首先打开浏览器然后点击书签访问到你的网站来说，这种类似于系统级别的消息通知能极大提高用户粘性。
+所以，要不要考虑把 Service Worker 在自己网站上用起来呢？
+下面，我们就来一步步实现这个功能。
+2. Service Worker 基础 现在你已经对 Service Worker 有了一个基本的了解，接下来我们看一下它的基础知识。
+首先你要明白 Service Worker 是如何实现推送通知的。其实它的工作原理也不复杂，当用户访问网页时，Service Worker 就会被安装到用户的设备上。当服务器有新的信息需要传递给用户时，服务器就会发送一个推送事件到 Service Worker。然后，Service Worker 就会接收这个事件推送，并根据这个事件显示给用户一个通知。</description>
+    </item>
+    
     <item>
       <title>链模式</title>
       <link>/posts/38/</link>
