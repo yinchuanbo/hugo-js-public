@@ -7,14 +7,27 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Wed, 06 Sep 2023 14:04:59 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 07 Sep 2023 22:48:24 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>链模式</title>
+      <title>惰性模式</title>
+      <link>/posts/37/</link>
+      <pubDate>Thu, 07 Sep 2023 22:48:24 +0800</pubDate>
+      
+      <guid>/posts/37/</guid>
+      <description>减少每次代码执行时的重复性的分支判断，通过对对象重定义来屏蔽原对象中的分支判断
+对事件的思考 // 单例模式定义命名空间 var A = {}; A.on = function (dom, type, fn) { if (dom.addEventListener) { dom.addEventListener(type, fn, false); } else if (dom.attachEvent) { dom.attachEvent(&amp;#34;on&amp;#34; + type, fn); } else { dom[&amp;#34;on&amp;#34; + type] = fn; } }; 每次为元素添加事件时，总会走一遍能力检测，有点多余。
+加载即执行 // 添加绑定事件方法 on A.on = (function (dom, type, fn) { if (document.addEventListener) { return function (dom, type, fn) { dom.addEventListener(type, fn, false); }; } else if (document.attachEvent) { return function (dom, type, fn) { dom.</description>
+    </item>
+    
+    <item>
+      <title>简单模板模式</title>
       <link>/posts/36/</link>
       <pubDate>Wed, 06 Sep 2023 14:04:59 +0800</pubDate>
       
       <guid>/posts/36/</guid>
-      <description></description>
+      <description>通过格式化字符串拼凑出视图避免创建视图时大量节点操作，优化内存开销。
+实现方案 // 命名空间 var A = A || {}; // 主体展示区容器 A.root = document.getElementById(&amp;#34;conainer&amp;#34;); // 创建视图方法集合 A.strategy = { listPart: function () {}, codePart: function () {}, onlyTitle: function () {}, guide: function () {}, //... }; // 创建视图入口 A.init = function (data) { this.strategy[data.type](data); }; 模板渲染方法
+A.formateString = function (str, data) { return str.replace(/\{#(\w+)#\}/g, function (match, key) { return typeof data[key] === undefined ? &amp;#34;&amp;#34; : data[key]; }); }; 有了这个方法，我们可以通过简单模板来渲染出我们需求视图</description>
     </item>
     
     <item>
