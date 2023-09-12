@@ -7,7 +7,116 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Mon, 11 Sep 2023 18:36:17 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 12 Sep 2023 18:08:38 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>资源优先级</title>
+      <link>/posts/46/</link>
+      <pubDate>Tue, 12 Sep 2023 18:08:38 +0800</pubDate>
+      
+      <guid>/posts/46/</guid>
+      <description>优先级 浏览器基于自身的启发式算法，会对资源的重要性进行判断来划分优先级，通常从低到高为：Lowest、Low、High、Highest。
+比如，在 &amp;lt;head&amp;gt; 标签中，CSS 文件通常具有最高的优先级 Highest，其次是 &amp;lt;script&amp;gt; 标签所请求的脚本文件，但当 &amp;lt;script&amp;gt; 标签带有 defer 或 async 的异步属性时，其优先级又会降为 Low。我们呢通过浏览器的控制台可以看到浏览器对资源进行的优先级划分。
+预加载 使用 &amp;lt;link rel=&amp;quot;preload&amp;quot;&amp;gt; 标签告诉浏览器当前所指定的资源，应该拥有更高的优先级，例如：
+&amp;lt;link rel=&amp;#34;preload&amp;#34; as=&amp;#34;script&amp;#34; href=&amp;#34;important.js&amp;#34; /&amp;gt; &amp;lt;link rel=&amp;#34;preload&amp;#34; as=&amp;#34;style&amp;#34; href=&amp;#34;critical.css&amp;#34; /&amp;gt; 这里通过 as 属性告诉浏览器所要加载的资源类型，
+要注意：&amp;lt;link rel=&amp;quot;preload&amp;quot;&amp;gt; 会强制浏览器进行预加载，它与其他资源的提示不同，浏览器对此是必须执行而非可选的。
+如果预加载指定的资源在 3s 内未被当前页面使用，则浏览器会在开发者工具的控制台中进行警告提示，该警告务必要处理。
+解下来看两个使用实例：字体的使用和关键路径渲染
+通常字体文件都位于页面加载的若干个 CSS 文件的末尾，但考虑为了减少用户等待文本内容的加载时间，以及避免系统字体与偏好字体发生冲突，就必须提前获取字体，
+&amp;lt;link rel=&amp;#34;preload&amp;#34; as=&amp;#34;font&amp;#34; crossorigin=&amp;#34;crossorigin&amp;#34; type=&amp;#34;font/woff2&amp;#34; href=&amp;#34;myfont.woff2&amp;#34; /&amp;gt; [注]：这里的 crossorigin 属性非常重要，如果缺失该属性，浏览器不会对指定的字体进行预加载。
+前面讲过页面渲染生命周期时，提到过关键渲染路径，其中涉及首次渲染之前必须加载的资源（比如 CSS 和 JavaScript 等），这些资源对首屏页面渲染来说是非常重要的。以前通常建议的做法是把这些资源内联到 HTML 中，但对服务端渲染或对页面而言，这样做很容易导致带宽浪费，
+所以使用 &amp;lt;link rel=&amp;quot;preload&amp;quot;&amp;gt; 对单个文件进行预加载，除了能很快的请求资源，还能尽量利用缓存，
+其唯一的缺点是可能会在浏览器和服务器之间发生额外的往返请求，因为浏览器需要加载解析 HTML 后，才会知道后续资源请求情况，其解决方式可以利用 HTTP2 的推送。</description>
+    </item>
+    
+    <item>
+      <title>网站优化之静态资源优化</title>
+      <link>/posts/45/</link>
+      <pubDate>Tue, 12 Sep 2023 12:19:06 +0800</pubDate>
+      
+      <guid>/posts/45/</guid>
+      <description>1、图片优化细则 1.1 用工具进行图片压缩 压缩 png
+node-pngquant-native
+跨平台，压缩比高，压缩 png24 非常好。
+说明文档： https://www.npmjs.com/package/node-pngquant-native
+安装方法： npm install node-pngquant-native
+压缩 jpg
+jpegtran
+跨平台，有 Linux 、Mac、 Windows 的解决方案
+官网：http://jpegclub.org/jpegtran/
+安装方法：npm install –g jpegtran
+使用方法： jpegtran -copy none -optimize -outfile out.jpg in.jpg
+压缩 gif
+Gifsicle：通过改变每帧比例，减小 gif 文件大小，同时可以使用透明来达到更小的 文件大小，目前公认的解决方案。
+安装： http://www.lcdf.org/gifsicle/
+使用方式： 优化级别设置为不小于 2，1 的话基本不压缩 gifsicle &amp;ndash;optimize=3 -o out.gif in.gif
+将透明部分截去 gifsicle &amp;ndash;optimize=3 &amp;ndash;crop-transparency -o out.gif in.gif
+1.2 图片尺寸随网络环境变化 不同网络环境（Wifi/4G/3G）下，加载不同尺寸和像素的图片，通过在图片 URL 后 缀加不同参数改变。
+http://img13.360buyimg.com/n1/s100x100_jfs/t2443/71/2538811251/470 889/c2ec38b3/570f3438N81a4b62c.jpg
+1.3 响应式图片 JavaScript 绑定事件检测窗口大小</description>
+    </item>
+    
+    <item>
+      <title>加载注意事项</title>
+      <link>/posts/44/</link>
+      <pubDate>Tue, 12 Sep 2023 10:22:36 +0800</pubDate>
+      
+      <guid>/posts/44/</guid>
+      <description>首屏加载 对于首屏上的内容就不应当进行延迟加载，而应该使用正常的加载方式。
+此外，若将首屏视窗边界线作为延迟加载触发的阈值，其实并非最贱的性能考虑，更理想的做法是，在延迟加载的媒体资源到达首屏边界之前设置一个缓冲区，以便媒体资源在进入视窗之前就开始进行加载。
+代码如下：
+const lazyImageObserver = new IntersectionObserver( (entries, onserver) =&amp;gt; { // .... }, { rootMargin: &amp;#34;0 0 256px 0&amp;#34;, } ); 资源占位 当延迟加载的媒体资源未渲染出来之前，应当在页面中使用相同尺寸的占位图，如果不使用占位图，图像延迟显示出来后，尺寸更改可能会使页面布局出现移位。
+这种现象不仅会对用户体验带来困惑，更严重的还会触发浏览器成本高昂的回流机制，进而增加系统资源开销，造成卡顿。
+而用来占位的图像解决方案也有多种，十分简单的方式是使用一个与目标媒体资源长度相同的纯色占位符，或者之前使用的 Base64 图片，当然也可以采用 LQIP 或 SQIP 等方法。
+内容加载失败 在进行延迟加载过程中，可能会因为某种原因造成媒体资源加载失败，进而导致错误的情况。
+例如，图片资源可能采用以下方式进行规避：
+const newImage = new Image(); newImage.src = &amp;#34;photo.png&amp;#34;; newImage.onerror = (err) =&amp;gt; { // 当发生故障时处理措施 /* 处理措施： 01 可将使用的图片占位图替换为按钮，让用户单击以尝试重新加载所需的媒体资源。 02 或者在占位符区域显示错误的提示信息。 */ }; newImage.onload = () =&amp;gt; { // 加载成功的回调 }; 图像解码延迟 我们知道渐进式的 JPEG 会先呈现一个低像素的图像版本，随后会慢慢呈现出原图的样貌。这是因为图像从被浏览器请求获取，再到最终完整呈现在屏幕上，需要经历一个解码的过程。</description>
+    </item>
+    
+    <item>
+      <title>视频加载</title>
+      <link>/posts/43/</link>
+      <pubDate>Mon, 11 Sep 2023 22:24:25 +0800</pubDate>
+      
+      <guid>/posts/43/</guid>
+      <description>不需要自动播放 为了使页面更快地加载并渲染出来，可以阻止不需要自动播放的视频的预加载，其方法是通过视频标签的 preload 进行控制。
+&amp;lt;video controls preload=&amp;#34;none&amp;#34; poster=&amp;#34;default.jpg&amp;#34;&amp;gt; &amp;lt;source src=&amp;#34;simply.webm&amp;#34; type=&amp;#34;video/webm&amp;#34; /&amp;gt; &amp;lt;source src=&amp;#34;simply.mp4&amp;#34; type=&amp;#34;video/mp4&amp;#34; /&amp;gt; &amp;lt;/video&amp;gt; preload 属性通常的默认值是 auto，表示无论用户是否希望，所有视频文件都会被自动下载，这里将其设置为 none，来阻止视频的自动预加载。同时这里还用过 poster 属性为视频提供占位符图片，它的作用是当视频未加载出来时，不至于在页面中呈现一块让用户未知的空白。
+浏览器对视频的加载行为可能存在较大的差异：
+Chrome 之前的版本中，preload 的默认值是 auto，从 64 版本以后其默认值改为了 metadata，表示仅加载视频的元数据，FireBox、IE11、Edge 等浏览器的行为类似。
+Safari 11.0 的 Mac 版会默认进行部分视频资源预加载，11.2 的 Mac 版后仅可预加载元数据，但 ios 的 Safari 不会对视频预加载。
+另外，如果你的站点中包含了同一域名下的多个视频资源，最好将 preload 属性设置为 metadata，或者定义 poster 属性值时将 preload 设置为 none，这样能很好的避免 HTTP 的最大连接数，因为通常 HTTP 1.1 协议规定同一域名下的最大连接数为 6，如果同时有超过此数量的资源请求连接，那么多余的连接便会被挂起，这无疑也会对性能造成负面的影响。
+视频代替 GIF 动画 应当尽量用视频代替尺寸多大的 GIF 动画，虽然 GIF 动画的应用历史和范围都很广泛，但其在输出文件大小，图像色彩质量等许多方面的表现均不如视频。GIF 动画相对于视频具有三个附加的特性：没有音轨、连续循环播放、加载完成自动播放，替换成视频后类似于：
+&amp;lt;video autoplay muted loop playsinline&amp;gt; &amp;lt;source src=&amp;#34;video.</description>
+    </item>
+    
+    <item>
+      <title>原生的延迟加载支持</title>
+      <link>/posts/42/</link>
+      <pubDate>Mon, 11 Sep 2023 21:55:45 +0800</pubDate>
+      
+      <guid>/posts/42/</guid>
+      <description>从 Chrome 75 版本开始，已经可以通过 &amp;lt;img&amp;gt; 和 &amp;lt;iframe&amp;gt; 标签的 loading 属性原生支持延迟加载了，loading 属性包含以下三种取值：
+lazy: 进行延迟加载
+eager: 立即加载
+auto: 浏览器自行决定是否进行延迟加载
+若不指定任何属性，loading 默认取值 auto，
+&amp;lt;!-- 当用户滚动屏幕视窗到该图像元素时，才进行加载 --&amp;gt; &amp;lt;img src=&amp;#34;photo.jpg&amp;#34; loading=&amp;#34;lazy&amp;#34; alt=&amp;#34;&amp;#34; /&amp;gt; &amp;lt;!-- 立刻加载图像元素 --&amp;gt; &amp;lt;img src=&amp;#34;photo.jpg&amp;#34; loading=&amp;#34;eager&amp;#34; alt=&amp;#34;&amp;#34; /&amp;gt; &amp;lt;!-- 浏览器决定是否进行延迟加载 --&amp;gt; &amp;lt;img src=&amp;#34;photo.jpg&amp;#34; loading=&amp;#34;auto&amp;#34; alt=&amp;#34;&amp;#34; /&amp;gt; &amp;lt;!-- 亦可延迟加载 picture 中的图像 --&amp;gt; &amp;lt;picture&amp;gt; &amp;lt;source media=&amp;#34;(min-width: 750px)&amp;#34; srcset=&amp;#34;phone.jpg 1x, phone-hd.jpg 2x&amp;#34; /&amp;gt; &amp;lt;source srcset=&amp;#34;small.jpg 1x, small- hd.jpg 2x&amp;#34; /&amp;gt; &amp;lt;img src=&amp;#34;default.jpg&amp;#34; loading=&amp;#34;lazy&amp;#34; /&amp;gt; &amp;lt;/picture&amp;gt; &amp;lt;!</description>
+    </item>
+    
+    <item>
+      <title>属性的 getter 和 setter</title>
+      <link>/posts/41/</link>
+      <pubDate>Mon, 11 Sep 2023 19:34:22 +0800</pubDate>
+      
+      <guid>/posts/41/</guid>
+      <description>有两种类型的对象属性。
+第一种是 数据属性。我们已经知道如何使用它们了。到目前为止，我们使用过的所有属性都是数据属性。
+第二种类型的属性是新东西。它是 访问器属性（accessor property）。它们本质上是用于获取和设置值的函数，但从外部代码来看就像常规属性。
+getter 和 setter 访问器属性由 “getter” 和 “setter” 方法表示。在对象字面量中，它们用 get 和 set 表示：
+let obj = { get propName() { // 当读取 obj.propName 时，getter 起作用 }, set propName(value) { // 当执行 obj.propName = value 操作时，setter 起作用 }, }; 当读取 obj.propName 时，getter 起作用，当 obj.propName 被赋值时，setter 起作用。
+例如，我们有一个具有 name 和 surname 属性的对象 user：
+let user = { name: &amp;#34;John&amp;#34;, surname: &amp;#34;Smith&amp;#34;, }; 现在我们想添加一个 fullName 属性，该属性值应该为 &amp;quot;John Smith&amp;quot;。当然，我们不想复制粘贴已有的信息，因此我们可以使用访问器来实现：</description>
+    </item>
+    
     <item>
       <title>裁剪的3种方式，CSS 如何隐藏移动端的滚动条？</title>
       <link>/posts/40/</link>
