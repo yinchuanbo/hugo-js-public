@@ -166,7 +166,7 @@ function plus(num) { return num &#43; 1; } const ret = plus(6); 当这段代码�
 执行过程会先对 num 标识符进行解析，即从作用域链的最顶层依次向下查找，直至找到 num 标识符。
 实战经验 对局部变量的使用 记住这一条建议："><meta itemprop="datePublished" content="2023-09-12T20:47:00+08:00" />
 <meta itemprop="dateModified" content="2023-09-12T20:47:00+08:00" />
-<meta itemprop="wordCount" content="454">
+<meta itemprop="wordCount" content="538">
 <meta itemprop="keywords" content="" />
   
   <meta name="twitter:card" content="summary"/>
@@ -484,7 +484,41 @@ function plus(num) { return num &#43; 1; } const ret = plus(6); 当这段代码�
 <ol start="4">
 <li>策略模式</li>
 </ol>
-<p>【&hellip;】</p>
+<p>策略模式就是定义一系列的处理流程或算法，把他们封装起来，使得他们可以相互代替。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// 计算奖金的方法
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// salary 月薪工资，level 绩效考核等级
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">calculateBonus</span>(<span style="color:#a6e22e">salary</span>, <span style="color:#a6e22e">level</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">level</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;S&#34;</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">salary</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">4</span>;
+</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">level</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;A&#34;</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">salary</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>;
+</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">level</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#34;B&#34;</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">salary</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>如果奖金规则计算变得复杂起来，重构策略模式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">strategies</span> <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">S</span><span style="color:#f92672">:</span> (<span style="color:#a6e22e">salary</span>) =&gt; <span style="color:#a6e22e">salary</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">4</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">A</span><span style="color:#f92672">:</span> (<span style="color:#a6e22e">salary</span>) =&gt; <span style="color:#a6e22e">salary</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">B</span><span style="color:#f92672">:</span> (<span style="color:#a6e22e">salary</span>) =&gt; <span style="color:#a6e22e">salary</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>,
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">calculateBonus</span>(<span style="color:#a6e22e">salary</span>, <span style="color:#a6e22e">level</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">strategies</span>[<span style="color:#a6e22e">level</span>](<span style="color:#a6e22e">salary</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ol start="5">
+<li>条件判断的使用建议</li>
+</ol>
+<ul>
+<li>
+<p>当所要匹配的条件仅为一两个离散值的时，或者容易划分不同取值范围时，使用 <code>if-else</code> 语句。</p>
+</li>
+<li>
+<p>当所要匹配的条件超过一两个但少于十个离散值时，使用 switch 语句。</p>
+</li>
+<li>
+<p>当所要匹配的条件超过 10 个离散值时，使用基于数组索引或对象属性的查找方式（也就是使用策略模式）。</p>
+</li>
+</ul>
 </section>
 
   
