@@ -166,7 +166,7 @@ function plus(num) { return num &#43; 1; } const ret = plus(6); 当这段代码�
 执行过程会先对 num 标识符进行解析，即从作用域链的最顶层依次向下查找，直至找到 num 标识符。
 实战经验 对局部变量的使用 记住这一条建议："><meta itemprop="datePublished" content="2023-09-12T20:47:00+08:00" />
 <meta itemprop="dateModified" content="2023-09-12T20:47:00+08:00" />
-<meta itemprop="wordCount" content="955">
+<meta itemprop="wordCount" content="1178">
 <meta itemprop="keywords" content="" />
   
   <meta name="twitter:card" content="summary"/>
@@ -673,7 +673,86 @@ function plus(num) { return num &#43; 1; } const ret = plus(6); 当这段代码�
 </span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>,
 </span></span><span style="display:flex;"><span>});
 </span></span></code></pre></div><p>这种方式也存在性能问题，比如函数闭包延长了局部变量的存活期。如果数据量过大又不能有效回收，则容易导致内存溢出。</p>
-<p>[未完待续]</p>
+<h3 id="快速响应">快速响应</h3>
+<p>JavaScript 代码的执行通常会阻塞页面的渲染，</p>
+<ol>
+<li>浏览器的限制</li>
+</ol>
+<p>JavaScript 是单线程的，这意味着浏览器的每个窗口或页签在同一时间内，要么执行 JavaScript 脚本，要么响应用户操作刷新页面，也就是二者的行为是相互阻塞的。</p>
+<p>例如：JavaScript 代码正在执行，用户页面会处于锁定状态无法进行输入，如果 JavaScript 代码执行时间过长，给用户带来的糟糕的体验。</p>
+<p>对于浏览器的这种限制，我们可能就需要对长时间运行的脚本进行重构，尽量保证一段脚本的执行不超过 <strong>100ms</strong>，如果超出这个阈值，用户明显就会有网站卡顿变慢的使用体验。</p>
+<p><strong>引起 JavaScript 执行时间过长的原因：</strong></p>
+<p><strong>- 01</strong> DOM 的频繁修改，相比于 JavaScript 脚本的运算，DOM 操作的开销都是极高的，</p>
+<p><strong>- 02</strong> 不恰当的循环，可能因为循环次数执行过多，或者每次循环中执行了过多操作，若将功能尽可能分解就会明显缓解这个问题。</p>
+<p><strong>- 03</strong> 存在过深的递归，浏览器对 JavaScript 调用栈存在限制，将递归改写成迭代能有效的避免此类问题。</p>
+<ol start="2">
+<li>异步队列</li>
+</ol>
+<p>JavaScript 既要处理运算又要响应与用户的交互，它是如何完成的呢？答案是<strong>异步</strong>。</p>
+<p>当我们创建一个异步任务时，它其实没有马上执行，而是被 JavaScript 引擎放置到一个队列中，当执行完成一个任务脚本后，JavaScript 引擎便会挂起让浏览器去做其他工作。</p>
+<p>比如更新页面，当页面更新完成后，JavaScript 引擎便会查看此异步队列，并从中取出一个任务脚本去执行，只要该队列不为空，这个过程便会不断重复，当队列中的任务脚本执行完成后，JavaScript 引擎便处于空闲状态，直到有新的任务脚本进入该异步队列。</p>
+<p>据此我们便有了对执行过长任务的一种优化策略，即将一个较长的任务拆分为多个异步任务，从而让浏览器给刷新页面留出时间，但过短的延迟时间也可能会让浏览器响应不及时，因为在几毫秒的时间里无法正确完成页面的更新与显示，通常可以用定时器来控制一个 100ms 左右的延迟，同时定时器也是 JavaScript 中创建一个加入队列十分有效的方法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// 将一个对大数组的处理过程拆成多个异步队列
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">chunk</span>(<span style="color:#a6e22e">array</span>, <span style="color:#a6e22e">process</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">setTimeout</span>(() =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">item</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">array</span>.<span style="color:#a6e22e">shift</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">process</span>(<span style="color:#a6e22e">item</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">array</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">setTimeout</span>(<span style="color:#a6e22e">arguments</span>.<span style="color:#a6e22e">callee</span>, <span style="color:#ae81ff">100</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }, <span style="color:#ae81ff">100</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="其他建议">其他建议</h3>
+<ol>
+<li>使用位操作</li>
+</ol>
+<p>几乎所有编程语言中，位操作的执行速度都是十分快的，</p>
+<p>JavaScript 中支持 6 种位操作，分别是 <code>按位与、按位或、按位异或、按位取反、按位左移、按位右移</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// 声明两个变量
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>; <span style="color:#75715e">// 二进制为：011
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">b</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">6</span>; <span style="color:#75715e">// 二进制为：110
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">result</span>;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 按位与
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">result</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">&amp;</span> <span style="color:#a6e22e">b</span>;
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">result</span>.<span style="color:#a6e22e">toString</span>(<span style="color:#ae81ff">2</span>)); <span style="color:#75715e">// 10
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 按位或
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">result</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">|</span> <span style="color:#a6e22e">b</span>;
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">result</span>.<span style="color:#a6e22e">toString</span>(<span style="color:#ae81ff">2</span>)); <span style="color:#75715e">// 111
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 按位异或
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">result</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">^</span> <span style="color:#a6e22e">b</span>;
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">result</span>.<span style="color:#a6e22e">toString</span>(<span style="color:#ae81ff">2</span>)); <span style="color:#75715e">// 101
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 按位取反
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">result</span> <span style="color:#f92672">=</span> <span style="color:#f92672">~</span><span style="color:#a6e22e">a</span>;
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">result</span>.<span style="color:#a6e22e">toString</span>(<span style="color:#ae81ff">2</span>)); <span style="color:#75715e">// -11100
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 按位左移
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">result</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">result</span>.<span style="color:#a6e22e">toString</span>(<span style="color:#ae81ff">2</span>)); <span style="color:#75715e">// 110
+</span></span></span></code></pre></div><p><strong>遍历数组元素，通过取余判断奇偶</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">len</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">array</span>.<span style="color:#a6e22e">length</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">arr</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">--</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">i</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 奇数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 偶数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>利用 <strong>按位与</strong> 改写</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">len</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">array</span>.<span style="color:#a6e22e">length</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">arr</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">--</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">i</span> <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 奇数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 偶数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>上面带来的性能提升与之前的取余操作相比，通常是翻倍的，循环规模越大带来的提升越明显。</p>
+<ol start="2">
+<li>使用原生方法</li>
+</ol>
+<p>无论如何优化 JavaScript 代码，也不可能比 JavaScript 引擎内置的原生方法更快。</p>
+<p>比如：<code>querySelector()</code> 和 <code>querySelectorAll()</code> 方法会比基于 JavaScript 进行的 CSS 查询快近 <code>10%</code>。</p>
 </section>
 
   
