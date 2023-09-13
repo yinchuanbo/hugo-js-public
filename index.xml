@@ -7,7 +7,22 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Tue, 12 Sep 2023 20:47:00 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 14 Sep 2023 07:06:22 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>构建优化</title>
+      <link>/posts/48/</link>
+      <pubDate>Thu, 14 Sep 2023 07:06:22 +0800</pubDate>
+      
+      <guid>/posts/48/</guid>
+      <description>压缩与合并 资源压缩和合并的优点:
+减少 http 的请求数量
+减少 http 请求的资源大小
+HTML 压缩 HTML 压缩的三种方式：
+在线网站提供 HTML 压缩服务
+基于 nodejs 的工具：html-minifier
+const fs = require(&amp;#34;fs&amp;#34;); const { minify } = require(&amp;#34;html-minifier&amp;#34;); fs.readFile(&amp;#34;./test.html&amp;#34;, &amp;#34;utf8&amp;#34;, (err, data) =&amp;gt; { if (err) throw err; fs.writeFile( &amp;#34;./test_mini.html&amp;#34;, minify( data, { removeComments: true, // 去掉注释 collapseWhitespace: true, // 去除空格 minifyJS: true, // 压缩 HTML 中的 JavaScript minifyCSS: true, // 压缩 HTML 中的 css }, () =&amp;gt; console.log(&amp;#34;success&amp;#34;) ) ); }); 服务端模板引擎的渲染压缩 CSS 压缩</description>
+    </item>
+    
     <item>
       <title>书写高性能的代码</title>
       <link>/posts/47/</link>
