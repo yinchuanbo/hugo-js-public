@@ -166,7 +166,7 @@ function plus(num) { return num &#43; 1; } const ret = plus(6); 当这段代码�
 执行过程会先对 num 标识符进行解析，即从作用域链的最顶层依次向下查找，直至找到 num 标识符。
 实战经验 对局部变量的使用 记住这一条建议："><meta itemprop="datePublished" content="2023-09-12T20:47:00+08:00" />
 <meta itemprop="dateModified" content="2023-09-12T20:47:00+08:00" />
-<meta itemprop="wordCount" content="783">
+<meta itemprop="wordCount" content="954">
 <meta itemprop="keywords" content="" />
   
   <meta name="twitter:card" content="summary"/>
@@ -621,7 +621,58 @@ function plus(num) { return num &#43; 1; } const ret = plus(6); 当这段代码�
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">right</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">array</span>.<span style="color:#a6e22e">slice</span>(<span style="color:#a6e22e">middle</span>);
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">merge</span>(<span style="color:#a6e22e">mergeSort</span>(<span style="color:#a6e22e">left</span>), <span style="color:#a6e22e">mergeSort</span>(<span style="color:#a6e22e">right</span>));
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>[&hellip;.]</p>
+</span></span></code></pre></div><p>可以看出这段代码中，mergeSort() 函数会被频繁调用，对于包含 n 个元素的数组来说，mergeSort() 函数会被调用 <code>2n - 1</code> 次，随着所处理数组元素的增多，这对浏览器的调用栈是一个严峻的考验。</p>
+<p><strong>改为迭代方式：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// 用迭代方式改写递归函数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">mergeSort</span>(<span style="color:#a6e22e">array</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">array</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">===</span> <span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">array</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">len</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">array</span>.<span style="color:#a6e22e">length</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">work</span> <span style="color:#f92672">=</span> [];
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">len</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">work</span>.<span style="color:#a6e22e">push</span>([<span style="color:#a6e22e">array</span>[<span style="color:#a6e22e">i</span>]]);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 确保总数组长度为偶数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">len</span> <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">1</span>) <span style="color:#a6e22e">work</span>.<span style="color:#a6e22e">push</span>([]);
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 迭代两两归并
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">lim</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">len</span>; <span style="color:#a6e22e">lim</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>; <span style="color:#a6e22e">lim</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">lim</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">j</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, <span style="color:#a6e22e">k</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">k</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">lim</span>; <span style="color:#a6e22e">j</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>, <span style="color:#a6e22e">k</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">2</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">work</span>[<span style="color:#a6e22e">j</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">merge</span>(<span style="color:#a6e22e">work</span>[<span style="color:#a6e22e">k</span>], <span style="color:#a6e22e">work</span>[<span style="color:#a6e22e">k</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>]);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 数组长度为奇数时，补一个空数组
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">lim</span> <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">1</span>) <span style="color:#a6e22e">work</span>[<span style="color:#a6e22e">j</span>] <span style="color:#f92672">=</span> [];
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">work</span>[<span style="color:#ae81ff">0</span>];
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>虽然在执行时间上要慢一点，但它不会受到浏览器对 js 调用栈的限制。</p>
+<ol start="2">
+<li>避免重复工作</li>
+</ol>
+<p>如果在递归的过程中，前一次的计算结果能被后一次计算使用，那么缓存前一次的计算结果就能有效避免许多重复工作，这样能带来很好的性能提升。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// 计算某个阶乘
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">factorial</span>(<span style="color:#a6e22e">n</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">n</span> <span style="color:#f92672">===</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">n</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">factorial</span>(<span style="color:#a6e22e">n</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>利用缓存来减少不必要计算的解决方案：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">memoize</span>(<span style="color:#a6e22e">func</span>, <span style="color:#a6e22e">cache</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">cache</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">cache</span> <span style="color:#f92672">||</span> {};
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">args</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">cache</span>.<span style="color:#a6e22e">hasOwnProperty</span>(<span style="color:#a6e22e">args</span>)) {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">cache</span>[<span style="color:#a6e22e">args</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">func</span>(<span style="color:#a6e22e">args</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">cache</span>[<span style="color:#a6e22e">args</span>];
+</span></span><span style="display:flex;"><span>  };
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>该方法利用函数闭包有效避免了类似计算多次阶乘时的重复操作，确保只有当一个计算在之前从未发生过时，才产生新的计算值。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// 改写
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">memorizeFactorial</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">memoize</span>(<span style="color:#a6e22e">factorial</span>, {
+</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">0</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><p>这种方式也存在性能问题，比如函数闭包延长了局部变量的存活期。如果数据量过大又不能有效回收，则容易导致内存溢出。</p>
 </section>
 
   
