@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Thu, 14 Sep 2023 14:44:40 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 14 Sep 2023 21:32:34 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>50</title>
+      <link>/posts/50/</link>
+      <pubDate>Thu, 14 Sep 2023 21:32:34 +0800</pubDate>
+      
+      <guid>/posts/50/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Object.create()</title>
       <link>/posts/49/</link>
@@ -35,7 +44,7 @@ var o = Object.create( {}, { a: { writable: true, configurable: true, value: &am
 HTML 压缩 HTML 压缩的三种方式：
 在线网站提供 HTML 压缩服务
 基于 nodejs 的工具：html-minifier
-const fs = require(&amp;#34;fs&amp;#34;); const { minify } = require(&amp;#34;html-minifier&amp;#34;); fs.readFile(&amp;#34;./test.html&amp;#34;, &amp;#34;utf8&amp;#34;, (err, data) =&amp;gt; { if (err) throw err; fs.writeFile( &amp;#34;./test_mini.html&amp;#34;, minify( data, { removeComments: true, // 去掉注释 collapseWhitespace: true, // 去除空格 minifyJS: true, // 压缩 HTML 中的 JavaScript minifyCSS: true, // 压缩 HTML 中的 css }, () =&amp;gt; console.log(&amp;#34;success&amp;#34;) ) ); }); 服务端模板引擎的渲染压缩 CSS 压缩</description>
+const fs = require(&amp;#34;fs&amp;#34;); const { minify } = require(&amp;#34;html-minifier&amp;#34;); fs.readFile(&amp;#34;./test.html&amp;#34;, &amp;#34;utf8&amp;#34;, (err, data) =&amp;gt; { if (err) throw err; fs.writeFile( &amp;#34;./test_mini.html&amp;#34;, minify( data, { removeComments: true, // 去掉注释 collapseWhitespace: true, // 去除空格 minifyJS: true, // 压缩 HTML 中的 JavaScript minifyCSS: true, // 压缩 HTML 中的 css }, () =&amp;gt; console.log(&amp;#34;success&amp;#34;) ) ); }); 服务端模板引擎的渲染压缩 CSS 压缩 CSS 代码也能进行压缩，而且很有必要去压缩。</description>
     </item>
     
     <item>
