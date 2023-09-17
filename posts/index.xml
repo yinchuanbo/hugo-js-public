@@ -7,14 +7,64 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Thu, 14 Sep 2023 21:32:34 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 17 Sep 2023 22:09:38 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>50</title>
+      <title>CSS网格布局</title>
+      <link>/posts/53/</link>
+      <pubDate>Sun, 17 Sep 2023 22:09:38 +0800</pubDate>
+      
+      <guid>/posts/53/</guid>
+      <description>&amp;lt;div id=&amp;#34;container&amp;#34;&amp;gt; &amp;lt;div class=&amp;#34;item item-1&amp;#34;&amp;gt;1&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;item item-2&amp;#34;&amp;gt;2&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;item item-3&amp;#34;&amp;gt;3&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;item item-4&amp;#34;&amp;gt;4&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;item item-5&amp;#34;&amp;gt;5&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;item item-6&amp;#34;&amp;gt;6&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;item item-7&amp;#34;&amp;gt;7&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;item item-8&amp;#34;&amp;gt;8&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;item item-9&amp;#34;&amp;gt;9&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; #container { display: grid; grid-template-columns: 50px 50px 50px; grid-template-rows: 50px 50px 50px; grid-gap: 10px; } .item { border: 1px solid red; text-align: center; line-height: 50px; } 使用百分比定义列宽和列高：
+#container { display: grid; grid-template-columns: 33.33% 33.33% 33.33%; grid-template-rows: 33.33% 33.33% 33.33%; /* 需要给 #container 设置一个高度 */ } 如上，重复书写比较麻烦，可以使用 repeat() 函数</description>
+    </item>
+    
+    <item>
+      <title> 一些 css 语法解释</title>
+      <link>/posts/52/</link>
+      <pubDate>Sun, 17 Sep 2023 21:58:31 +0800</pubDate>
+      
+      <guid>/posts/52/</guid>
+      <description>filter: invert(1) 是一种 CSS 滤镜效果，它用于将元素的颜色进行反转，即将亮色变为暗色，暗色变为亮色。具体而言，它将元素的亮度值进行反转，使得黑色变为白色，白色变为黑色，其他颜色也会相应地进行反转。这个滤镜效果常用于创建黑暗主题、反色效果或者增强视觉对比度。
+-webkit-autofill .contac__input: -webkit-autofill { transition: background-color 6000s, color 6000s; } 这段代码是用于自动填充表单输入框的样式设置。 -webkit-autofill 是一个 Webkit 浏览器的伪类选择器，用于匹配自动填充的表单字段。
+transition: background-color 6000s, color 6000s; 是一个过渡效果的设置，它定义了在 6000 秒内发生的过渡效果。具体来说，它定义了在自动填充表单字段时，背景颜色和文字颜色的过渡效果。
+这段代码的作用是为自动填充表单字段提供过渡效果，使得填充的背景颜色和文字颜色能够平滑地改变，提升用户体验。
+placeholder-shown .contact__input:not(:placeholder-shown).contact__input:not(:focus) + .contact__label { opacity: 1; top: -16px; } 这段代码是用于在表单输入框中输入内容时，控制相邻标签的样式变化。具体来说：
+.contact__input:not(:placeholder-shown).contact__input:not(:focus) 选择器表示选中没有占位符文本且没有获得焦点的输入框。
++ .contact__label 表示选中与上述选择器相邻的类名为 .contact__label 的元素。
+opacity: 1; 设置透明度为 1，即完全不透明。
+top: -16px 将元素的位置向上移动 16 像素。
+这段代码的作用是在用户在输入框中输入内容时，将相邻的标签元素显示出来，并将其位置向上移动 16 像素。通常用于实现输入框中的占位标签在输入内容时的动态效果，提升用户体验。
+margin-inline .contact__data { margin-inline: auto; } 这段代码设置了类名为 .contact__data 的元素的水平居中对齐。具体来说：
+margin-inline: auto; 是一个 CSS 属性，用于设置元素的水平外边距。 auto 值表示自动计算外边距，使元素在水平方向上居中对齐。</description>
+    </item>
+    
+    <item>
+      <title>创建带有曲线的侧边栏菜单</title>
+      <link>/posts/51/</link>
+      <pubDate>Sun, 17 Sep 2023 21:33:06 +0800</pubDate>
+      
+      <guid>/posts/51/</guid>
+      <description>具体代码如下: HTML
+&amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang=&amp;#34;en&amp;#34;&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta charset=&amp;#34;UTF-8&amp;#34; /&amp;gt; &amp;lt;meta name=&amp;#34;viewport&amp;#34; content=&amp;#34;width=device-width, initial-scale=1.0&amp;#34; /&amp;gt; &amp;lt;link href=&amp;#34;https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css&amp;#34; rel=&amp;#34;stylesheet&amp;#34; /&amp;gt; &amp;lt;link rel=&amp;#34;stylesheet&amp;#34; href=&amp;#34;assets/css/styles.css&amp;#34; /&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;nav class=&amp;#34;nav&amp;#34;&amp;gt; &amp;lt;ul class=&amp;#34;nav__list&amp;#34;&amp;gt; &amp;lt;a href=&amp;#34;#&amp;#34; class=&amp;#34;nav__link active-link&amp;#34;&amp;gt; &amp;lt;i class=&amp;#34;ri-dashboard-3-line&amp;#34;&amp;gt;&amp;lt;/i&amp;gt; &amp;lt;span class=&amp;#34;nav__name&amp;#34;&amp;gt;Home&amp;lt;/span&amp;gt; &amp;lt;/a&amp;gt; &amp;lt;a href=&amp;#34;#&amp;#34; class=&amp;#34;nav__link&amp;#34;&amp;gt; &amp;lt;i class=&amp;#34;ri-account-box-line&amp;#34;&amp;gt;&amp;lt;/i&amp;gt; &amp;lt;span class=&amp;#34;nav__name&amp;#34;&amp;gt;Accounts&amp;lt;/span&amp;gt; &amp;lt;/a&amp;gt; &amp;lt;a href=&amp;#34;#&amp;#34; class=&amp;#34;nav__link&amp;#34;&amp;gt; &amp;lt;i class=&amp;#34;ri-rocket-line&amp;#34;&amp;gt;&amp;lt;/i&amp;gt; &amp;lt;span class=&amp;#34;nav__name&amp;#34;&amp;gt;Investments&amp;lt;/span&amp;gt; &amp;lt;/a&amp;gt; &amp;lt;a href=&amp;#34;#&amp;#34; class=&amp;#34;nav__link&amp;#34;&amp;gt; &amp;lt;i class=&amp;#34;ri-file-list-3-line&amp;#34;&amp;gt;&amp;lt;/i&amp;gt; &amp;lt;span class=&amp;#34;nav__name&amp;#34;&amp;gt;Files&amp;lt;/span&amp;gt; &amp;lt;/a&amp;gt; &amp;lt;a href=&amp;#34;#&amp;#34; class=&amp;#34;nav__link&amp;#34;&amp;gt; &amp;lt;i class=&amp;#34;ri-settings-3-line&amp;#34;&amp;gt;&amp;lt;/i&amp;gt; &amp;lt;span class=&amp;#34;nav__name&amp;#34;&amp;gt;Settings&amp;lt;/span&amp;gt; &amp;lt;/a&amp;gt; &amp;lt;/ul&amp;gt; &amp;lt;!</description>
+    </item>
+    
+    <item>
+      <title>渲染优化</title>
       <link>/posts/50/</link>
-      <pubDate>Thu, 14 Sep 2023 21:32:34 +0800</pubDate>
+      <pubDate>Sun, 17 Sep 2023 16:42:43 +0800</pubDate>
       
       <guid>/posts/50/</guid>
-      <description></description>
+      <description>如果把浏览器呈现页面的整个过程一分为二，前面讨论的的诸如图像资源优化、加载优化，以及构建中如何压缩资源大小等，都可视为浏览器为呈现页面请求所需资源的部分，本章主要关注浏览器获取资源后，进行渲染部分的相关优化内容。
+页面渲染性能 流畅的使用体验 网站页面要快速加载出来，而且运行过程也应更顺畅。
+那么要达到在怎样的性能指标，才能满足用户流畅的使用体验呢？
+目前大部分设备的屏幕分辨率都在 60fps 左右，也就是每秒刷新 60 次，所以要满足用户的体验期望，就需要浏览器在渲染页面动画或响应用户操作时，每一帧的生成速率尽量接近屏幕的刷新率。
+若按照 60fps 来算，则留给每一帧画面的时间不到 17ms，再除去浏览器对资源的一些整理工作，一帧画面的渲染应尽量再 10ms 内完成，如果达不到要求而导致帧率下降，则屏幕上的内容会发生抖动或卡顿。
+渲染过程 为了使每一帧页面渲染的开销都能在期望的时间范围内完成，就需要开发者了解渲染过程的每个阶段，以及各个阶段有哪些优化空间是我们力能所及的，
+经过分析根据开发者对优化渲染过程的控制力度，可以大体将其划分为五个部分：
+JavaScript 处理、计算样式、页面布局、绘制、合成
+JavaScript 处理： 前端项目中经常会需要响应用户操作，通过 JavaScript 对数据集进行计算、操作 DOM 元素，并展示动画等视觉效果。当然对于动画的实现，除了 JavaScript，也可以考虑使用如 CSS Animations、Transitions 等技术。
+计算样式： 在解析 CSS 文件后，浏览器需要根据各种选择器去匹配所要应用 CSS 规则的元素节点，然后计算出每个元素的最终样式。
+【&amp;hellip;】</description>
     </item>
     
     <item>
@@ -200,7 +250,7 @@ let user = { name: &amp;#34;John&amp;#34;, surname: &amp;#34;Smith&amp;#34;, }; 
 下面是一个横向滚动列表
 &amp;lt;div class=&amp;#34;list&amp;#34;&amp;gt; &amp;lt;div class=&amp;#34;item&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;item&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;item&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;item&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;item&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;item&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;item&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; 简单修饰一下，让这个列表可以横向滚动
 .list { display: flex; overflow: auto; gap: 10px; padding: 10px; } .item { width: 100px; height: 100px; background: royalblue; border-radius: 8px; flex-shrink: 0; } 效果如下
-通过**「overflow」**隐藏的方式很简单，我们需要一个父级
+通过 「overflow」 隐藏的方式很简单，我们需要一个父级
 &amp;lt;div class=&amp;#34;wrap&amp;#34;&amp;gt; &amp;lt;div class=&amp;#34;list&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; 然后，将列表底部padding设置的稍微大一些，比如
 .list { /**/ padding-bottom: 20px; } 可以看到列表下方的距离变大了，滚动条也更靠下了，效果如下</description>
     </item>
