@@ -112,7 +112,7 @@
 <meta itemprop="description" content="&lt;div id=&#34;container&#34;&gt; &lt;div class=&#34;item item-1&#34;&gt;1&lt;/div&gt; &lt;div class=&#34;item item-2&#34;&gt;2&lt;/div&gt; &lt;div class=&#34;item item-3&#34;&gt;3&lt;/div&gt; &lt;div class=&#34;item item-4&#34;&gt;4&lt;/div&gt; &lt;div class=&#34;item item-5&#34;&gt;5&lt;/div&gt; &lt;div class=&#34;item item-6&#34;&gt;6&lt;/div&gt; &lt;div class=&#34;item item-7&#34;&gt;7&lt;/div&gt; &lt;div class=&#34;item item-8&#34;&gt;8&lt;/div&gt; &lt;div class=&#34;item item-9&#34;&gt;9&lt;/div&gt; &lt;/div&gt; #container { display: grid; grid-template-columns: 50px 50px 50px; grid-template-rows: 50px 50px 50px; grid-gap: 10px; } .item { border: 1px solid red; text-align: center; line-height: 50px; } 使用百分比定义列宽和列高：
 #container { display: grid; grid-template-columns: 33.33% 33.33% 33.33%; grid-template-rows: 33.33% 33.33% 33.33%; /* 需要给 #container 设置一个高度 */ } 如上，重复书写比较麻烦，可以使用 repeat() 函数"><meta itemprop="datePublished" content="2023-09-17T22:09:38+08:00" />
 <meta itemprop="dateModified" content="2023-09-17T22:09:38+08:00" />
-<meta itemprop="wordCount" content="1155">
+<meta itemprop="wordCount" content="1149">
 <meta itemprop="keywords" content="" />
   
   <meta name="twitter:card" content="summary"/>
@@ -296,7 +296,7 @@
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p><strong>auto 关键字：</strong></p>
 <p>auto 关键字表示由浏览器自己决定长度。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-css" data-lang="css"><span style="display:flex;"><span><span style="color:#f92672">grid-template-columns</span><span style="color:#f92672">:</span> <span style="color:#f92672">100px</span> <span style="color:#f92672">auto</span> <span style="color:#f92672">100px</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>grid-template-columns: 100px auto 100px;
 </span></span></code></pre></div><img src="/img/53/04.png" />
 <p><strong>网格线名称：</strong></p>
 <p><code>grid-template-columns</code> 属性和 <code>grid-template-rows</code> 属性里面，还可以使用方括号，指定每一根网格线的名字，方便以后的引用。</p>
@@ -371,7 +371,7 @@
 <p>划分网格以后，容器的子元素会按照顺序，自动放置在每一个网格。默认的放置顺序是&quot;先行后列&quot;，即先填满第一行，再开始放入第二行，即下图数字的顺序。</p>
 <img src="/img/53/05.png" />
 <p>这个顺序由<code>grid-auto-flow</code>属性决定，默认值是<code>row</code>，即&quot;先行后列&quot;。也可以将它设成<code>column</code>，变成&quot;先列后行&quot;。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-css" data-lang="css"><span style="display:flex;"><span><span style="color:#f92672">grid-auto-flow</span><span style="color:#f92672">:</span> <span style="color:#f92672">column</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>grid-auto-flow: column;
 </span></span></code></pre></div><img src="/img/53/06.png" />
 <p><code>grid-auto-flow</code> 属性除了设置成 <code>row</code> 和 <code>column</code>，还可以设成 <code>row dense</code> 和 <code>column dense</code>。这两个值主要用于，某些项目指定位置以后，剩下的项目怎么自动放置。</p>
 <p>下面的例子让 1 号项目和 2 号项目各占据两个单元格，然后在默认的 <code>grid-auto-flow: row</code> 情况下，会产生下面这样的布局</p>
@@ -420,7 +420,7 @@
 </span></span></code></pre></div><img src="/img/53/07.png" />
 <p>上图中，1 号项目后面的位置是空的，这是因为 3 号项目默认跟着 2 号项目，所以会排在 2 号项目后面。</p>
 <p>现在修改设置，设为<code>row dense</code>，表示&quot;先行后列&quot;，并且尽可能紧密填满，尽量不出现空格。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-css" data-lang="css"><span style="display:flex;"><span><span style="color:#f92672">grid-auto-flow</span><span style="color:#f92672">:</span> <span style="color:#f92672">row</span> <span style="color:#f92672">dense</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>grid-auto-flow: row dense;
 </span></span></code></pre></div><img src="/img/53/08.png" />
 <p>上图会先填满第一行，再填满第二行，所以 3 号项目就会紧跟在 1 号项目的后面。8 号项目和 9 号项目就会排到第四行。</p>
 <p>如果将设置改为 <code>column dense</code>，表示&quot;先列后行&quot;，并且尽量填满空格。</p>
@@ -457,8 +457,8 @@
 </span></span><span style="display:flex;"><span><span style="color:#75715e">/* ... */</span>
 </span></span></code></pre></div><img src="/img/53/11.png" />
 <p><code>place-items</code> 属性是 <code>align-items</code> 属性和 <code>justify-items</code> 属性的合并简写形式。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-css" data-lang="css"><span style="display:flex;"><span><span style="color:#f92672">place-items</span><span style="color:#f92672">:</span> <span style="color:#f92672">&lt;</span><span style="color:#f92672">align-items</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">&lt;</span><span style="color:#f92672">justify-items</span><span style="color:#f92672">&gt;;</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-css" data-lang="css"><span style="display:flex;"><span><span style="color:#f92672">place-items</span><span style="color:#f92672">:</span> <span style="color:#f92672">start</span> <span style="color:#f92672">end</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>place-items: &lt;align-items&gt; &lt;justify-items&gt;;
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>place-items: start end;
 </span></span></code></pre></div><p>如果省略第二个值，则浏览器认为与第一个值相等。</p>
 <h3 id="justify-content-属性-align-content-属性-place-content-属性">justify-content 属性， align-content 属性， place-content 属性</h3>
 <p><code>justify-content</code> 属性是整个内容区域在容器里面的水平位置（左中右），<code>align-content</code> 属性是整个内容区域的垂直位置（上中下）。</p>
@@ -499,8 +499,8 @@
 </ul>
 <img src="/img/53/18.png" />
 <p><code>place-content</code> 属性是 <code>align-content</code> 属性和 <code>justify-content</code> 属性的合并简写形式。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-css" data-lang="css"><span style="display:flex;"><span><span style="color:#f92672">place-content</span><span style="color:#f92672">:</span> <span style="color:#f92672">&lt;</span><span style="color:#f92672">align-content</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">&lt;</span><span style="color:#f92672">justify-content</span><span style="color:#f92672">&gt;;</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-css" data-lang="css"><span style="display:flex;"><span><span style="color:#f92672">place-content</span><span style="color:#f92672">:</span> <span style="color:#f92672">space-around</span> <span style="color:#f92672">space-evenly</span><span style="color:#f92672">;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>place-content: &lt;align-content&gt; &lt;justify-content&gt;;
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>place-content: space-around space-evenly;
 </span></span></code></pre></div><h3 id="grid-auto-columns-属性-grid-auto-rows-属性">grid-auto-columns 属性， grid-auto-rows 属性</h3>
 <p>有时候，一些项目的指定位置，在现有网格的外部。比如网格只有 3 列，但是某一个项目指定在第 5 行。这时，浏览器会自动生成多余的网格，以便放置项目。</p>
 <p><code>grid-auto-columns</code> 属性和 <code>grid-auto-rows</code> 属性用来设置，浏览器自动创建的多余网格的列宽和行高。它们的写法与 <code>grid-template-columns</code> 和 <code>grid-template-rows</code> 完全相同。如果不指定这两个属性，浏览器完全根据单元格内容的大小，决定新增网格的列宽和行高。</p>
@@ -632,10 +632,8 @@
 </span></span></code></pre></div><p>使用这四个属性，如果产生了项目的重叠，则使用<code>z-index</code>属性指定项目的重叠顺序。</p>
 <h3 id="grid-column-属性-grid-row-属性">grid-column 属性， grid-row 属性</h3>
 <p><code>grid-column</code> 属性是 <code>grid-column-start</code> 和 <code>grid-column-end</code> 的合并简写形式，<code>grid-row</code> 属性是 <code>grid-row-start</code> 属性和 <code>grid-row-end</code> 的合并简写形式。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-css" data-lang="css"><span style="display:flex;"><span>.<span style="color:#a6e22e">item</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">grid-column</span>: <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">start</span><span style="color:#f92672">-</span>line<span style="color:#f92672">&gt;</span> <span style="color:#f92672">/</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">end</span><span style="color:#f92672">-</span>line<span style="color:#f92672">&gt;</span>;
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">grid-row</span>: <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">start</span><span style="color:#f92672">-</span>line<span style="color:#f92672">&gt;</span> <span style="color:#f92672">/</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">end</span><span style="color:#f92672">-</span>line<span style="color:#f92672">&gt;</span>;
-</span></span><span style="display:flex;"><span>}
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>grid-column: &lt;start-line&gt; / &lt;end-line&gt;;
+</span></span><span style="display:flex;"><span>grid-row: &lt;start-line&gt; / &lt;end-line&gt;;
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-css" data-lang="css"><span style="display:flex;"><span>.<span style="color:#a6e22e">item-1</span> {
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">grid-column</span>: <span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">3</span>;
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">grid-row</span>: <span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>;
@@ -691,9 +689,7 @@
 </span></span></code></pre></div><img src="/img/53/24.png" />
 <p>上面代码中，1 号项目位于<code>e</code>区域，效果如下图。</p>
 <p><code>grid-area</code>属性还可用作 <code>grid-row-start</code>、<code>grid-column-start</code>、<code>grid-row-end</code>、<code>grid-column-end</code> 的合并简写形式，直接指定项目的位置。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-css" data-lang="css"><span style="display:flex;"><span>.<span style="color:#a6e22e">item</span> {
-</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">grid-area</span>: <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">row</span><span style="color:#f92672">-</span><span style="color:#66d9ef">start</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">/</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">column</span><span style="color:#f92672">-</span><span style="color:#66d9ef">start</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">/</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">row</span><span style="color:#f92672">-</span><span style="color:#66d9ef">end</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">/</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">column</span><span style="color:#f92672">-</span><span style="color:#66d9ef">end</span><span style="color:#f92672">&gt;</span>;
-</span></span><span style="display:flex;"><span>}
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>grid-area: &lt;row-start&gt; / &lt;column-start&gt; / &lt;row-end&gt; / &lt;column-end&gt;;
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-css" data-lang="css"><span style="display:flex;"><span>.<span style="color:#a6e22e">item-1</span> {
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">grid-area</span>: <span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">3</span>;
 </span></span><span style="display:flex;"><span>}
