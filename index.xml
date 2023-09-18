@@ -7,7 +7,34 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Sun, 17 Sep 2023 22:09:38 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 18 Sep 2023 14:09:13 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>scrollIntoview</title>
+      <link>/posts/54/</link>
+      <pubDate>Mon, 18 Sep 2023 14:09:13 +0800</pubDate>
+      
+      <guid>/posts/54/</guid>
+      <description>大家可能都知道 dom 有一个 scrollIntoview方法，它可以轻易的让目标元素滚动到可视范围之内，而无需手动计算偏移量
+dom.scrollIntoview(); 效果如下
+这样跳转比较生硬，因此可能还知道有这样一个参数
+dom.scrollIntoview({ behavior: &amp;#34;smooth&amp;#34;, }); 这样就能平滑滚动了
+仅仅只有这些了吗？其实还可以做很多
+一、重新学习 scrollIntoView 语法 打开 MDN 官网
+https://developer.mozilla.org/zh-CN/docs/Web/API/Element/scrollIntoView
+语法其实很简单，有三种形式
+scrollIntoView(); scrollIntoView(alignToTop); scrollIntoView(scrollIntoViewOptions); 首先看第 2 种形式，就一个参数 「alignToTop」 布尔值
+默认为 true，表示是否沿着元素的顶端和滚动容器对齐，否则和元素底端对齐。
+dom.scrollIntoView(); dom.scrollIntoView(true); 这两种效果是相同的
+如果设置为false，那么会居底部对齐
+dom.scrollIntoview(false); 效果如下
+注意，「alignToTop」 自适应于 「垂直方向」 上的滚动，如果是 「水平方向」 的滚动，设置了没有任何区别。
+// 水平滚动下，以下 3 种写法作用相同 dom.scrollIntoview(); dom.scrollIntoview(true); dom.scrollIntoview(false); 效果都是一样的，如下
+🤔 为啥是居右侧对齐呢？同时为了满足两个方向上的灵活控制，出现了 「scrollIntoViewOptions」 参数。
+这个稍微复杂一点，接着往下看。
+二、详解 scrollIntoViewOptions 参数 「scrollIntoViewOptions」 是一个对象，包含 3 个属性，分别是 「behavior」、「block」、「inline」
+dom.scrollIntoView({ behavior: &amp;#34;smooth&amp;#34;, block: &amp;#34;end&amp;#34;, inline: &amp;#34;nearest&amp;#34;, }); 首先来看 「behavior」 属性，这是用来定义滚动动画的，有 3 个关键词</description>
+    </item>
+    
     <item>
       <title>CSS网格布局</title>
       <link>/posts/53/</link>
