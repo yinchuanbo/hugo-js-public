@@ -55,7 +55,14 @@
 JavaScript 处理、计算样式、页面布局、绘制、合成
 JavaScript 处理： 前端项目中经常会需要响应用户操作，通过 JavaScript 对数据集进行计算、操作 DOM 元素，并展示动画等视觉效果。当然对于动画的实现，除了 JavaScript，也可以考虑使用如 CSS Animations、Transitions 等技术。
 计算样式： 在解析 CSS 文件后，浏览器需要根据各种选择器去匹配所要应用 CSS 规则的元素节点，然后计算出每个元素的最终样式。
-【&hellip;】" />
+页面布局： 指的是浏览器在计算完样式后，会对每个元素尺寸大小和屏幕位置进行计算。由于每个元素都可能会受到其他元素的影响，并且位于 DOM 树形结构中子节点元素，总会受到父级元素修改的影响，所以页面布局的计算会经常发生。
+绘制： 在页面布局确定后，接下来便可以绘制元素的可视内容，包括颜色、边框、阴影及文本和图像。
+合成： 通常由于页面中的不同部分可能被绘制在多个图层上，所以在绘制完成后需要将多个图层按照正确的顺序在屏幕上合成，以便最终正确地渲染出来。
+这个过程中的每一个阶段都可能产生卡顿，
+这里值得说明的是： 并非对于每一帧画面都会经历这五个部分，比如仅修改与绘制相关的属性（文字颜色、背景图片或边缘阴影等），而未对页面布局产生任何修改，那么在计算样式阶段完成后，便会跳过页面布局直接执行绘制。
+如果所更改的属性既不影响页面布局又不需要重新绘制，便可直接跳过合成阶段执行。
+具体修改哪些属性会触发页面布局、绘制或合成阶段的执行，这与浏览器的内核类型存在一定关系，
+不同内核浏览器的 CSS 属性触发差异 属性 Blink Gecko Webkit z-index 绘制/合成 绘制/合成 布局/绘制/合成 transform 合成 合成 布局/绘制/合成 opacity 绘制/合成 合成 布局/绘制/合成 min-width 布局/绘制/合成 布局/合成 布局/绘制/合成 color 布局/绘制 布局/绘制 布局/绘制/合成 background 布局/绘制 布局/绘制 布局/绘制/合成 border-radius 布局/绘制 布局/绘制 布局/绘制/合成 border-style 布局/绘制/合成 布局/绘制/合成 布局/绘制/合成 border-width 布局/绘制/合成 布局/绘制/合成 布局/绘制/合成 JavaScript 执行优化 实现动画效果 利用 JavaScript 通常最容易想到的方式是 setTimeout 或 setInterval 来实现，" />
   <meta name="author" content="" />
   
 
@@ -119,7 +126,14 @@ JavaScript 处理： 前端项目中经常会需要响应用户操作，通过 J
 JavaScript 处理、计算样式、页面布局、绘制、合成
 JavaScript 处理： 前端项目中经常会需要响应用户操作，通过 JavaScript 对数据集进行计算、操作 DOM 元素，并展示动画等视觉效果。当然对于动画的实现，除了 JavaScript，也可以考虑使用如 CSS Animations、Transitions 等技术。
 计算样式： 在解析 CSS 文件后，浏览器需要根据各种选择器去匹配所要应用 CSS 规则的元素节点，然后计算出每个元素的最终样式。
-【&hellip;】" />
+页面布局： 指的是浏览器在计算完样式后，会对每个元素尺寸大小和屏幕位置进行计算。由于每个元素都可能会受到其他元素的影响，并且位于 DOM 树形结构中子节点元素，总会受到父级元素修改的影响，所以页面布局的计算会经常发生。
+绘制： 在页面布局确定后，接下来便可以绘制元素的可视内容，包括颜色、边框、阴影及文本和图像。
+合成： 通常由于页面中的不同部分可能被绘制在多个图层上，所以在绘制完成后需要将多个图层按照正确的顺序在屏幕上合成，以便最终正确地渲染出来。
+这个过程中的每一个阶段都可能产生卡顿，
+这里值得说明的是： 并非对于每一帧画面都会经历这五个部分，比如仅修改与绘制相关的属性（文字颜色、背景图片或边缘阴影等），而未对页面布局产生任何修改，那么在计算样式阶段完成后，便会跳过页面布局直接执行绘制。
+如果所更改的属性既不影响页面布局又不需要重新绘制，便可直接跳过合成阶段执行。
+具体修改哪些属性会触发页面布局、绘制或合成阶段的执行，这与浏览器的内核类型存在一定关系，
+不同内核浏览器的 CSS 属性触发差异 属性 Blink Gecko Webkit z-index 绘制/合成 绘制/合成 布局/绘制/合成 transform 合成 合成 布局/绘制/合成 opacity 绘制/合成 合成 布局/绘制/合成 min-width 布局/绘制/合成 布局/合成 布局/绘制/合成 color 布局/绘制 布局/绘制 布局/绘制/合成 background 布局/绘制 布局/绘制 布局/绘制/合成 border-radius 布局/绘制 布局/绘制 布局/绘制/合成 border-style 布局/绘制/合成 布局/绘制/合成 布局/绘制/合成 border-width 布局/绘制/合成 布局/绘制/合成 布局/绘制/合成 JavaScript 执行优化 实现动画效果 利用 JavaScript 通常最容易想到的方式是 setTimeout 或 setInterval 来实现，" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/posts/50/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-09-17T16:42:43+08:00" />
@@ -137,9 +151,16 @@ JavaScript 处理： 前端项目中经常会需要响应用户操作，通过 J
 JavaScript 处理、计算样式、页面布局、绘制、合成
 JavaScript 处理： 前端项目中经常会需要响应用户操作，通过 JavaScript 对数据集进行计算、操作 DOM 元素，并展示动画等视觉效果。当然对于动画的实现，除了 JavaScript，也可以考虑使用如 CSS Animations、Transitions 等技术。
 计算样式： 在解析 CSS 文件后，浏览器需要根据各种选择器去匹配所要应用 CSS 规则的元素节点，然后计算出每个元素的最终样式。
-【&hellip;】"><meta itemprop="datePublished" content="2023-09-17T16:42:43+08:00" />
+页面布局： 指的是浏览器在计算完样式后，会对每个元素尺寸大小和屏幕位置进行计算。由于每个元素都可能会受到其他元素的影响，并且位于 DOM 树形结构中子节点元素，总会受到父级元素修改的影响，所以页面布局的计算会经常发生。
+绘制： 在页面布局确定后，接下来便可以绘制元素的可视内容，包括颜色、边框、阴影及文本和图像。
+合成： 通常由于页面中的不同部分可能被绘制在多个图层上，所以在绘制完成后需要将多个图层按照正确的顺序在屏幕上合成，以便最终正确地渲染出来。
+这个过程中的每一个阶段都可能产生卡顿，
+这里值得说明的是： 并非对于每一帧画面都会经历这五个部分，比如仅修改与绘制相关的属性（文字颜色、背景图片或边缘阴影等），而未对页面布局产生任何修改，那么在计算样式阶段完成后，便会跳过页面布局直接执行绘制。
+如果所更改的属性既不影响页面布局又不需要重新绘制，便可直接跳过合成阶段执行。
+具体修改哪些属性会触发页面布局、绘制或合成阶段的执行，这与浏览器的内核类型存在一定关系，
+不同内核浏览器的 CSS 属性触发差异 属性 Blink Gecko Webkit z-index 绘制/合成 绘制/合成 布局/绘制/合成 transform 合成 合成 布局/绘制/合成 opacity 绘制/合成 合成 布局/绘制/合成 min-width 布局/绘制/合成 布局/合成 布局/绘制/合成 color 布局/绘制 布局/绘制 布局/绘制/合成 background 布局/绘制 布局/绘制 布局/绘制/合成 border-radius 布局/绘制 布局/绘制 布局/绘制/合成 border-style 布局/绘制/合成 布局/绘制/合成 布局/绘制/合成 border-width 布局/绘制/合成 布局/绘制/合成 布局/绘制/合成 JavaScript 执行优化 实现动画效果 利用 JavaScript 通常最容易想到的方式是 setTimeout 或 setInterval 来实现，"><meta itemprop="datePublished" content="2023-09-17T16:42:43+08:00" />
 <meta itemprop="dateModified" content="2023-09-17T16:42:43+08:00" />
-<meta itemprop="wordCount" content="39">
+<meta itemprop="wordCount" content="523">
 <meta itemprop="keywords" content="" />
   
   <meta name="twitter:card" content="summary"/>
@@ -154,7 +175,14 @@ JavaScript 处理： 前端项目中经常会需要响应用户操作，通过 J
 JavaScript 处理、计算样式、页面布局、绘制、合成
 JavaScript 处理： 前端项目中经常会需要响应用户操作，通过 JavaScript 对数据集进行计算、操作 DOM 元素，并展示动画等视觉效果。当然对于动画的实现，除了 JavaScript，也可以考虑使用如 CSS Animations、Transitions 等技术。
 计算样式： 在解析 CSS 文件后，浏览器需要根据各种选择器去匹配所要应用 CSS 规则的元素节点，然后计算出每个元素的最终样式。
-【&hellip;】"/>
+页面布局： 指的是浏览器在计算完样式后，会对每个元素尺寸大小和屏幕位置进行计算。由于每个元素都可能会受到其他元素的影响，并且位于 DOM 树形结构中子节点元素，总会受到父级元素修改的影响，所以页面布局的计算会经常发生。
+绘制： 在页面布局确定后，接下来便可以绘制元素的可视内容，包括颜色、边框、阴影及文本和图像。
+合成： 通常由于页面中的不同部分可能被绘制在多个图层上，所以在绘制完成后需要将多个图层按照正确的顺序在屏幕上合成，以便最终正确地渲染出来。
+这个过程中的每一个阶段都可能产生卡顿，
+这里值得说明的是： 并非对于每一帧画面都会经历这五个部分，比如仅修改与绘制相关的属性（文字颜色、背景图片或边缘阴影等），而未对页面布局产生任何修改，那么在计算样式阶段完成后，便会跳过页面布局直接执行绘制。
+如果所更改的属性既不影响页面布局又不需要重新绘制，便可直接跳过合成阶段执行。
+具体修改哪些属性会触发页面布局、绘制或合成阶段的执行，这与浏览器的内核类型存在一定关系，
+不同内核浏览器的 CSS 属性触发差异 属性 Blink Gecko Webkit z-index 绘制/合成 绘制/合成 布局/绘制/合成 transform 合成 合成 布局/绘制/合成 opacity 绘制/合成 合成 布局/绘制/合成 min-width 布局/绘制/合成 布局/合成 布局/绘制/合成 color 布局/绘制 布局/绘制 布局/绘制/合成 background 布局/绘制 布局/绘制 布局/绘制/合成 border-radius 布局/绘制 布局/绘制 布局/绘制/合成 border-style 布局/绘制/合成 布局/绘制/合成 布局/绘制/合成 border-width 布局/绘制/合成 布局/绘制/合成 布局/绘制/合成 JavaScript 执行优化 实现动画效果 利用 JavaScript 通常最容易想到的方式是 setTimeout 或 setInterval 来实现，"/>
 
   
   
@@ -273,7 +301,243 @@ JavaScript 处理： 前端项目中经常会需要响应用户操作，通过 J
 <p><strong>JavaScript 处理、计算样式、页面布局、绘制、合成</strong></p>
 <p><strong>JavaScript 处理：</strong> 前端项目中经常会需要响应用户操作，通过 JavaScript 对数据集进行计算、操作 DOM 元素，并展示动画等视觉效果。当然对于动画的实现，除了 JavaScript，也可以考虑使用如 CSS Animations、Transitions 等技术。</p>
 <p><strong>计算样式：</strong> 在解析 CSS 文件后，浏览器需要根据各种选择器去匹配所要应用 CSS 规则的元素节点，然后计算出每个元素的最终样式。</p>
-<p>【&hellip;】</p>
+<p><strong>页面布局：</strong> 指的是浏览器在计算完样式后，会对每个元素尺寸大小和屏幕位置进行计算。由于每个元素都可能会受到其他元素的影响，并且位于 DOM 树形结构中子节点元素，总会受到父级元素修改的影响，所以页面布局的计算会经常发生。</p>
+<p><strong>绘制：</strong> 在页面布局确定后，接下来便可以绘制元素的可视内容，包括颜色、边框、阴影及文本和图像。</p>
+<p><strong>合成：</strong> 通常由于页面中的不同部分可能被绘制在多个图层上，所以在绘制完成后需要将多个图层按照正确的顺序在屏幕上合成，以便最终正确地渲染出来。</p>
+<p><strong>这个过程中的每一个阶段都可能产生卡顿，</strong></p>
+<p><strong>这里值得说明的是：</strong> 并非对于每一帧画面都会经历这五个部分，比如仅修改与绘制相关的属性（文字颜色、背景图片或边缘阴影等），而未对页面布局产生任何修改，那么在计算样式阶段完成后，便会跳过页面布局直接执行绘制。</p>
+<p>如果所更改的属性既不影响页面布局又不需要重新绘制，便可直接跳过合成阶段执行。</p>
+<p>具体修改哪些属性会触发页面布局、绘制或合成阶段的执行，这与浏览器的内核类型存在一定关系，</p>
+<ul>
+<li>不同内核浏览器的 CSS 属性触发差异</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>Blink</th>
+<th>Gecko</th>
+<th>Webkit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>z-index</td>
+<td>绘制/合成</td>
+<td>绘制/合成</td>
+<td>布局/绘制/合成</td>
+</tr>
+<tr>
+<td>transform</td>
+<td>合成</td>
+<td>合成</td>
+<td>布局/绘制/合成</td>
+</tr>
+<tr>
+<td>opacity</td>
+<td>绘制/合成</td>
+<td>合成</td>
+<td>布局/绘制/合成</td>
+</tr>
+<tr>
+<td>min-width</td>
+<td>布局/绘制/合成</td>
+<td>布局/合成</td>
+<td>布局/绘制/合成</td>
+</tr>
+<tr>
+<td>color</td>
+<td>布局/绘制</td>
+<td>布局/绘制</td>
+<td>布局/绘制/合成</td>
+</tr>
+<tr>
+<td>background</td>
+<td>布局/绘制</td>
+<td>布局/绘制</td>
+<td>布局/绘制/合成</td>
+</tr>
+<tr>
+<td>border-radius</td>
+<td>布局/绘制</td>
+<td>布局/绘制</td>
+<td>布局/绘制/合成</td>
+</tr>
+<tr>
+<td>border-style</td>
+<td>布局/绘制/合成</td>
+<td>布局/绘制/合成</td>
+<td>布局/绘制/合成</td>
+</tr>
+<tr>
+<td>border-width</td>
+<td>布局/绘制/合成</td>
+<td>布局/绘制/合成</td>
+<td>布局/绘制/合成</td>
+</tr>
+</tbody>
+</table>
+<h3 id="javascript-执行优化">JavaScript 执行优化</h3>
+<ol>
+<li>实现动画效果</li>
+</ol>
+<p>利用 JavaScript 通常最容易想到的方式是 setTimeout 或 setInterval 来实现，</p>
+<p>实践经验告诉我们，使用定时器实现的动画会在一些低端机器上出现抖动或者卡顿的现象，这主要是因为浏览器无法确定定时器的回调函数的执行时机。</p>
+<p>以 setInterval 为例，其创建后回调任务被放入异步队列，只有当主线程上的任务执行完成后，浏览器才会去检查队列中是否有等待需要执行的任务，如果有就从任务队列中取出执行，这样会使任务的实际执行时机比所设定的延迟时间要晚一些。</p>
+<p>其次屏幕分辨率和尺寸也会影响刷新频率，不同设备的屏幕绘制频率可能会有所不同，</p>
+<p>setInterval 只能设置某个固定的时间间隔，这个间隔时间不一定与所有屏幕的刷新时间同步，那么导致动画随机丢帧也在所难免。</p>
+<p>为了避免这种动画实现方案中因丢帧而造成的卡顿现象，推荐使用 <code>requestAnimationFrame</code> 方法。</p>
+<p>与 setInterval 相比，其最大的优势是将回调函数的执行时机交由系统来决定，即如果屏幕刷新的频率是 60Hz，则它的回调函数大约会每 16.7ms 执行一次，如果屏幕的刷新屏幕是 75Hz，则它的回调函数大约会每 13.3ms 执行一次，<strong>也就是说 requestAnimationFrame 方法的执行时机与系统刷新频率同步。</strong></p>
+<p><code>这样能保证回调函数在屏幕的每次刷新间隔中只被执行一次，从而避免因随机丢帧而造成的卡顿现象</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">let</span> <span style="color:#a6e22e">start</span>;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 定义目标动画元素
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">element</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;MyAnimate&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">element</span>.<span style="color:#a6e22e">style</span>.<span style="color:#a6e22e">position</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;absolute&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">updateScreen</span>(<span style="color:#a6e22e">timestamp</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#a6e22e">start</span>) <span style="color:#a6e22e">start</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">timestamp</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 根据时间戳计算每次动画位移
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">progress</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">timestamp</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">start</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">element</span>.<span style="color:#a6e22e">style</span>.<span style="color:#a6e22e">left</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">`</span><span style="color:#e6db74">${</span>Math.<span style="color:#a6e22e">min</span>(<span style="color:#a6e22e">progress</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">200</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">px`</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">progress</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">2000</span>) <span style="color:#a6e22e">requestAnimationFrame</span>(<span style="color:#a6e22e">updateScreen</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 启动动画回调函数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">requestAnimationFrame</span>(<span style="color:#a6e22e">updateScreen</span>);
+</span></span></code></pre></div><p>当创建 setInterval 定时器后，除非显示地调用 clearInterval 去销毁该定时器，不然在后台的动画任务会被不断执行。而 requestAnimationFrame 方法则完全不同，当页面未被激活，屏幕刷新任务会被系统暂停。只有当页面激活，动画任务才会被激活并从上次暂停的地方继续执行，所以能有效地节省 CPU 开销。</p>
+<ol start="2">
+<li>恰当使用 web Worker</li>
+</ol>
+<p>web Worker 为 JavaScript 提供多线程环境，主线程通过创建 Worker 子线程，可以分担一部分自己的任务执行压力。</p>
+<p>在 Worker 子线程上执行的任务不会干扰主线程，待其上的任务执行完成后，会把结果返回给主线程。</p>
+<p><strong>注意：</strong> Worker 子线程一旦创建成功就会始终执行，不会被主线程上的事件打断，所以 Worker 子线程一旦使用完毕就应该及时关闭。</p>
+<p><strong>Worker 的使用注意：</strong></p>
+<ul>
+<li>
+<p>DOM 限制：Worker 无法读取主线程所处理网页的 DOM 对象，也无法使用 document、window、parent 等对象，只能访问 navigator 和 location 对象。</p>
+</li>
+<li>
+<p>文件读取限制：Worker 子线程无法访问本地文件系统，这就要求所加载的脚本来自网络。</p>
+</li>
+<li>
+<p>通信限制：主线程和 Worker 子线程不在同一个上下文内，所以它们无法直接进行通信，只能通过消息来完成。</p>
+</li>
+<li>
+<p>脚本执行限制：虽然 Worker 可以用过 <code>XMLHTTPRequest</code> 对象发起 ajax 请求，但不能使用 <code>alert()</code> 方法和 <code>confirm()</code> 方法在页面弹出提示。</p>
+</li>
+<li>
+<p>同源限制：Worker 子线程执行的代码文件需要与主线程的代码文件同源。</p>
+</li>
+</ul>
+<blockquote>
+<p>在主线程中通过调用 worker.terminate() 方法来关闭，在子线程中通过调用自身全局对象中的 self.close() 方法来关闭。</p>
+</blockquote>
+<blockquote>
+<p>考虑到关于 Worker 使用中的限制，并非所有任务都适合用这种方式处理来提升性能，如果所要处理的任务必须要放在主线程上完成，则应当考虑将一个大型任务拆分为多个微任务，每个微任务处理的耗时最好在几毫秒之内，能在每帧的 requestAnimationFrame 更新方法中处理完成。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// 将一个大型任务拆分为多个微任务
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">taskList</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">splitTask</span>(<span style="color:#a6e22e">BigTask</span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 微任务处理逻辑，参数为每次起始时间戳
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">processTaskList</span>(<span style="color:#a6e22e">taskStartTime</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">taskFinishTime</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">do</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 从任务堆栈中推出要处理的下一个任务
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">nextTask</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">taskList</span>.<span style="color:#a6e22e">pop</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 处理下一个任务
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">processTask</span>(<span style="color:#a6e22e">nextTask</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 获取任务执行完成的时间，如果时间够 3毫秒就继续执行
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">taskFinishTime</span> <span style="color:#f92672">=</span> window.<span style="color:#a6e22e">performance</span>.<span style="color:#a6e22e">now</span>();
+</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">while</span> (<span style="color:#a6e22e">taskFinishTime</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">taskStartTime</span> <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">3</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 如果任务堆栈不为空则继续
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">taskList</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">requestAnimationFrame</span>(<span style="color:#a6e22e">processTaskList</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">requestAnimationFrame</span>(<span style="color:#a6e22e">processTaskList</span>);
+</span></span></code></pre></div><p><strong>应用实例：</strong></p>
+<ul>
+<li>假设你有一个需要处理的大型数据集，例如一个包含 10000 个元素的数组。你希望在处理过程中保持用户界面的响应性，而不让它在处理期间冻结。你可以使用这段代码将大任务拆分为多个微任务，并在每个微任务中处理一部分数据。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// 假设你有一个包含10000个元素的数组
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">bigData</span> <span style="color:#f92672">=</span> Array.<span style="color:#a6e22e">from</span>({ <span style="color:#a6e22e">length</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">10000</span> }, (<span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">index</span>) =&gt; <span style="color:#a6e22e">index</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 将大任务拆分为每次处理100个元素的微任务
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">taskList</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">splitTask</span>(<span style="color:#a6e22e">bigData</span>, <span style="color:#ae81ff">100</span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 微任务处理逻辑，参数为每次起始索引
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">processTaskList</span>(<span style="color:#a6e22e">startIndex</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">endIndex</span> <span style="color:#f92672">=</span> Math.<span style="color:#a6e22e">min</span>(<span style="color:#a6e22e">startIndex</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">100</span>, <span style="color:#a6e22e">bigData</span>.<span style="color:#a6e22e">length</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">startIndex</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">endIndex</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 处理当前索引对应的元素
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">processElement</span>(<span style="color:#a6e22e">bigData</span>[<span style="color:#a6e22e">i</span>]);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 如果还有剩余的元素需要处理，则继续下一个微任务
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">endIndex</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">bigData</span>.<span style="color:#a6e22e">length</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">requestAnimationFrame</span>(() =&gt; <span style="color:#a6e22e">processTaskList</span>(<span style="color:#a6e22e">endIndex</span>));
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 开始处理任务
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">requestAnimationFrame</span>(() =&gt; <span style="color:#a6e22e">processTaskList</span>(<span style="color:#ae81ff">0</span>));
+</span></span></code></pre></div><ol start="3">
+<li>事件节流和事件防抖</li>
+</ol>
+<p>页面交互过程中，势必有一些操作会被频繁触发，如滚动页面触发 scroll 事件，页面缩放触发的 resize 事件，鼠标涉及的 mousemove、mouseover 等事件，以及键盘涉及的 keyup、keydown 等事件。</p>
+<p>频繁触发这些事件会导致相应回调函数的大量计算，进而引发页面的抖动甚至卡顿。</p>
+<p><strong>事件节流</strong>，简单来说就是某段时间内，无论触发多少次回调，在计时结束后都只响应第一次的触发。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">throttle</span>(<span style="color:#a6e22e">time</span>, <span style="color:#a6e22e">callback</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 上次触发回调的时间
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">last</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 事件节流操作的闭包返回
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">return</span> (<span style="color:#a6e22e">params</span>) =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 记录本次回调触发的时间
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">now</span> <span style="color:#f92672">=</span> Number(<span style="color:#66d9ef">new</span> Date());
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 判断事件触发时间是否超出节流时间间隔
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">now</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">last</span> <span style="color:#f92672">&gt;=</span> <span style="color:#a6e22e">time</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// 如果超出节流时间间隔，则触发相应回调函数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#a6e22e">callback</span>(<span style="color:#a6e22e">params</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  };
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">throttle_scroll</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">throttle</span>(<span style="color:#ae81ff">1000</span>, () =&gt; <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;页面滚动&#34;</span>));
+</span></span><span style="display:flex;"><span>document.<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#34;scroll&#34;</span>, <span style="color:#a6e22e">throttle_scroll</span>);
+</span></span></code></pre></div><p><strong>事件防抖：</strong> 只是所响应的触发事件是最后一次事件。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">debounce</span>(<span style="color:#a6e22e">time</span>, <span style="color:#a6e22e">callback</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">timer</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> (<span style="color:#a6e22e">params</span>) =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">timer</span>) <span style="color:#a6e22e">clearTimeout</span>(<span style="color:#a6e22e">timer</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 设置新的定时器
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">timer</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">setTimeout</span>(() =&gt; <span style="color:#a6e22e">callback</span>(<span style="color:#a6e22e">params</span>), <span style="color:#a6e22e">time</span>);
+</span></span><span style="display:flex;"><span>  };
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">debounce_scroll</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">debounce</span>(<span style="color:#ae81ff">1000</span>, () =&gt; <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;页面滚动&#34;</span>));
+</span></span><span style="display:flex;"><span>document.<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#34;scroll&#34;</span>, <span style="color:#a6e22e">debounce_scroll</span>);
+</span></span></code></pre></div><p><strong>虽然通过上述事件防抖操作，可以有效的避免在规定时间内频繁的触发事件回调函数，但是如果用户操作过于频繁，每次都在防抖定时器结束之前就进行了下一次操作，那么同一事件所要触发的回调函数将会被无限延迟。频繁延迟会让用户迟迟得不到响应，同样也会造成页面卡顿的使用体验。</strong></p>
+<p>所以我们需要为事件防抖设置一条延迟等待的时间底线，在延迟时间内可以重新生成定时器，但只要延迟时间到了就必须对用户之前的操作做出响应，</p>
+<p>结合事件节流的思想提供了一个升级版的实现方式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">throttle_pro</span>(<span style="color:#a6e22e">time</span>, <span style="color:#a6e22e">callback</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">last</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">timer</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> (<span style="color:#a6e22e">params</span>) =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 记录本次回调触发的时间
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">now</span> <span style="color:#f92672">=</span> Number(<span style="color:#66d9ef">new</span> Date());
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 判断事件触发时间是否超出节流时间间隔
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">now</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">last</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">time</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// 若在所设置的延迟时间间隔内，则重新设置防抖定时器
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#a6e22e">clearTimeout</span>(<span style="color:#a6e22e">timer</span>);
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">timer</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">setTimeout</span>(() =&gt; {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">last</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">now</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">callback</span>(<span style="color:#a6e22e">params</span>);
+</span></span><span style="display:flex;"><span>      }, <span style="color:#a6e22e">time</span>);
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// 若超出延迟时间，则直接响应用户操作，不用等待
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#a6e22e">last</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">now</span>;
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">callback</span>(<span style="color:#a6e22e">params</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  };
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 结合节流与防抖优化后的事件回调函数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">scroll_pro</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">throttle_pro</span>(<span style="color:#ae81ff">1000</span>, () =&gt; <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#34;页面滚动&#34;</span>));
+</span></span><span style="display:flex;"><span>document.<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#34;scroll&#34;</span>, <span style="color:#a6e22e">scroll_pro</span>);
+</span></span></code></pre></div><ol start="4">
+<li>恰当的 JavaScript 优化</li>
+</ol>
+<p>[&hellip;]</p>
 </section>
 
   
