@@ -160,7 +160,7 @@ JavaScript 处理： 前端项目中经常会需要响应用户操作，通过 J
 具体修改哪些属性会触发页面布局、绘制或合成阶段的执行，这与浏览器的内核类型存在一定关系，
 不同内核浏览器的 CSS 属性触发差异 属性 Blink Gecko Webkit z-index 绘制/合成 绘制/合成 布局/绘制/合成 transform 合成 合成 布局/绘制/合成 opacity 绘制/合成 合成 布局/绘制/合成 min-width 布局/绘制/合成 布局/合成 布局/绘制/合成 color 布局/绘制 布局/绘制 布局/绘制/合成 background 布局/绘制 布局/绘制 布局/绘制/合成 border-radius 布局/绘制 布局/绘制 布局/绘制/合成 border-style 布局/绘制/合成 布局/绘制/合成 布局/绘制/合成 border-width 布局/绘制/合成 布局/绘制/合成 布局/绘制/合成 JavaScript 执行优化 实现动画效果 利用 JavaScript 通常最容易想到的方式是 setTimeout 或 setInterval 来实现，"><meta itemprop="datePublished" content="2023-09-17T16:42:43+08:00" />
 <meta itemprop="dateModified" content="2023-09-17T16:42:43+08:00" />
-<meta itemprop="wordCount" content="859">
+<meta itemprop="wordCount" content="994">
 <meta itemprop="keywords" content="" />
   
   <meta name="twitter:card" content="summary"/>
@@ -693,7 +693,92 @@ JavaScript 处理： 前端项目中经常会需要响应用户操作，通过 J
 </span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 样式的写操作应放在读取操作后进行
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#a6e22e">div</span>.<span style="color:#a6e22e">classList</span>.<span style="color:#a6e22e">add</span>(<span style="color:#e6db74">&#34;my-div&#34;</span>);
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>[未完待续&hellip;]</p>
+</span></span></code></pre></div><ol start="3">
+<li>通过工具对绘制进行评估</li>
+</ol>
+<p><strong>监控渲染信息</strong></p>
+<p>打开 Chrome 的开发者工具，可以在 “设置” -&gt; “更多工具”，发现许多很实用的性能辅助小工具，比如监控渲染的 <strong>Rendering</strong> 工具，</p>
+<img src="/img/50/01.png" />
+<p>首先选择 <strong>Paint flashing</strong>，当开启此功能，操作页面发生重新渲染，Chrome 会让重绘区域进行一次绿色闪动。</p>
+<p>这样就可以通过观察闪动区域来判断是否存在多余的绘制开销，比如若仅单击 Select 组件弹出下拉列表框，却发现整个屏幕区域都发生了闪动，或与此操作组件的无关区域发生了闪动，这都意味着有多余的绘制开销存在，需要进一步研究与优化。</p>
+<p><strong>Layer borders</strong> 功能开启，会在页面上显示出绘制的图层边界。</p>
+<p><strong>FPS meter</strong> 功能开启后，会在当前页面的左上角显示实时的帧率情况，GPU 功能是否开启及 GPU 内存占用情况。</p>
+<p><strong>查看图层详情</strong></p>
+<p>当我们通过 Rendering 工具发现存在有多余的图层渲染时，由于闪动是难以捕捉的，所以还需要工具辅助显示出各个图层的详细信息，这便需要用到 Layers 图层工具，</p>
+<img src="/img/50/02.png" />
+<p>通过这些信息能够帮助我们快速定位到所要查看的图层信息，当我们使用 Rendering 工具监控页面交互过程中有不恰当的图层存在时，便可使用 Layers 工具进行问题复现：首先打开目标页面，然后从左侧图层列表中依次查找出问题图层，接着分析引起该图层发生重绘的原因。</p>
+<ol start="4">
+<li>降低绘制复杂度</li>
+</ol>
+<p>绘制是在页面布局确定后，将元素的可视内容绘制到屏幕上的过程。</p>
+<p>虽然不同的 CSS 绘制样式看不出性能上明显的不同，但并非所有属性都有同样的性能开销。</p>
+<p>例如，绘制带有阴影效果的元素内容，就会比仅绘制单边边框所耗费的时间要长，因为涉及模糊就意味着更高的复杂度。</p>
+<p>CSS 属性如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-css" data-lang="css"><span style="display:flex;"><span><span style="color:#75715e">/* 绘制时间相对较短的边框颜色 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">border-color</span><span style="color:#f92672">:</span> <span style="color:#f92672">red</span><span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/* 绘制时间更长的阴影内容 */</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">box-shadow</span><span style="color:#f92672">:</span> <span style="color:#f92672">0</span> <span style="color:#f92672">8px</span> <span style="color:#f92672">rgba</span><span style="color:#f92672">(</span><span style="color:#f92672">255</span><span style="color:#f92672">,</span> <span style="color:#f92672">0</span><span style="color:#f92672">,</span> <span style="color:#f92672">0</span><span style="color:#f92672">,</span> <span style="color:#f92672">0</span>.<span style="color:#a6e22e">5</span><span style="color:#f92672">);</span>
+</span></span></code></pre></div><p>使用之前介绍过的渲染性能分析工具，发现了有明显性能瓶颈需要优化时，需要确认是否存在高复杂度的绘制内容，可以使用其他实现方式来替换以降低绘制的复杂度。</p>
+<p>比如位图的阴影效果，可以考虑使用 PS 等图像处理工具直接为图片本身添加阴影效果，而非全交给 CSS 样式去处理。</p>
+<p>此外，还要注意对绘制区域的控制，对不需要重新绘制的区域应尽量避免重绘。</p>
+<p>例如，页面的顶部有一个固定的 header 标头，若它与页面其他位置的某个区域位于同一图层，当后者发生重绘时，就有可能触发包括固定标头区域在内的整个页面的重绘，对于固定不变不期望发生重绘的区域，建议可以将其提升为独立的绘图层，避免被其他区域的重绘连带着触发重绘。</p>
+<h3 id="合成处理">合成处理</h3>
+<p>合成处理时将已绘制的不同图层放在一起，最终在屏幕上渲染出来的过程。</p>
+<p>在这个环节中，有两个因素可能会影响页面性能：一个是所需合成的图层数量，另一个是实现动画的相关属性。</p>
+<p><strong>新增图层</strong></p>
+<p>可通过将固定区域和动画区域拆分到不同图层上进行绘制，来达到绘制区域最小化的目的。</p>
+<p>如何新建图层？</p>
+<p>最佳方式便是使用 CSS 属性 will-change 来创建：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-css" data-lang="css"><span style="display:flex;"><span>.<span style="color:#a6e22e">new-layer</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">will-change</span>: <span style="color:#66d9ef">transform</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>该方法在 Chrome、Firefox、Opera 上均有效，而对 Safari 等不支持 will-change 属性的浏览器，则可以使用 3D 变换来强制创建：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-css" data-lang="css"><span style="display:flex;"><span>.<span style="color:#a6e22e">new-layer</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">transform</span>: translate(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>虽然创建新的图层能够在一定程度上减少绘制区域，但也应当注意不能创建太多的图层，因为每个图层都需要浏览器为其分配内存及管理开销。</p>
+<p>如果已经将一个元素提升到所创建的新图层上，也最好使用 Chrome 开发者工具中的 Layers 对图层详情进行评估，确定是否真的带来了性能提升，切忌在未经分析评估前就盲目地进行图层创建。</p>
+<p><strong>仅与合成相关的动画属性</strong></p>
+<p>如果一个动画的实现不经过页面布局或重绘环节，仅在合成处理阶段就能完成，则将会节省大量的性能开销。</p>
+<p>目前能够符合这一要求的动画属性只有两个：opacity、transform。</p>
+<ul>
+<li>仅合成阶段可实现的动画效果</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>动画效果</th>
+<th>实现方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>位移</td>
+<td><code>transform: translate(npx, npx)</code></td>
+</tr>
+<tr>
+<td>缩放</td>
+<td><code>transform: scale(n)</code></td>
+</tr>
+<tr>
+<td>旋转</td>
+<td><code>transform: rotate(ndeg)</code></td>
+</tr>
+<tr>
+<td>倾斜</td>
+<td><code>transform: skew(ndeg)</code></td>
+</tr>
+<tr>
+<td>矩阵变换</td>
+<td><code>transform: matrix(3d)</code></td>
+</tr>
+<tr>
+<td>透明度</td>
+<td><code>opacity: 0~1</code></td>
+</tr>
+</tbody>
+</table>
+<p>在使用 opacity 和 transform 实现相应的动画效果时，需要注意动画元素应当位于独立的绘图层上，以避免影响其他绘制区域，这就需要将动画元素提升至一个新的绘图层。</p>
 </section>
 
   

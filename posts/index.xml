@@ -7,7 +7,64 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Mon, 18 Sep 2023 14:09:13 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 24 Sep 2023 16:12:01 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>盒阴影</title>
+      <link>/posts/58/</link>
+      <pubDate>Sun, 24 Sep 2023 16:12:01 +0800</pubDate>
+      
+      <guid>/posts/58/</guid>
+      <description>示例
+.profile-photo { box-shadow: 0.25em 0.25em 0.5em rgba(0, 0, 0, 0.3); } 扩展半径：调整阴影大小 比如，可以在模糊半径的值后面再加一个值，表示 扩展半径，用于扩展阴影的大小。这个值默认为 0，即阴影与所属元素一样大，增大这个值，阴影相应增大，负值导致阴影缩小。
+div:nth-child(1) { box-shadow: 1em 1em 0.5em 0.5em rgba(0, 0, 0, 0.3); } div:nth-child(2) { box-shadow: 1em 1em 0.5em -0.5em rgba(0, 0, 0, 0.3); } 内阴影 inset inset 关键字，这个关键字可以为元素应用内阴影，即把元素当成投影表面，可以创造一种背景被 “镂空” 的效果，比如，可以给个人页面顶部背景应用内阴影，制造一种在页面上凹陷或者被头像及其他页面内容并遮住的感觉。
+多阴影 也可以给一个元素应用多个阴影，以逗号分隔多组值。
+div:nth-child(1) { box-shadow: 0 0 0 10px #1c318d, 0 0 0 20px #3955c7, 0 0 0 30px #546dc7, 0 0 0 40px #7284d8; } </description>
+    </item>
+    
+    <item>
+      <title>背景图片语法</title>
+      <link>/posts/57/</link>
+      <pubDate>Sun, 24 Sep 2023 11:03:50 +0800</pubDate>
+      
+      <guid>/posts/57/</guid>
+      <description>背景位置 下面尝试把背景图片定位到元素中心，背景图片的位置由 background-position 属性控制。
+为了更大的屏幕上也能覆盖整个元素，我们特意使用大图，在较小的屏幕上图片上端的边缘会被切掉，但至少图片是居中的。
+.profile-box { width: 100%; height: 600px; background-color: #8da9cf; background-image: url(&amp;#34;img/big-cat.jpg&amp;#34;); background-repeat: no-repeat; background-position: 50% 50%; } background-position 属性既可以使用关键字，也可以使用像素、em 或百分比。
+最简单情况下，可以只给两个值：
+一个表示相对于左侧的偏移量 一个表示相对于顶部的偏移量 如果使用像素或 em 单位来设置背景图片的位置，那么图片的左上角会相对于元素的左上角定位，也就是会偏移指定的数值。比如，要是在水平和垂直方向都指定了 20 像素，那么图片左上角就会偏移到距离元素左边和上边均为 20 像素的点。如果设置背景图片的位置时使用了百分比，那么情况就不一样了，百分比值不像绝对数值那样会定位背景图片的左上角，而是定位图片中对应的点。如果水平和垂直方向都设置为 20%，那么你定位的实际上是距图片左边和上边各 20% 的点，而这个点会与距离父元素左边和上边各 20% 的点重合。
+使用关键字来对齐背景图片，在 x 轴上用 left、center、right，在 y 轴上用 top、center、bottom。
+顺序一般是先 x 轴后 y 轴。
+但在一个关键字后加上一个长度值的情况下，规则本身将无效，比如如下声明：
+.box { background-position: 50% left; /* 不要这样写 */ } 背景裁剪与原点 默认情况下，背景图片是绘制到元素边框以内的，如果把背景图片定位到边框下方，同时边框也设置为半透明的话，那么图片边缘就会出现班半透明的边框，
+使用 background-clip 属性可以改变这个行为，这个属性默认值为 background-clip: border-box，将其改为 padding-box 就可以把图片裁剪到内边距盒子以内。而 content-box 值则会把图片位于内边距及其之外的部分裁剪。</description>
+    </item>
+    
+    <item>
+      <title>使用 JavaScript 提升排版品质</title>
+      <link>/posts/56/</link>
+      <pubDate>Sun, 24 Sep 2023 10:10:22 +0800</pubDate>
+      
+      <guid>/posts/56/</guid>
+      <description>推荐几个 JavaScript 库 jQuery 插件 lettering.js: 对文本进行分割和样式化处理。它通过将文本包裹在不同的HTML元素中，使得对文本的各个部分进行独立的样式控制成为可能。通过Lettering.js，你可以对文字进行字母级别的样式化，比如单独控制每个字母的颜色、大小、动画效果等。这个插件在设计和排版方面提供了更多的自由度和创意性。
+jQuery 插件 fitText.js: 自动调整文本的大小以适应其容器的大小。它可以根据容器的宽度动态地调整文本的字体大小，使文本始终填满容器，并保持良好的可读性。这个插件在响应式设计和移动设备优化方面非常有用，可以确保文本在不同屏幕尺寸和设备上都能够自适应地显示。
+BitText.js: 可以让一行文本放大到尽可能与包含它的容器一般大。
+Widowtamer.js: 通过在一段的末尾每隔一定的距离就在单词间插入非换行空白符，来防止出现意外的孤行。</description>
+    </item>
+    
+    <item>
+      <title>使用 JavaScript 加载字体</title>
+      <link>/posts/55/</link>
+      <pubDate>Fri, 22 Sep 2023 21:15:51 +0800</pubDate>
+      
+      <guid>/posts/55/</guid>
+      <description>有一个库，叫 Web Font Loader，这个库体积很小，在浏览器支持的情况下，他会使用原生的字体加载 API；在浏览器不支持的情况下，它会模拟相同的功能。这个库内置了一些 web 字体服务，比如 Typekit、Google Fonts 和 Fonts.com，同时也支持自托管的字体。
+可以下载这个库，也可以从 Google 的服务器上加载它，地址是：https://developers.google.com/speed/libraries/#web-font-loader
+Web Font Loader 提供了很多有用的功能，其中最有用的就是确保字体加载的跨浏览器一致性。
+Web Font Loader 为以下事件提供了接入点：
+loading: 开始加载字体 active: 字体加载完成 inactive: 字体加载失败 需要把 @font-face 块中的所有代码转移到一个独立的样式表 alegreya-vollkorn.css，同时把它放在一个子文件夹 css 中，然后，需要在页面头部添加一个小段 Js 代码：
+&amp;lt;script&amp;gt; WebFontConfig = { custom: { families: [&amp;#34;AlegreyaSans:n4,i4&amp;#34;, &amp;#34;Vollkorn:n6,n5,n7&amp;#34;], urls: [&amp;#34;css/alegreya-vollkorn.css&amp;#34;], }, }; (function () { var wf = document.createElement(&amp;#34;script&amp;#34;); wf.src = &amp;#34;https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js&amp;#34;; wf.type = &amp;#34;text/javascript&amp;#34;; wf.async = &amp;#34;true&amp;#34;; var s = document.getElementsByTagName(&amp;#34;script&amp;#34;)[0]; s.</description>
+    </item>
+    
     <item>
       <title>scrollIntoview</title>
       <link>/posts/54/</link>
