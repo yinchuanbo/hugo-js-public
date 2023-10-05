@@ -7,7 +7,81 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Sun, 24 Sep 2023 16:12:01 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 04 Oct 2023 22:07:00 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CSS功能特性</title>
+      <link>/posts/63/</link>
+      <pubDate>Wed, 04 Oct 2023 22:07:00 +0800</pubDate>
+      
+      <guid>/posts/63/</guid>
+      <description>01 clamp() clamp() 函数的作用是把一个值限制在一个上限和下限之间，当这个值超过最小值和最大值的范围时，在最小值和最大值之间选择一个值使用。它接收三个参数：最小值、首选值、最大值。
+.box { width: clamp(220px, 55%, 300px); } h1 { letter-spacing: 2px; font-size: clamp(1.8rem, 2.5vw, 2.8rem); } 02 smooth 平滑滚动。
+&amp;lt;div class=&amp;#34;top&amp;#34;&amp;gt; &amp;lt;a href=&amp;#34;#bottom&amp;#34;&amp;gt;TOP&amp;lt;/a&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;bottom&amp;#34; id=&amp;#34;bottom&amp;#34;&amp;gt;BOTTOM&amp;lt;/div&amp;gt; html { scroll-behavior: smooth; } .top, .bottom { height: 100vh; } 03 scroll snap 允许开发者在用户完成滚动后将视窗锁定在特定的元素或位置；设置了在有滚动容器的情形下吸附至吸附点的严格程度。
+语法：
+#不吸附 scroll-snap-type: none; #表示吸附轴的关键字 scroll-snap-type: x; scroll-snap-type: y; scroll-snap-type: block; scroll-snap-type: inline; scroll-snap-type: both; #表示吸附程度的可选关键字 #mandatory 或 proximity scroll-snap-type: x mandatory; scroll-snap-type: y proximity; scroll-snap-type: both mandatory; #全局值 scroll-snap-type: inherit; scroll-snap-type: initial; scroll-snap-type: revert; scroll-snap-type: revert-layer; scroll-snap-type: unset; &amp;lt;div class=&amp;#34;holster&amp;#34;&amp;gt; &amp;lt;div class=&amp;#34;container x mandatory-scroll-snapping&amp;#34; dir=&amp;#34;ltr&amp;#34;&amp;gt; &amp;lt;div&amp;gt;x 轴强制、从左往右&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;2&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;3&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;4&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;5&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;container x proximity-scroll-snapping&amp;#34; dir=&amp;#34;ltr&amp;#34;&amp;gt; &amp;lt;div&amp;gt;x 轴靠近、从左往右&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;2&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;3&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;4&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;5&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;container y mandatory-scroll-snapping&amp;#34; dir=&amp;#34;ltr&amp;#34;&amp;gt; &amp;lt;div&amp;gt;y 轴强制、从左往右&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;2&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;3&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;4&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;5&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;container y proximity-scroll-snapping&amp;#34; dir=&amp;#34;ltr&amp;#34;&amp;gt; &amp;lt;div&amp;gt;y 轴靠近、从左往右&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;2&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;3&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;4&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;5&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;container x mandatory-scroll-snapping&amp;#34; dir=&amp;#34;rtl&amp;#34;&amp;gt; &amp;lt;div&amp;gt;x 轴强制、从右往左&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;2&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;3&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;4&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;5&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;container x proximity-scroll-snapping&amp;#34; dir=&amp;#34;rtl&amp;#34;&amp;gt; &amp;lt;div&amp;gt;x 轴靠近、从右往左&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;2&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;3&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;4&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;5&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;container y mandatory-scroll-snapping&amp;#34; dir=&amp;#34;rtl&amp;#34;&amp;gt; &amp;lt;div&amp;gt;y 轴强制、从右往左&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;2&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;3&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;4&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;5&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;container y proximity-scroll-snapping&amp;#34; dir=&amp;#34;rtl&amp;#34;&amp;gt; &amp;lt;div&amp;gt;y 轴靠近、从右往左&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;2&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;3&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;4&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;5&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; /* 滚动吸附 */ .</description>
+    </item>
+    
+    <item>
+      <title>Flexbox</title>
+      <link>/posts/62/</link>
+      <pubDate>Mon, 25 Sep 2023 20:56:41 +0800</pubDate>
+      
+      <guid>/posts/62/</guid>
+      <description>理解 Flex 方法：主轴和辅轴 Flexbox 可以针对页面中某一个区域，控制其中元素的顺序、大小、分布及对齐。这个区域内的盒子可以沿两个方向排列：默认水平排列，也可以垂直排列。这个排列方向称为主轴。
+与主轴垂直的方向称为辅轴，主轴方向的这个尺寸为主尺寸。
+ul { display: flex; } 如果把 flex-direction: row-reverse，那么选项就会集中在右侧，而且变成从右向左排列。
+ul { display: flex; flex-direction: row-reverse; } 如果不指定大小，Flex 容器内的项目会自动收缩，也就说，一行中的各项会收缩到各自的最小宽度，或者一列中的各项会收缩到各自的最小的高度，以恰好可以容纳自身内容为限。
+对齐与空间 Flexbox 对子项的排列有多种方式，沿主轴的排列叫 排布，沿辅轴的排列则叫 对齐。
+用于指定排布方式的属性是 justify-content，其默认值为 flex-start，表示左对齐。如果改成 flex-end，所有项就都会挤到右侧。另外 3 个关键字的效果：center、space-between、space-around。
+创造一项位于一侧，其余项位于另一侧的布局
+li:nth-child(1) { margin-right: auto; } 辅轴对齐 ul { display: flex; min-height: 100px; } li { width: 100px; } 子项自动就和父元素等高了，实际上，控制辅轴对齐的属性 align-items，其默认值是 stretch（拉伸）。也就是说子项默认拉伸，以填满可用空间。其他的关键字还有 flex-start、center、flex-end，
+最后，还可以使用 baseline 关键字，将子项中文本的基线与容器基线对齐，如果子项大小不一，而你希望它们在辅轴上虽然位置不同，但本身对齐，那么就可以采用这种方法。
+将第二项字体设大一点
+ul { display: flex; min-height: 100px; align-items: baseline; } li { min-width: 100px; height: 50px; background-color: red; list-style: none; text-align: center; line-height: 50px; } li:nth-child(2) { background-color: aqua; font-size: 30px; height: 70px; } 对齐个别项 还可以在辅轴上指定个别项的对齐方式。比如，让 “HOME” 项对齐到左上角，让其他项对齐到右下角。</description>
+    </item>
+    
+    <item>
+      <title>使用表格显示属性实现布局</title>
+      <link>/posts/61/</link>
+      <pubDate>Mon, 25 Sep 2023 20:53:22 +0800</pubDate>
+      
+      <guid>/posts/61/</guid>
+      <description> HTML &amp;lt;ul&amp;gt; &amp;lt;li&amp;gt;HOME&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;SPACESHIPS&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;PLANETS&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;STRAS&amp;lt;/li&amp;gt; &amp;lt;/ul&amp;gt; CSS ul { width: 100%; display: table; table-layout: fixed; } li { width: 25%; height: 50px; background-color: red; list-style: none; display: table-cell; vertical-align: middle; text-align: center; } li:nth-child(2) { background-color: aqua; } li:nth-child(3) { background-color: aquamarine; } li:nth-child(4) { background-color: blue; } </description>
+    </item>
+    
+    <item>
+      <title>为嵌入图片和元素添加样式</title>
+      <link>/posts/60/</link>
+      <pubDate>Sun, 24 Sep 2023 16:37:08 +0800</pubDate>
+      
+      <guid>/posts/60/</guid>
+      <description>可伸缩的图片模式 img { width: auto; max-width: 100%; height: auto; } 控制对象大小的新方法 img { width: 200px; height: 200px; } img.contain { object-fit: contain; } img.cover { object-fit: cover; } img.none { object-fit: none; } img.scaledown { object-fit: scale-down; } object-fit 属性的默认值为 fill，意味着图片内容会在必要时拉伸以填满容器，因此可能破坏宽高比，
+cover 和 contain 则与 background-size 属性中对应的关键字作用相同。none 会采用图片固有大小，不管容器有多大。最后，scale-down 会自动从 none 和 contain 中选一个，哪个结果尺寸小就用哪一个。最终图片会居中，但可以通过 object-position 重新设置，与定位背景图片时类似。
+可保持宽高比的容器 对于具有固定宽高比的位图，把高度设置为 auto，只改变宽度，或者把宽度设置为 auto，只改变高度，都是可以的，
+但如果是没有固定宽高比的元素呢？如果使其在可伸缩的同时保持固定宽高比？
+iframe 和 object 元素就属于这种情形，某些情况下的 SVG 内容也是。常见的例子是在页面中通过 iframe 嵌入一段视频：
+&amp;lt;iframe width=&amp;#34;420&amp;#34; height=&amp;#34;315&amp;#34; src=&amp;#34;xxx&amp;#34; frameborder=&amp;#34;0&amp;#34; allowfullscreen &amp;gt;&amp;lt;/iframe&amp;gt; 如果像这样给他设置一个可伸缩的宽度：</description>
+    </item>
+    
+    <item>
+      <title>渐变</title>
+      <link>/posts/59/</link>
+      <pubDate>Sun, 24 Sep 2023 16:28:08 +0800</pubDate>
+      
+      <guid>/posts/59/</guid>
+      <description>在背景上使用渐变色是一种常见设计，能够页面增加一种纵深感。
+.profile-box { background-image: linear-gradient(to bottom, #cfdeee 0%, #8da9cf 100%); } 线性渐变 前面的例子使用了 linear-gradient 函数，沿一条假象线，从元素顶部到底部绘制了一个渐变背景。
+这条线的角度由这个函数的第一对关键字（to bottom）表示，其后是由逗号分隔的色标，色标用于在渐变线上标出颜色发生变化的位置，在这个例子中，位置 0% 处的颜色是浅蓝灰色，而位置 100% 也就是元素底部的颜色是深蓝色。
+渐变线的方向可以使用关键字 to，再加上一个表示边（top、right、bottom、left）或表示角（top left、top right、bottom left、bottom right）的关键字来指定，后者指定的是对角线。渐变线总是始于元素的一个边或一个角，然后穿过元素的中心区域。
+此外，还可以使用 deg 单位指定渐变线的角度，0deg 表示垂直向上，增大角度值就意味着沿顺时针方向旋转，直到 360 度，跟 HSL 色轮类似。此时，度数表示绘制渐变的方向，因此起点就在我们指定的相反方向。
+比如下面就是一个 45 度角的渐变：
+.profile-box { background-image: linear-gradient(45deg, #cfdeee, #8da9cf); } 此时，渐变线的起点并不是背景图片区域的边，而是自动延长线的角，
+m 默认值及色标位置
+线性渐变的默认方向是自上而下（to bottom），而 0% 和 100% 分别表示第一个和最后一个色标的位置，因此前面第一个例子实际上可以简写如下：
+.profile-box { background-image: linear-gradient(#cfdeee, #8da9cf); } 新增色标若未指定位置，则在 0% ~ 100% 范围内取值。比如，有 5 个未指定位置的色标，那么它们的位置分别为 0%、25%、50%、75%、100%。
+.profile-box { background-image: linear-gradient(red, green, blue, yellow, purple); } 处理百分比，还可以使用绝对值指定色标位置，比如：</description>
+    </item>
+    
     <item>
       <title>盒阴影</title>
       <link>/posts/58/</link>
