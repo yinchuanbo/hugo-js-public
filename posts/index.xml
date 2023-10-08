@@ -7,7 +7,114 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Wed, 04 Oct 2023 22:07:00 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 07 Oct 2023 22:03:53 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>错误处理技巧</title>
+      <link>/posts/69/</link>
+      <pubDate>Sat, 07 Oct 2023 22:03:53 +0800</pubDate>
+      
+      <guid>/posts/69/</guid>
+      <description>拦截错误 try/catch 语句 一般来说，JavaScript 中会以 try/catch 来拦截错误，且常常会搭配 finally 来减少重复的程序代码：
+try { // 可能出错的程序代码 } catch (error) { // 处理错误 } finally { // 此处必定执行 } 需要注意的是，在 finally 内使用 return 或 throw 会覆写掉 try/catch 内原本的操作：
+function foo() { try { throw new Error(&amp;#34;Hello World!&amp;#34;); } catch (error) { throw error; } finally { return &amp;#34;finally&amp;#34;; } } console.log(foo()); // finally function bar() { try { return &amp;#34;try&amp;#34;; } finally { throw new Error(&amp;#34;finally&amp;#34;); } } console.</description>
+    </item>
+    
+    <item>
+      <title>浏览器渲染性能分析技巧</title>
+      <link>/posts/68/</link>
+      <pubDate>Fri, 06 Oct 2023 12:07:42 +0800</pubDate>
+      
+      <guid>/posts/68/</guid>
+      <description>渲染流程 许多原因都会触发浏览器进行渲染，例如用户交互、CSS 动画、以 JavaScript 修改 CSS 等，不过整体上可以将渲染分为 5 个阶段：
+JavaScript -&amp;gt; Style Calculation -&amp;gt; Layout -&amp;gt; Paint -&amp;gt; Composite
+JavaScript：修改 DOM、CSS 或使用 Animation API 等
+Style Calculation(样式计算)：计算每个元素的最终样式
+Layout(布局)：计算元素的位置，大小
+Paint(绘制)：根据各个元素的样式和位置等信息制作出多个图层(Layers)
+Composite(合成)：将图层合并后产生最终的画面
+经过渲染后会产生一个画面，当浏览器将其显示于页面上时，用户才会看到新的一帧画面。
+一般来说，浏览器的画面刷新频率为每秒 60 次（60FPS），因此浏览器需要再约 16ms 的时间内完成渲染才不会造成画面延迟。
+JavaScript 阶段 制作动画除了用 JavaScript 直接修改 DOM、CSS 外，还有 Animation API、CSS Animations、CSS Transitions 等方式，但归根结底都是改变元素的样式，因此性能问题大致上可以归类为花过长时间或在错误的时机修改样式。
+requestAnimationFrame 作为渲染的第一阶段，最适合修改样式的时机在每一帧的开头，如此才能保留最多时间给后续的阶段。
+用 JavaScript 制作动画时，使用 requestAnimationFrame 能确保 JavaScript 在每一帧的开头执行，
+function updateScreen(time) { // 修改 DOM、CSS } requestAnimationFrame(updateScreen); 若使用 setTimeout、setInterval 来修改样式，则无法确保 JavaScript 在开头出执行，容易造成浏览器无法在 16ms 内完成渲染，或是在 16ms 内执行两次而造成性能损失，</description>
+    </item>
+    
+    <item>
+      <title>页面加载流程分析技巧</title>
+      <link>/posts/67/</link>
+      <pubDate>Thu, 05 Oct 2023 22:51:11 +0800</pubDate>
+      
+      <guid>/posts/67/</guid>
+      <description>分析 浏览器在开始渲染网页内容前，大致会经过以下步骤：
+载入 HTML
+开始解析 HTML
+载入或解析其他文件
+继续解析 HTML，重复以上步骤
+所有文件解析完毕，开始渲染页面
+例如：
+&amp;lt;html&amp;gt; &amp;lt;head&amp;gt; &amp;lt;link rel=&amp;#34;stylesheel&amp;#34; href=&amp;#34;style.css&amp;#34; /&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;div&amp;gt;Hello, World!&amp;lt;/div&amp;gt; &amp;lt;script src=&amp;#34;index.js&amp;#34;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt; 浏览器在下载完 HTML 后，将会开始解析，步骤如下：
+解析 HTML 至第 3 行时，开始加载 style.css，解析完成前不进行渲染。
+解析 HTML 至第 7 行时，开始加载 index.js，程序代码执行完毕前，暂停解析 HTML。
+若先下载完 style.css，则开始解析 style.css；若先下载完 index.js，则需等待 style.css 解析完毕后，才能执行程序代码。
+解析 HTML 完成，开始渲染页面。
+可以注意到在解析 HTML 的过程中，可能由于某些原因被 “阻塞” 而延后了渲染页面的时机，因此造成了阻塞的原因即为分析的重点。
+阻塞 解析 HTML 的过程中，会有许多需要加载的文件，例如 JavaScript、CSS、图片等，其中某些文件可能会造成阻塞，让浏览器无法开始渲染。阻塞分为 “阻塞渲染” 和 “阻塞解析” 两种。
+阻塞渲染 浏览器需要 HTML 和 CSS 才能绘制出完整的页面，若解析完 HTML 马上显示页面，等到解析完 CSS 又显示另一版页面，用户就会看到屏幕一闪而过，几乎无法阅读其中的文字，接着再变为加入 CSS 的正常页面，这种现象被称为 Flash of Unstyled Content(FOUC)。</description>
+    </item>
+    
+    <item>
+      <title>内存占用量</title>
+      <link>/posts/66/</link>
+      <pubDate>Thu, 05 Oct 2023 22:02:52 +0800</pubDate>
+      
+      <guid>/posts/66/</guid>
+      <description>“网页性能” 除了受到 JavaScript 执行和浏览器绘制页面的时间影响之外，还与内存的占用量有关系，且内存的占用量造成的性能问题通常对用户的影响非常明显。
+网页性能随着使用时间拉长变得越来越差就是典型的例子，其原因是 JavaScript 使用垃圾回收机制来管理内存，但是垃圾回收时在主线程上进行的，会占用其他任务的时间，当内存占用量过多时，会让垃圾回收的执行效率上升，进而影响网页性能。
+垃圾回收 “垃圾回收” 可以简单理解为每次新建对象、DOM 时，浏览器都会分配内存空间去存储这些对象，然而，当执行垃圾回收时，只要没有任何方式可以存取到某个对象，该对象所占用的内存就会被释放。
+范例如下：
+let a = {}; // 分配内存来存储 A 对象 let b = {}; // 分配内存来存储 B 对象 let c = a; a = undefined; b = undefined; 此时由于已经没有任何方式可以存取 B 对象，浏览器执行垃圾回收时，该对象占用的内存空间会被释放，而 a 虽然被修改为 undefined，A 对象还是能够通过 c 来存取的，因此无法释放。
+常见原因 内存占用量问题通常是因为程序代码的写法而造成浏览器无法释放内存，随着时间内存的使用量不断累计最终影响性能，这也被称为 内存泄漏。
+全局变量 全局变量在任何时候都能存取，因为会让该内存空间永远无法释放，除了尽可能减少全局变量外，还需要注意使用到的情况，不过在严格模式下基本可以避免这个问题。
+function foo() { this.bar = &amp;#34;bar&amp;#34;; baz = &amp;#34;baz&amp;#34;; // 意外存取到外部或全部变量 } foo(); 未清除的 Callback 先不考虑 Callback 函数本身用到的内存，如果 Callback 内存取了外部的变量，在清除 Callback 之前，该变量用到的内存空间都无法释放，下面举例：</description>
+    </item>
+    
+    <item>
+      <title>API技巧</title>
+      <link>/posts/65/</link>
+      <pubDate>Thu, 05 Oct 2023 15:08:57 +0800</pubDate>
+      
+      <guid>/posts/65/</guid>
+      <description>分析问题的原因 减少干扰 当请求出现非预期的运行方式，或者想要重现用户遇到的问题时，首先要去除开发环境和浏览器的干扰，才能有效缩小问题的范围，最简单的方式是启动无痕模式。另一种常用的方式为清除浏览器缓存并重新刷新页面。
+步骤如下：
+清除网站数据 在浏览网站的过程中，可能会存储 Cookie、缓存等，它们都可能影响后续网站浏览和请求的运行方式，使用 Clear site data 可以清除该网站所有的数据，
+如上，可以同时清除 LocalStorage 和 Cookie。
+网站之外的因素 除了网站本身外，请求的运行方式还可能受到以下因素影响：
+存储在服务器、CDN 的缓存：需要了解服务器端的设置，或通过 CDN 提供的 API 来清除非预期的缓存。
+设备连接状态：DNS 查询和建立连接的过程也占了请求时间的一环，浏览器会使用 DNS 解析缓存等机制来加速连接流程。
+HSTS: 使用 HSTS 机制的网站会将所有 HTTP 请求自动转为 HTTPS。
+清除 Chrome 现有的连接和 DNS 解析缓存的步骤如下：
+(1) 在网址输入：chrome://net-internals/#sockets
+(2) 单击 Flush socket pools 来关闭现有的连接
+(3) 从左侧列表切换到 DNS，单击 Clear host cache 来清除 DNS 解析缓存。
+清除 HSTS 机制步骤如下：
+(1) 在网址输入：chrome://net-internals/#hsts
+(2) 在最下方的 Delete domain security policies 中输入网站的 Domain
+(3) 单击 Delete 按钮</description>
+    </item>
+    
+    <item>
+      <title>元素检查技巧</title>
+      <link>/posts/64/</link>
+      <pubDate>Thu, 05 Oct 2023 14:32:57 +0800</pubDate>
+      
+      <guid>/posts/64/</guid>
+      <description>状态锁定 在 Elements 页面中找到目标元素，右击该元素，展开 Force state 选项，选择想要锁定的状态即可，
+节点隐藏 在 Elements 面板中右击选择元素，选择 Hide element 隐藏覆盖节点，随后就可以顺利 Debug 目标元素
+移动和删除节点 在 Elements 面板中，可以直接通鼠标拖拽改变节点的位置，使用键盘则可以通过 ctrl + c、ctrl + x、ctrl + v 组合键来复制、剪切、粘贴节点，也可以用过 delete 和 ctrl + z 组合键来删除和复原。
+==$0 检查元素时，元素右方会显示提示信息 ==$0，此时打开 Console 面板输入 $0，会返回该节点，可以直接使用 JavaScript 与节点互动。</description>
+    </item>
+    
     <item>
       <title>CSS功能特性</title>
       <link>/posts/63/</link>
