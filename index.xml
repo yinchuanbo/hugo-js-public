@@ -7,7 +7,39 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Sat, 07 Oct 2023 22:03:53 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 09 Oct 2023 22:23:03 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Console API</title>
+      <link>/posts/71/</link>
+      <pubDate>Mon, 09 Oct 2023 22:23:03 +0800</pubDate>
+      
+      <guid>/posts/71/</guid>
+      <description>1. console.assert Level：Error 与 console.log 的作用相似，差别在于当第一个参数是 false 时才会打印出信息。
+[false, null, undefined, 0, -0, 0n, NaN, &amp;#34;&amp;#34;] # false 值 举例，检查 user 对象的 name 属性是否为字符串，可能会编写以下程序代码：
+const user = { name: null, }; if (typeof name === &amp;#34;string&amp;#34;) { console.log(&amp;#34;invalid name&amp;#34;, user); } 这种情况可以使用 console.assert 省去 if 条件判断语句，不但编写的程序代码可以更少，而且在语义上也更清晰，条件不符就抛出错误
+console.assert(typeof user.name === &amp;#34;string&amp;#34;, &amp;#34;invalid name&amp;#34;, user); 2. console.count Level：Info console.count 的默认参数为 default，可以作为计数器，累计特定标签出现的次数。
+for (let i = 0; i &amp;lt; 5; i++) { const number = Math.</description>
+    </item>
+    
+    <item>
+      <title>Console信息</title>
+      <link>/posts/70/</link>
+      <pubDate>Mon, 09 Oct 2023 21:58:42 +0800</pubDate>
+      
+      <guid>/posts/70/</guid>
+      <description>信息级别 Console 信息共分为以下 4 个级别：
+Verbose
+Info
+Warning
+Error
+例如，console.log 打印出的信息就属于 Info 级别，通过不同的 Console API 能够产生不用级别的信息。
+Verbose 基本 API：console.debug 默认情况下，Console 面板不会显示 Verbose 信息，若要查看，则需要展开上方的 All levels 菜单，勾选 Verbose。
+Info 基本 API：console.log、console.info 这两种 Console API 是等价的，执行时会打印出信息，并显示程序代码文件的文件名。
+Warning 基本 API：console.warn 常用于软件包和共享函数，适用于警示 “可能” 出错的情况或功能弃用提示，
+Warning 级别的信息会带有 Call stack，单击左侧的图片来展开 Call stack 信息。
+Error 基本 API：console.error Error 和 Warning 级别的信息都能够展开 Call stack 信息。</description>
+    </item>
+    
     <item>
       <title>错误处理技巧</title>
       <link>/posts/69/</link>
