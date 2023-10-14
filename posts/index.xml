@@ -7,7 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Tue, 10 Oct 2023 20:11:05 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 14 Oct 2023 10:35:33 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>URI的编码与反编码</title>
+      <link>/posts/73/</link>
+      <pubDate>Sat, 14 Oct 2023 10:35:33 +0800</pubDate>
+      
+      <guid>/posts/73/</guid>
+      <description>有一些字符是具有特殊含义的，我们想 “转义” 这些字符，就可以去调用函数 encodeURI() 或 encodeURIComponent()。
+encodeURI() 会返回一个可用的 URL
+encodeURIComponent() 则会认为我们所传递的仅仅是 URL 的一部分
+var url = &amp;#39;http://www.packtpub.com/scr ipt.php?q=this and that&amp;#39;; encodeURI(url); // &amp;#39;http://www.packtpub.com/scr%20ipt.php?q=this%20and%20that&amp;#39; var url = &amp;#39;http://www.packtpub.com/scr ipt.php?q=this and that&amp;#39;; encodeURIComponent(url); // &amp;#39;http%3A%2F%2Fwww.packtpub.com%2Fscr%20ipt.php%3Fq%3Dthis%20and%20that&amp;#39; encodeURI() 和 encodeURIComponent() 分别都有各自对应的反编码函数：decodeURI() 和 decodeURIComponent()。
+[注] 还有相似的编码函数和反编码函数：escape() 和 unescape();</description>
+    </item>
+    
     <item>
       <title>Console Utilities API</title>
       <link>/posts/72/</link>
