@@ -7,7 +7,57 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Sat, 14 Oct 2023 10:35:33 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 18 Oct 2023 23:16:19 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>表达式预算</title>
+      <link>/posts/76/</link>
+      <pubDate>Wed, 18 Oct 2023 23:16:19 +0800</pubDate>
+      
+      <guid>/posts/76/</guid>
+      <description>字符串运算 var s = &amp;#34;abc&amp;#34;; s[1]; // b // 尝试修改 s[1] = &amp;#34;x&amp;#34;; console.log(s); // abc, 字符串并没有被修改 字符串又被添加了 Symbol.iterator 属性，它可以作为可迭代对象处理，
+console.log([...&amp;#34;string&amp;#34;]); // [&amp;#39;s&amp;#39;, &amp;#39;t&amp;#39;, &amp;#39;r&amp;#39;, &amp;#39;i&amp;#39;, &amp;#39;n&amp;#39;, &amp;#39;g&amp;#39;] function* foo() { yield* &amp;#34;string&amp;#34;; } foo().next(); // { &amp;#34;value&amp;#34;: &amp;#34;s&amp;#34;,&amp;#34;done&amp;#34;: false } [&amp;hellip;.]</description>
+    </item>
+    
+    <item>
+      <title>转义符</title>
+      <link>/posts/75/</link>
+      <pubDate>Wed, 18 Oct 2023 22:39:43 +0800</pubDate>
+      
+      <guid>/posts/75/</guid>
+      <description>JavaScript 中的字符串转义序列 转义符 含义 \b 退格符 \t 水平制表符 \v 垂直制表符 \n 换行符 \r 回车符 \f 换页符 \\ 反斜线字符 \&#39; 单引号 \&amp;quot; 双引号 除了定义转义符之外，当反斜线字符 \ 位于一行的末尾时，也用于表示 连续 的字符串声明，这在声明大段文本块时很有用。
+var aTextBlock = &amp;#34;\ sfhsvfghsdvfghsvdghfvgshdfvghsf\ \ 123456789\ \ +-*/&amp;#34;; console.log(aTextBlock); // &amp;#39;sfhsvfghsdvfghsvdghfvgshdfvghsf 123456789 +-*/&amp;#39; 比较容易被忽视的是：空字符串与其他字符串一样也可以用作对象成员名
+const obj = { &amp;#34; &amp;#34;: 100, }; console.log(obj[&amp;#34; &amp;#34;]); // 100 数值字面量 如果以 0x 或 0X 开始，则表明是一个 十六进制 数值。
+如果以 0o 或 0O 开始，则表明是一个 八进制 数值。
+如果以 0b 或 0B 开始，则表明是一个 二进制 数值。</description>
+    </item>
+    
+    <item>
+      <title>变量的数据类型</title>
+      <link>/posts/74/</link>
+      <pubDate>Wed, 18 Oct 2023 22:14:56 +0800</pubDate>
+      
+      <guid>/posts/74/</guid>
+      <description>7 种基本数据类型 undefined: 未定义
+number: 数值
+string: 字符串
+boolean: 布尔值
+symbol: 符号
+function: 函数
+object: 对象
+基本数据类型 任何一个变量或值的类型都可以使用 typeof 运算得到。
+var str = &amp;#34;this is a test.&amp;#34;; console.log(typeof str); // 类似函数的风格 console.log(typeof(str)); console.log(typeof &amp;#34;test!&amp;#34;); 值类型与引用类型 变量不但有数据类型之别，而且还有值类型与引用类型之别
+undefined: 值类型
+number: 值类型
+boolean: 值类型
+string: 值类型
+symbol: 值类型
+function: 引用类型
+object: 引用类型
+值与引用、值与值之间即使相等 (==)，也不一定严格相等 (===)
+两个引用之间如果相等 (==)，则一定严格相等 (===)
+var str = &amp;#34;abcde&amp;#34;; var obj = new String(str); function newToString() { return &amp;#34;hello, world!</description>
+    </item>
+    
     <item>
       <title>URI的编码与反编码</title>
       <link>/posts/73/</link>
