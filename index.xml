@@ -7,15 +7,48 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Wed, 18 Oct 2023 23:16:19 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 24 Oct 2023 11:00:58 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>表达式预算</title>
-      <link>/posts/76/</link>
-      <pubDate>Wed, 18 Oct 2023 23:16:19 +0800</pubDate>
+      <title>如何使用 Promise 去控制并发请求？</title>
+      <link>/posts/79/</link>
+      <pubDate>Tue, 24 Oct 2023 11:00:58 +0800</pubDate>
       
-      <guid>/posts/76/</guid>
-      <description>字符串运算 var s = &amp;#34;abc&amp;#34;; s[1]; // b // 尝试修改 s[1] = &amp;#34;x&amp;#34;; console.log(s); // abc, 字符串并没有被修改 字符串又被添加了 Symbol.iterator 属性，它可以作为可迭代对象处理，
-console.log([...&amp;#34;string&amp;#34;]); // [&amp;#39;s&amp;#39;, &amp;#39;t&amp;#39;, &amp;#39;r&amp;#39;, &amp;#39;i&amp;#39;, &amp;#39;n&amp;#39;, &amp;#39;g&amp;#39;] function* foo() { yield* &amp;#34;string&amp;#34;; } foo().next(); // { &amp;#34;value&amp;#34;: &amp;#34;s&amp;#34;,&amp;#34;done&amp;#34;: false } [&amp;hellip;.]</description>
+      <guid>/posts/79/</guid>
+      <description>明确概念 并发：并发是多个任务同时交替的执行（因为 cpu 执行指令的速度非常之快，它可以不必按顺序一段代码一段代码的执行，这样效率反而更加低下），这样看起来就是一起执行的，所以叫并行。
+并行：可以理解为多个物理 cpu 或者有分布式系统，是真正的&amp;rsquo;同时&amp;rsquo;执行
+并发控制：意思是多个并发的任务，一旦有任务完成，就立刻开启下一个任务
+切片控制：将并发任务切片的分配出来，比如 10 个任务，切成 2 个片，每片有 5 个任务，当前一片的任务执行完毕，再开始下一个片的任务，这样明显效率没并发控制那么高了微信搜索公众号：架构师指南，回复：架构师 领取资料
+实现 定义常量和函数 function sendRequest(requestList, limits, callback) { // 定义执行队列，表示所有待执行的任务 const promises = requestList.slice(); // 定义开始时能执行的并发数 const concurrentNum = Math.min(limits, requestList.length); let concurrentCount = 0; // 当前并发数 // 启动初次能执行的任务 const runTaskNeeded = () =&amp;gt; { let i = 0; while (i &amp;lt; concurrentNum) { runTask(); } }; // 取出任务并推送到执行器 const runTask = () =&amp;gt; {}; // 执行器，这里去执行任务 const runner = () =&amp;gt; {}; // 捞起下一个任务 const picker = () =&amp;gt; {}; // 开始执行！ runTaskNeeded(); } 实现对应的函数 function sendRequest(requestList, limits, callback) { const promises = requestList; // 取得请求list // 得到开始时，能执行的并发数 const concurrentNum = Math.</description>
+    </item>
+    
+    <item>
+      <title>比较运算</title>
+      <link>/posts/78/</link>
+      <pubDate>Thu, 19 Oct 2023 20:34:10 +0700</pubDate>
+      
+      <guid>/posts/78/</guid>
+      <description>等值检测 等值检测的目的是判断两个变量是否相等，
+名称 运算符 说明 相等 == 比较两个表达式，看是否相等 不等 != 比较两个表达式，看是否不相等 严格相等 === 比较两个表达式，看值是否相等并具有相同的数据类型 不严格相等 !== 比较两个表达式，看是否具有不相等的值或不同的数据类型 对于等值检测来说，最简单和最有效的方法当然是比较两个变量引用（所指向的内存地址），但这并不准确，因为我们显然会在两个不同的内存地址上存放同样的数据，例如两个相同的字符串。
+因此比较引用虽然高效，但在很多时候却需要比较两个变量的值。
+等值检测中“相等”的运算原则 类型 运算规则 值类型与引用类型进行比较 将引用类型的数据转换为与值类型数据相同的数据，再进行“数据等值”比较 两个值类型进行比较 转换成相同数据类型的值进行“数据等值”比较 两个引用类型进行比较 比较引用（内存地址） 上述规则中所谓的 “数据等值” 仅指对 “值类型” 的比较而言，表明比较是变量所指向的存储单元中的数据（通常指 “内存数据”）
+在三种值类型（数值、布尔值、字符串）中，如果两个被比较的值类型不用，那么：
+有任何一个是数字时，会将另一个转换为数字进行比较
+有任何一个数布尔值时，它将被转换为数字进行比较（并且由于上一个规则的存在，所以另一个数据也将被转换为数字），
+有任何一个是对象（或函数）时，将调用该对象的 valueOf() 方法将其转换为数据进行比较，且在多数情况下该值数据作为数字值处理
+按照特定规则返回比较结果，例如 undefined 与 null 值总是相等的。
+undefined === undefined; // true null === null; // true 可见，Js 总是尽量用数字值比较来实现等值检测，
+这主要是因为 Js 内部的数据存储格式适合这一操作，同样的原因（即出于内部存储的格式的限制），字符串检测通常会存在非常大的开销。
+严格来说，必须对字符串中的每一个字符串进行比较，才能判断两个字符串是否相等，
+var str1 = &amp;#34;abc&amp;#34; + &amp;#34;def&amp;#34;; console.log(typeof str1); // string var str2 = &amp;#34;abcd&amp;#34; + &amp;#34;ef&amp;#34;; console.</description>
+    </item>
+    
+    <item>
+      <title>20个JS工具函数助力高效开发</title>
+      <link>/posts/77/</link>
+      <pubDate>Thu, 19 Oct 2023 20:08:19 +0700</pubDate>
+      
+      <guid>/posts/77/</guid>
+      <description>1.校验数据类型 export const typeOf = function (obj) { return Object.prototype.toString.call(obj).slice(8, -1).toLowerCase(); }; 示例： typeOf(&amp;#34;树哥&amp;#34;); // string typeOf([]); // array typeOf(new Date()); // date typeOf(null); // null typeOf(true); // boolean typeOf(() =&amp;gt; {}); // function 2.防抖 export const debounce = (() =&amp;gt; { let timer = null; return (callback, wait = 800) =&amp;gt; { timer &amp;amp;&amp;amp; clearTimeout(timer); timer = setTimeout(callback, wait); }; })(); 示例： debounce(() =&amp;gt; { console.log(&amp;#34;加载数据&amp;#34;); }, 500); 3.节流 export const throttle = (() =&amp;gt; { let last = 0; return (callback, wait = 800) =&amp;gt; { let now = +new Date(); if (now - last &amp;gt; wait) { callback(); last = now; } }; })(); 4.</description>
     </item>
     
     <item>
