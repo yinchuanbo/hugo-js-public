@@ -7,7 +7,72 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Tue, 24 Oct 2023 11:00:58 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 17 Dec 2023 19:07:45 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>如何及时发现网页的隐形错误</title>
+      <link>/posts/84/</link>
+      <pubDate>Sun, 17 Dec 2023 19:07:45 +0800</pubDate>
+      
+      <guid>/posts/84/</guid>
+      <description>想要进行异常监控之前，肯定先要了解有哪些异常才能进行监控。
+异常的类型 一般来说，浏览器端的异常分为两种类型：
+JavaScript 错误，一般都是来自代码的原因。 静态资源错误，一般都是来着资源加载的原因 而这里面我们又有各自的差异
+JavaScript 错误 先来说说 JavaScript 的错误类型，ECMA-262 定义了 7 种错误类型，说明如下：
+EvalError ：eval() 函数的相关的错误 RangeError ：使用了超出了 JavaScript 的限制或范围的值。 ReferenceError： 引用了未定义的变量或对象 TypeError： 类型错误 URIError： URI 操作错误 SyntaxError： 语法错误 (这个错误 WebIDL 中故意省略，保留给 ES 解析器使用) Error： 普通异常，通常与 throw 语句和 try/catch 语句一起使用，利用属性 name 可以声明或了解异常的类型，利用 message 属性可以设置和读取异常的详细信息。 如果想更详细了解可以看详细错误罗列这篇文章
+静态资源错误 通过 XMLHttpRequest、Fetch() 的方式来请求的 http 资源时。 利用 &amp;lt;img&amp;gt; 、&amp;lt;script&amp;gt;、&amp;lt;video&amp;gt;、&amp;lt;audio&amp;gt;、&amp;lt;iframe&amp;gt; 等标签加载的资源。 通过创建实例的方式，例如 new Image() 等代码来实现初始化。 那既然我们已经知道了我们的网站在客户端运行时可能会出现这些异常。那我们要如何进行捕获错误信息呢？
+捕捉错误 我们常见的几种捕捉方法有
+try-catch (ES 提供基本的错误捕获语法) window.onerror = cb (DOM0) window.</description>
+    </item>
+    
+    <item>
+      <title>性能优化-前端时间分片渲染简单做法</title>
+      <link>/posts/83/</link>
+      <pubDate>Sun, 17 Dec 2023 18:48:25 +0800</pubDate>
+      
+      <guid>/posts/83/</guid>
+      <description>在经典的面试题中：”如果后端返回了十万条数据要你插入到页面中，你会怎么处理？”
+除了像 useVirtualList 这样的虚拟列表来处理外，我们还可以通过 时间分片 来处理
+通过 setTimeout &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang=&amp;#34;en&amp;#34;&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta charset=&amp;#34;UTF-8&amp;#34; /&amp;gt; &amp;lt;meta http-equiv=&amp;#34;X-UA-Compatible&amp;#34; content=&amp;#34;IE=edge&amp;#34; /&amp;gt; &amp;lt;meta name=&amp;#34;viewport&amp;#34; content=&amp;#34;width=device-width, initial-scale=1.0&amp;#34; /&amp;gt; &amp;lt;title&amp;gt;十万数据渲染&amp;lt;/title&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;ul id=&amp;#34;list-container&amp;#34;&amp;gt;&amp;lt;/ul&amp;gt; &amp;lt;script&amp;gt; const oListContainer = document.getElementById(&amp;#34;list-container&amp;#34;); const fetchData = () =&amp;gt; { return new Promise((resolve) =&amp;gt; { const response = { code: 0, msg: &amp;#34;success&amp;#34;, data: [], }; for (let i = 0; i &amp;lt; 100000; i++) { response.data.push(`content-${i + 1}`); } setTimeout(() =&amp;gt; { resolve(response); }, 100); }); }; // 模拟请求后端接口返回十万条数据 // 渲染 total 条数据中的第 page 页，每页 pageCount 条数据 const renderData = (data, total, page, pageCount) =&amp;gt; { // base case -- total 为 0 时没有数据要渲染 不再递归调用 if (total &amp;lt;= 0) return; // total 比 pageCount 少时只渲染 total 条数据 pageCount = Math.</description>
+    </item>
+    
+    <item>
+      <title>IntersectionObserver：前端性能优化的新利器</title>
+      <link>/posts/82/</link>
+      <pubDate>Sun, 17 Dec 2023 18:37:06 +0800</pubDate>
+      
+      <guid>/posts/82/</guid>
+      <description>IntersectionObserver 是什么？ IntersectionObserver 是一种 JavaScript API，它提供了一种异步监测元素与其祖先容器或视口之间交叉状态的方法。简单来说，它可以告诉我们一个元素是否进入了视口或者与其祖先容器发生了交叉。
+通过 IntersectionObserver，我们可以轻松地监听目标元素的可见性变化，进而根据这些变化来实现各种交互效果，比如懒加载图片、实现无限滚动等功能。相较于传统的事件监听方式，IntersectionObserver 更高效、灵活，可以提供更好的用户体验和性能优化。
+当我们创建一个 IntersectionObserver 实例时，可以指定一个回调函数，该函数在目标元素进入或离开视口时被触发。 回调函数提供了一个入参 IntersectionObserverEntry，其中包含了与目标元素相关的信息，例如交叉比例、目标元素的位置和大小等。
+IntersectionObserver 还支持设定阈值，即交叉比例的百分比，用于触发回调函数。默认情况下，当目标元素至少有 0% 进入视口时，回调函数会被触发。我们可以通过设置不同的阈值来满足不同的需求。
+IntersectionObserver 创建使用 //创建IntersectionObserver实例 const options = { root: null, // 根元素，默认为浏览器视口 rootMargin: &amp;#34;0px&amp;#34;, // 根元素的外边距 threshold: 0.5, // 交叉比例的阈值，触发回调函数的条件 }; const observer = new IntersectionObserver(callback, options); //定义回调函数 function callback(entries, observer) { entries.forEach((entry) =&amp;gt; { if (entry.isIntersecting) { // 元素进入了视口 // 执行相应的操作，比如加载图片、添加动画等 } else { // 元素离开了视口 // 执行相应的操作，比如停止加载、移除动画等 } }); } //将目标元素与 IntersectionObserver 关联起来： const targetElement = document.</description>
+    </item>
+    
+    <item>
+      <title>CSS counters 嵌套索引</title>
+      <link>/posts/81/</link>
+      <pubDate>Sun, 17 Dec 2023 18:07:23 +0800</pubDate>
+      
+      <guid>/posts/81/</guid>
+      <description>HTML
+&amp;lt;ol&amp;gt; &amp;lt;li&amp;gt; &amp;lt;ol&amp;gt; &amp;lt;li&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;/ol&amp;gt; &amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt; &amp;lt;ol&amp;gt; &amp;lt;li&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt; &amp;lt;ol&amp;gt; &amp;lt;li&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;&amp;lt;/li&amp;gt; &amp;lt;/ol&amp;gt; &amp;lt;/li&amp;gt; &amp;lt;/ol&amp;gt; &amp;lt;/li&amp;gt; &amp;lt;/ol&amp;gt; CSS
+ol { counter-reset: count; } li { counter-increment: count; } li::marker { content: counters(count, &amp;#34;.&amp;#34;); } </description>
+    </item>
+    
+    <item>
+      <title>细数那些惊艳一时的 CSS 属性</title>
+      <link>/posts/80/</link>
+      <pubDate>Sun, 17 Dec 2023 17:37:39 +0800</pubDate>
+      
+      <guid>/posts/80/</guid>
+      <description>background-clip: text 简单来说就是可以做一个带背景的文字效果
+:focus-within 伪类 :focus-within 表示一个元素获得焦点，或该元素的后代元素获得焦点，就会匹配上
+form { border: 1px solid; width: 400px; height: 300px; display: flex; justify-content: center; align-items: center; } form:focus-within { box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3); background-color: beige; } &amp;lt;form&amp;gt; &amp;lt;input type=&amp;#34;text&amp;#34; id=&amp;#34;ipt&amp;#34; placeholder=&amp;#34;请输入...&amp;#34; /&amp;gt; &amp;lt;/form&amp;gt; mix-blend-mode:difference mix-blend-mode:difference 属性描述了元素的内容应该与元素的直系父元素的内容和元素的背景如何混合。其中，difference 表示差值。
+如果给你这张图，你会怎么去绘制？是不是很麻烦。
+但是如果用 mix-blend-mode:difference 这个属性，就可以很容易的实现。
+.mode { display: flex; justify-content: center; align-items: center; mix-blend-mode: difference; } .dark { position: relative; left: 6px; height: 24px; width: 24px; background-color: grey; border-radius: 50%; } .</description>
+    </item>
+    
     <item>
       <title>如何使用 Promise 去控制并发请求？</title>
       <link>/posts/79/</link>
