@@ -7,7 +7,29 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Sun, 17 Dec 2023 19:07:45 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 20 Dec 2023 22:47:56 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>普通的文本输入框实现敏感词文字高亮</title>
+      <link>/posts/86/</link>
+      <pubDate>Wed, 20 Dec 2023 22:47:56 +0800</pubDate>
+      
+      <guid>/posts/86/</guid>
+      <description>实现思路 实现标红就需要给文字加上 html 标签和样式，但是输入框会将 html 都转为字符串，既然输入框无法实现，那么我们换一种思路，通过 div 代替输入框来显示输入的文本，那我们是不是就可以实现文本标红了？
+&amp;lt;div class=&amp;#34;main&amp;#34;&amp;gt; &amp;lt;div id=&amp;#34;shadowInput&amp;#34; class=&amp;#34;highlight-shadow-input&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;textarea id=&amp;#34;textarea&amp;#34; cols=&amp;#34;30&amp;#34; rows=&amp;#34;10&amp;#34; class=&amp;#34;highlight-input&amp;#34; &amp;gt;&amp;lt;/textarea&amp;gt; &amp;lt;/div&amp;gt; .main { position: relative; } .highlight-shadow-input { position: absolute; top: 0; left: 0; height: 100%; width: 100%; padding: 8px; border: 1px; box-sizing: border-box; font-size: 12px; font-family: monospace; overflow-y: auto; word-break: break-all; white-space: pre-wrap; } .highlight-input { position: relative; width: 100%; padding: 8px; box-sizing: border-box; font-size: 12px; background: rgba(0, 0, 0, 0); -webkit-text-fill-color: transparent; z-index: 999; word-break: break-all; } 实现这个功能的精髓就在于将输入框的背景和输入的文字设置为透明，然后将其层级设置在 div 之上，这样用户既可以在输入框中输入，而输入的文字又不会展示出来，然后将输入的文本处理后渲染到 div 上。</description>
+    </item>
+    
+    <item>
+      <title>前端数字格式化展示方法</title>
+      <link>/posts/85/</link>
+      <pubDate>Mon, 18 Dec 2023 22:11:13 +0800</pubDate>
+      
+      <guid>/posts/85/</guid>
+      <description>Number.prototype.toLocaleString() toLocaleString 是 JavaScript 的内置方法，用于格式化数字为字符串，考虑了地区和语言的差异。这个方法的灵活性使得它在实际开发中有很多有用的应用场景。
+基本用法 const number = 1234567.89; // 默认地区格式化 const formattedDefault = number.toLocaleString(); console.log(formattedDefault); // 根据浏览器/环境的默认地区输出：&amp;#34;1,234,567.89&amp;#34; // 指定地区格式化 const formattedWithLocale = number.toLocaleString(&amp;#34;fr-FR&amp;#34;); console.log(formattedWithLocale); // 指定法国地区输出：&amp;#34;1 234 567,89&amp;#34; 在上述例子中，toLocaleString 默认使用环境或浏览器的默认地区，但也可以通过传递一个地区字符串参数来指定特定的地区。
+小数位数和千位分隔符 const number = 1234567.89123; // 限定小数点后两位 const formattedWithPrecision = number.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2, }); console.log(formattedWithPrecision); // 输出：&amp;#34;1,234,567.89&amp;#34; // 不使用千位分隔符 const formattedWithoutSeparator = number.toLocaleString(undefined, { useGrouping: false, }); console.log(formattedWithoutSeparator); // 输出：&amp;#34;1234567.89&amp;#34; 通过在 toLocaleString 的第二个参数中传递一个选项对象，可以设置小数点后的位数，以及是否使用千位分隔符等。
+货币格式化 const currencyValue = 1234567.</description>
+    </item>
+    
     <item>
       <title>如何及时发现网页的隐形错误</title>
       <link>/posts/84/</link>
