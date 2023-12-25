@@ -7,7 +7,67 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Wed, 20 Dec 2023 22:47:56 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 24 Dec 2023 21:47:06 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>token无感知刷新</title>
+      <link>/posts/90/</link>
+      <pubDate>Sun, 24 Dec 2023 21:47:06 +0800</pubDate>
+      
+      <guid>/posts/90/</guid>
+      <description>前言 在前后端分离的应用中，使用 token 进行交互验证是一种比较常见的方式。但是，由于 token 的有效期限制，需要不断地刷新 token，否则会导致用户认证失败。
+栗子 可以幻想一下，你在一个应用中，填写了很多个表单，最后提交的时候，401 认证失败，这个时候你心里肯定一万个&amp;hellip;.所以为了解决这个问题，给用户更好的体验，本文介绍无感知刷新 token 的实现。
+token 验证的原理 在 web 应用中，常见的 token 认证方式有基于 token 和基于 cookie 的认证。基于 token 的认证方式是，将认证信息每次放在请求头中，在每次发起请求时，将 token 发给服务端认证，而基于 cookie 的认证方式是，客户端本地存储的 cookie 文件来记录用户的操作状态在随后的访问请求中，客户端浏览器会检索与用户请求资源相匹配的 Cookie，并将其提交给 Web 服务器进行验证。如果 Cookie 合法，则允许用户访问请求的资源，反之则拒绝用户的访问请求。
+什么是无感知刷新 token 无感知刷新 Token 是指在 Token 过期之前，系统自动使用 Refresh Token 获取新的 Access Token，从而实现 Token 的无感知刷新，用户可以无缝继续使用应用。在实现无感知刷新 token 的时候需要考虑以下几点：
+如何判断 token 是否过期? 如何在 token 过期时，自动使用 Refresh Token 获取新的 Access Token? Refresh Token 安全性? 代码实现-第一步 使用 axios 作为客户端请求库</description>
+    </item>
+    
+    <item>
+      <title>HTMl&#43;CSS&#43;JS实现瀑布流式页面布局</title>
+      <link>/posts/89/</link>
+      <pubDate>Sun, 24 Dec 2023 18:02:31 +0800</pubDate>
+      
+      <guid>/posts/89/</guid>
+      <description>瀑布流式布局页面是什么？ 页面上给人一种参差不齐的多栏布局，其中元素大部分为图片，图片的宽度是统一固定的，但是由于高度不一样，第一行图片排满之后，新的图片会插入到第一排中高度最低的图片下面，并更新高度，如此循环，最终达到瀑布流式的效果。
+优点： 吸引眼球： 瀑布流布局的不规则排列方式能够引起用户的兴趣，使界面更吸引人。用户会感到好奇，想要浏览所有的项目，因为每个项目都以不同的方式呈现。 有效利用空间： 瀑布流布局可以充分利用页面空间，无论是横向还是纵向滚动，都可以容纳很多项目。这对于展示大量内容或产品非常有用。 适应性： 瀑布流布局可以适应不同屏幕大小和设备类型，因为它是响应式设计的一部分。这意味着它可以在桌面电脑、平板电脑和移动设备上都有良好的表现。 提高用户参与度： 用户通常更愿意探索页面上的不同项目，因为每次滚动都可能带来新的发现，从而增加了用户的参与度和浏览时间。 缺点： 信息层次不明确： 由于项目的不规则排列，瀑布流布局可能会使用户难以识别内容的层次和重要性。重要内容可能会被埋没在次要内容中。 不适用于所有类型的内容： 瀑布流布局更适合视觉导向的内容，如图片、照片、商品展示等。对于需要详细信息或结构化内容的页面，这种布局可能不够合适。 加载时间问题： 当页面包含大量项目时，瀑布流布局可能导致页面加载时间变长，特别是在网络连接较慢的情况下。这可能会影响用户体验。 有限的导航性： 用户可能会发现导航和查找特定项目变得更加困难，因为项目的位置是不固定的。这可能会使用户在页面上迷失方向。 代码实现 HTML:
+&amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang=&amp;#34;en&amp;#34;&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta charset=&amp;#34;UTF-8&amp;#34; /&amp;gt; &amp;lt;meta http-equiv=&amp;#34;X-UA-Compatible&amp;#34; content=&amp;#34;IE=edge&amp;#34; /&amp;gt; &amp;lt;meta name=&amp;#34;viewport&amp;#34; content=&amp;#34;width=device-width, initial-scale=1.0&amp;#34; /&amp;gt; &amp;lt;title&amp;gt;js瀑布流&amp;lt;/title&amp;gt; &amp;lt;link rel=&amp;#34;stylesheet&amp;#34; href=&amp;#34;style.css&amp;#34; /&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;!-- container容器用来存放box容器，一个box放一张图片 --&amp;gt; &amp;lt;div id=&amp;#34;container&amp;#34;&amp;gt; &amp;lt;!-- 根据自己的需求添加图片的数量 --&amp;gt; &amp;lt;div class=&amp;#34;box&amp;#34;&amp;gt; &amp;lt;div class=&amp;#34;box-img&amp;#34;&amp;gt;&amp;lt;img src=&amp;#34;./img/1.jpg&amp;#34; alt=&amp;#34;&amp;#34; /&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;box&amp;#34;&amp;gt; &amp;lt;div class=&amp;#34;box-img&amp;#34;&amp;gt;&amp;lt;img src=&amp;#34;./img/2.jpg&amp;#34; alt=&amp;#34;&amp;#34; /&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;box&amp;#34;&amp;gt; &amp;lt;div class=&amp;#34;box-img&amp;#34;&amp;gt;&amp;lt;img src=&amp;#34;.</description>
+    </item>
+    
+    <item>
+      <title>前端外描边完美实现</title>
+      <link>/posts/88/</link>
+      <pubDate>Sun, 24 Dec 2023 17:51:36 +0800</pubDate>
+      
+      <guid>/posts/88/</guid>
+      <description>背景 最近在公司做画布相关的内容，涉及到了字体描边的方案选择，在三种方案对比和尝试下，最终选用了 SVG 作为字体描边的方案，今天就来讲讲这些方案的优缺点。
+字体描边方案对比 1. text-stroke 优点： 实现效果好
+缺点：
+兼容性一般，需要配合 -webkit-background-clip 属性来实现外描边，而市面上的截图库都不支持这个属性 😅，也就是截图后描边效果会丢失（尝试过 html2canvas、html-to-image、dom-to-image，以及公司内部的一些截图库） 有描边吞字的现象：描边宽度变大时，描边会向内扩展把文本覆盖， 宽度为 0px 的时候也依旧存在描边 效果：
+2. text-shadow 优点： 兼容性好
+缺点： 实现效果不好，怎么说呢，很难评，有种锯齿的美，毕竟人家不是干这行的 😅
+效果：
+3. SVG 优点： 兼容性好、实现效果好，整体上看比 text-stroke 效果还要好
+缺点： iOS 上同样存在描边吞字的现象，但是它的缺点都可以解决，还请看下文
+效果：
+4. Canvas 优点： 兼容性好
+缺点：
+字体整体比较模糊 有描边吞字的现象 需要通过 canvas api 来进行绘制 效果：
+调试 上面四种方案都可以在 CodeSandBox 中自行尝试一下：
+codesandbox.io/p/sandbox/s…
+SVG 实现字体描边 通过 svg 的 paint-order 来实现字体描边，兼容性最好，并且实现效果也很不错，基本兼容市面上所有浏览器，并且截图库基本都支持这个属性，下面就来讲讲 SVG 字体描边方案的实现：
+&amp;lt;svg xmlns=&amp;#34;http://www.w3.org/2000/svg&amp;#34; width=&amp;#34;400&amp;#34; height=&amp;#34;200&amp;#34;&amp;gt; &amp;lt;text x=&amp;#34;0&amp;#34; y=&amp;#34;0&amp;#34; alignment-baseline=&amp;#34;text-before-edge&amp;#34; text-anchor=&amp;#34;start&amp;#34;&amp;gt; 字体描边 &amp;lt;/text&amp;gt; &amp;lt;/svg&amp;gt; text { font-size: 50px; font-weight: bold; stroke: red; stroke-width: 4px; paint-order: stroke; } 通过 stroke-linejoin 属性，可以 对 svg 的描边有更灵活的控制：</description>
+    </item>
+    
+    <item>
+      <title>梳理一下浏览器中常见Observer</title>
+      <link>/posts/87/</link>
+      <pubDate>Sun, 24 Dec 2023 16:23:07 +0800</pubDate>
+      
+      <guid>/posts/87/</guid>
+      <description>MutationObserver MutationObserver 用于监听 DOM 对象的变更（包括子节点），当节点属性发生变化，或执行增删改操作时执行对应的 callback。
+MutationObserver 为我们提供了一种十分方便的监听 DOM 变化的方式。
+基本使用 // Observer需要一个用于监听的目标DOM const targetNode = document.getElementById(&amp;#34;app&amp;#34;); //用于确定mutation监听变化的范围 const config = { attributes: true, // 监听目标节点的属性变化，例如id，class等属性 childList: true, // 除目标节点外还要监听目标节点的直接子节点 subtree: true, // subtree的范围大于childList，还包括子节点children characterData: true, // 监听TextNode需要额外配置，默认TextNode变化不会触发callback }; // 当观察到变动时执行的回调函数，mutationsList包含本次变更的信息 const callback = function (mutationsList, observer) { console.log(mutationsList); }; const observer = new MutationObserver(callback); observer.observe(targetNode, config); API 介绍 observe observe 用于开启对某个 DOM 的监听，一个 MutationObserver 可以通过多次调用 observe 监听多个 DOM 的变化。</description>
+    </item>
+    
     <item>
       <title>普通的文本输入框实现敏感词文字高亮</title>
       <link>/posts/86/</link>
