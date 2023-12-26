@@ -7,7 +7,59 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Sun, 24 Dec 2023 21:47:06 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 25 Dec 2023 22:28:27 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>纯前端也可以实现「用户无感知录屏」</title>
+      <link>/posts/94/</link>
+      <pubDate>Mon, 25 Dec 2023 22:28:27 +0800</pubDate>
+      
+      <guid>/posts/94/</guid>
+      <description>视频是由帧组成的，我们是否可以不断的截图，然后组合成一段视频？好像是可以的。
+页面 先写一个简单的页面
+&amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang=&amp;#34;en&amp;#34;&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta charset=&amp;#34;UTF-8&amp;#34; /&amp;gt; &amp;lt;title&amp;gt;Canvas视频录制&amp;lt;/title&amp;gt; &amp;lt;link rel=&amp;#34;stylesheet&amp;#34; href=&amp;#34;styles.css&amp;#34; /&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;main&amp;gt; &amp;lt;div class=&amp;#34;buttons&amp;#34;&amp;gt; &amp;lt;button class=&amp;#34;start-btn&amp;#34;&amp;gt;开始录制&amp;lt;/button&amp;gt; &amp;lt;button class=&amp;#34;pause-btn&amp;#34;&amp;gt;暂停录制&amp;lt;/button&amp;gt; &amp;lt;button class=&amp;#34;resume-btn&amp;#34;&amp;gt;继续录制&amp;lt;/button&amp;gt; &amp;lt;button class=&amp;#34;stop-btn&amp;#34;&amp;gt;结束录制&amp;lt;/button&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;div id=&amp;#34;box&amp;#34;&amp;gt; &amp;lt;section class=&amp;#34;content&amp;#34;&amp;gt; &amp;lt;h2&amp;gt;TODO LIST&amp;lt;/h2&amp;gt; &amp;lt;div class=&amp;#34;background-div&amp;#34;&amp;gt; &amp;lt;button class=&amp;#34;background-btn&amp;#34;&amp;gt;切换背景颜色&amp;lt;/button&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;div id=&amp;#34;todo-form&amp;#34;&amp;gt; &amp;lt;input type=&amp;#34;text&amp;#34; class=&amp;#34;input-field&amp;#34; placeholder=&amp;#34;输入待办事项&amp;#34; /&amp;gt; &amp;lt;button type=&amp;#34;submit&amp;#34; class=&amp;#34;submit-btn&amp;#34;&amp;gt;提交&amp;lt;/button&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;list&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;/section&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;img src=&amp;#34;&amp;#34; alt=&amp;#34;&amp;#34; class=&amp;#34;hidden&amp;#34; /&amp;gt; &amp;lt;/main&amp;gt; &amp;lt;script src=&amp;#34;&amp;lt;https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.min.js&amp;gt;&amp;#34; defer &amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script src=&amp;#34;canvas.js&amp;#34; defer&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt; 截图 实现网页的截图操作，最常用的库是 html2canvas用，它可以将网页中的 HTML 元素转换为 Canvas 元素，并将其导出为图像文件。在浏览器中捕获整个页面或特定区域的截图，包括 CSS 样式和渲染效果。</description>
+    </item>
+    
+    <item>
+      <title>纯前端也可以访问文件系统</title>
+      <link>/posts/93/</link>
+      <pubDate>Mon, 25 Dec 2023 22:16:27 +0800</pubDate>
+      
+      <guid>/posts/93/</guid>
+      <description>showOpenFilePicker 用来选择文件
+语法 showOpenFilePicker(); 参数 options：（可选）包含以下属性 multiple：布尔值，默认为false。为true表示允许用户选择多个文件 excludeAcceptAllOption：布尔值，默认为false。默认情况下，文件选择器带有一个允许用户选择所有类型文件的过滤选项（展开于文件类型选项中）。设置此选项为 true 以使该过滤选项不可用。 types：表示允许选择的文件类型的数组 返回值 返回一个promise对象，会兑现一个包含 FileSystemFileHandle 对象的 Array 数组。
+体验 &amp;lt;template&amp;gt; &amp;lt;div class=&amp;#34;open_file&amp;#34; @click=&amp;#34;openFile&amp;#34;&amp;gt;打开文件&amp;lt;/div&amp;gt; &amp;lt;/template&amp;gt; &amp;lt;script setup lang=&amp;#34;ts&amp;#34;&amp;gt; const openFile = async () =&amp;gt; { const res = await window.showOpenFilePicker(); console.log(res); }; &amp;lt;/script&amp;gt; 默认只能打开一个文件，可以传入multiple:true打开多个文件
+showDirectoryPicker 用来选择目录
+语法 属于浏览器全局方法，直接调用即可
+showDirectoryPicker(); 参数 options：（可选）包含以下属性 multiple：布尔值，默认为false。为true表示允许用户选择多个文件 excludeAcceptAllOption：布尔值，默认为false。默认情况下，文件选择器带有一个允许用户选择所有类型文件的过滤选项（展开于文件类型选项中）。设置此选项为 true 以使该过滤选项不可用。 types：表示允许选择的文件类型的数组 返回值 返回一个promise对象，会兑现一个包含 FileSystemFileHandle 对象的 Array 数组。
+体验 &amp;lt;template&amp;gt; &amp;lt;div class=&amp;#34;open_file&amp;#34; @click=&amp;#34;openFile&amp;#34;&amp;gt;打开文件&amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;open_file&amp;#34; @click=&amp;#34;openDir&amp;#34;&amp;gt;打开文件夹&amp;lt;/div&amp;gt; &amp;lt;/template&amp;gt; &amp;lt;script setup lang=&amp;#34;ts&amp;#34;&amp;gt; const openFile = async () =&amp;gt; { const res = await window.</description>
+    </item>
+    
+    <item>
+      <title>使用CSS&#43;JS实现多行文本的展开收起效果</title>
+      <link>/posts/92/</link>
+      <pubDate>Mon, 25 Dec 2023 22:04:47 +0800</pubDate>
+      
+      <guid>/posts/92/</guid>
+      <description>源码 &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang=&amp;#34;en&amp;#34;&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta charset=&amp;#34;UTF-8&amp;#34; /&amp;gt; &amp;lt;meta http-equiv=&amp;#34;X-UA-Compatible&amp;#34; content=&amp;#34;IE=edge&amp;#34; /&amp;gt; &amp;lt;meta name=&amp;#34;viewport&amp;#34; content=&amp;#34;width=device-width, initial-scale=1.0&amp;#34; /&amp;gt; &amp;lt;title&amp;gt;Document&amp;lt;/title&amp;gt; &amp;lt;style&amp;gt; html, body { height: 100%; } .outerElement { display: flex; width: 600px; } .innerElement { line-height: 1.5; overflow: hidden; position: relative; overflow: hidden; /*必须结合的属性,当内容溢出元素框时发生的事情*/ text-overflow: ellipsis; /*可以用来多行文本的情况下，用省略号“…”隐藏超出范围的文本 。*/ display: -webkit-box; /*必须结合的属性 ，将对象作为弹性伸缩盒子模型显示 。*/ -webkit-box-orient: vertical; /*必须结合的属性 ，设置或检索伸缩盒对象的子元素的排列方式 。*/ } .line-clamp-three { -webkit-line-clamp: 3; /*用来限制在一个块元素显示的文本的行数。*/ } .line-clamp-countless { -webkit-line-clamp: 666; /*用来限制在一个块元素显示的文本的行数。*/ } .</description>
+    </item>
+    
+    <item>
+      <title>聊聊图片预加载</title>
+      <link>/posts/91/</link>
+      <pubDate>Mon, 25 Dec 2023 21:33:34 +0800</pubDate>
+      
+      <guid>/posts/91/</guid>
+      <description>如何进行图片的预加载 前端实现图片的预加载，其实是利用了浏览器的缓存，我们通过 a 标签来提前加载图片，如下：
+const img = new Image(); img.src = &amp;#34;链接&amp;#34;; img.onload = function () { console.log(&amp;#34;加载完成&amp;#34;); }; 预加载的策略 场景一：贪婪加载 刚进入页面有 loading，需要将后面的图片全部加载完成。如进入 h5 游戏的时候，需要把后面用到的人物背景图片都加载出来。
+这个时候我们不考虑带宽的问题，一次性加载所有的图片。
+将每次加载图片封装成一次 promise：
+new Promise((reslove, reject) =&amp;gt; { const img = new Image(); img.src = &amp;#34;链接&amp;#34;; img.onload = onerror = resolve; }); 再使用 promise.all 进行全加载
+Promise.all([...]) 场景二：部分加载 正常展示当前页面，但是下个页面的图片可以先偷偷加载进来，同时不要影响当前页面正常图片的加载。
+这时候我们需要考虑带宽，不能一次性使用加载图片拉满，这样会导致页面加载的图片加载不出来。可以使用批量加载，比如每次加载 5 张，加载完 5 张之后再加载下 5 张。这样如果当前页面如果有图片也可以正常展示加载。
+具体实现类似分页一样，获取要加载图片里面的 5 张，进行加载，直到加载结束。
+// 总任务 function loadImages(list) { const pageSize = 5; const pageNum = 0; return new Promise((reslove, reject) =&amp;gt; { function run() { Promise.</description>
+    </item>
+    
     <item>
       <title>token无感知刷新</title>
       <link>/posts/90/</link>
