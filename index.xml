@@ -7,7 +7,36 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Mon, 25 Dec 2023 22:28:27 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 26 Dec 2023 22:25:44 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>PageSpy:支持远程调试的 vConsole</title>
+      <link>/posts/96/</link>
+      <pubDate>Tue, 26 Dec 2023 22:25:44 +0800</pubDate>
+      
+      <guid>/posts/96/</guid>
+      <description>PageSpy Page Spy 是由货拉拉大前端开源的一款用于调试 H5 、或者远程 Web 项目的工具。基于对原生 API 的封装，它将调用原生方法时的参数进行过滤、转化，整理成格式规范的消息供调试端消费；调试端收到消息数据，提供类控制台可交互式的功能界面将数据呈现出来。
+PageSpy 是一个强大的开源前端远程调试平台，它可以显著提高我们在面对前端问题时的效率。以下是 PageSpy 的一些主要特点：
+一眼查看客户端信息 PageSpy 会对客户端的运行环境进行识别，其中系统识别支持 Mac / iOS / Window / Linux / Android，浏览器识别支持谷歌、火狐、Safari、Edge、微信、UC、百度、QQ； 实时查看输出： PageSpy 可以实时捕获并显示程序输出，包括 Console、Network、Storage 和 Element。这使开发人员能够直观地了解页面的外观和行为，无需依赖用户的描述或截图。 网络请求监控： PageSpy 还可以捕获和显示页面的网络请求，有助于开发人员更好的查看与后端的交互。 远程控制台： PageSpy 支持远程调试 JavaScript 代码，允许开发人员执行 JavaScript 代码在用户的浏览器上运行。这对于排查特定问题或测试代码修复非常有帮助。 跨浏览器兼容性： SDK 可以在各种主流浏览器中运行，确保你可以检查和调试不同浏览器上的问题。 用户体验提升： 通过快速识别和解决前端问题，PageSpy 可以显著提升用户体验，减少用户因前端问题而受到的不便。 使用 PageSpy 进行远程调试 使用 PageSpy 进行远程调试是相对简单的。以下是一些基本步骤：
+部署 PageSpy： 首先，PageSpy 提供了 Docker、Node 和 Release 的一键部署方案，点击查看； 实例化 SDK： PageSpy 成功部署后，你可以在项目中引入对应的 SDK 文件并进行实例化，它提供了多场景类型的参数，以便于用户对它的行为进行定制。 实时监控页面： 之后，你可以实时查看页面的各种数据，这有助于你直观地理解页面的问题。 监控网络请求： 你还可以查看所有的网络请求，包括请求的 URL、响应代码和响应时间。这可以帮助你识别与后端通信相关的问题。 解决问题： 借助 PageSpy 提供的信息和工具，你可以更快速地定位和解决前端问题，从而提高用户体验。 </description>
+    </item>
+    
+    <item>
+      <title>IntersectionObserver：实现滚动动画、懒加载、虚拟列表...</title>
+      <link>/posts/95/</link>
+      <pubDate>Tue, 26 Dec 2023 21:54:06 +0800</pubDate>
+      
+      <guid>/posts/95/</guid>
+      <description>简介 IntersectionObserver API 提供了一种创建IntersectionObserver 对象的方法，对象用于监测目标元素与视窗(viewport)的交叉状态，并在交叉状态变化时执行回调函数，回调函数可以接收到元素与视窗交叉的具体数据。
+一个 IntersectionObserver 对象可以监听多个目标元素，并通过队列维护回调的执行顺序。
+IntersectionObserver 特别适用于：滚动动画、懒加载、虚拟列表等场景。
+回调异步执行，不阻塞主线程。且监听不随着目标元素的滚动而触发，性能消耗极低。
+API 构造函数 IntersectionObserver 构造函数 接收两个参数：
+callback： 当元素可见比例达到指定阈值后触发的回调函数 options： 配置对象（可选，不传时会使用默认配置） IntersectionObserver 构造函数 返回观察器实例，实例携带四个方法：
+observe：开始监听目标元素 unobserve：停止监听目标元素 disconnect：关闭观察器 takeRecords：返回所有观察目标的 IntersectionObserverEntry 对象数组 // 调用构造函数 生成IntersectionObserver观察器 const myObserver = new IntersectionObserver(callback, options); // 开始监听 指定元素 myObserver.observe(element); // 停止对目标的监听 myObserver.unobserve(element); // 关闭观察器 myObserver.disconnect(); 构造参数 - callback 回调函数，当交叉状态发生变化时（可见比例超过或者低于指定阈值）会进行调用，同时传入两个参数：
+entries：IntersectionObserverEntry 数组，每项都描述了目标元素与 root 的交叉状态 observer：被调用的 IntersectionObserver 实例 - options 配置参数，通过修改配置参数，可以改变进行监听的视窗，可以缩小或扩大交叉的判定范围，或者调整触发回调的阈值(交叉比例)。
+属性 说明 root 所监听对象的具体祖先元素，默认使用顶级文档的视窗(一般为 html)。 rootMargin 计算交叉时添加到根(root)边界盒bounding box的矩形偏移量， 可以有效的缩小或扩大根的判定范围从而满足计算需要。所有的偏移量均可用像素(px)或百分比(%)来表达, 默认值为&amp;quot;0px 0px 0px 0px&amp;quot;。 threshold 一个包含阈值的列表, 按升序排列, 列表中的每个阈值都是监听对象的交叉区域与边界区域的比率。当监听对象的任何阈值被越过时，都会触发 callback。默认值为 0。 - IntersectionObserverEntry 属性 说明 boundingClientRect 返回包含目标元素的边界信息，返回结果与 element.</description>
+    </item>
+    
     <item>
       <title>纯前端也可以实现「用户无感知录屏」</title>
       <link>/posts/94/</link>
