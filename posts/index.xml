@@ -7,7 +7,22 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Fri, 29 Dec 2023 21:27:28 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 01 Jan 2024 11:40:54 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Set和WeakSet的用法和区别</title>
+      <link>/posts/100/</link>
+      <pubDate>Mon, 01 Jan 2024 11:40:54 +0800</pubDate>
+      
+      <guid>/posts/100/</guid>
+      <description>Set 和 WeakSet 是 ES6 中新增的两种数据结构，它们都用于存储一组不重复的值。但是它们之间有一些区别，下面我会简要介绍它们的用法和区别，以及相应的应用场景。
+Set 的用法和特点： Set 是一个类似数组的数据结构，它的成员值都是唯一的，不会重复。 你可以向 Set 中添加值，并且它会自动去重。 Set 中的值可以是任何类型的数据，包括原始类型和对象引用。
+下面是 Set 常见的操作方法：
+add(value) : 向 Set 中添加一个新的值。 delete(value) : 从 Set 中删除一个值。 has(value) : 判断 Set 中是否包含某个值。 size : 返回 Set 中值的数量。 clear() : 清空 Set 中的所有值。 示例代码：
+const set = new Set(); set.add(1); set.add(2); set.add(2); // 这个值不会被重复添加 set.has(1); // true set.size; // 2 set.delete(2); set.clear(); 下面是一些常见的 Set 的应用场景：
+1. 数组去重：
+Set 的去重功能非常有用，可以方便地从数组中去除重复的值。可以通过将数组转换为 Set，然后将 Set 转回数组来实现去重。</description>
+    </item>
+    
     <item>
       <title>前端代码重复度检测</title>
       <link>/posts/99/</link>
