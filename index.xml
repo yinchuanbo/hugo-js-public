@@ -7,9 +7,125 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Mon, 01 Jan 2024 11:40:54 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 28 Jan 2024 20:52:12 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Set和WeakSet的用法和区别</title>
+      <title>FileReader</title>
+      <link>/posts/109/</link>
+      <pubDate>Sun, 28 Jan 2024 20:52:12 +0800</pubDate>
+      
+      <guid>/posts/109/</guid>
+      <description>读取文件 if (typeof FileReader === &amp;#34;undefined&amp;#34;) { alert(&amp;#34;当前浏览器不支持 FileReader 对象&amp;#34;); } else { var reader = new FileReader(); } FileReader 对象包含 5 个方法，其中前 4 个用以读取文件，另一个用来中断读取操作。
+readAsText(Blob, type): 将 Blob 对象或文件中的数据读取为文本数据。该方法包含两个参数，其中第二个参数是文本的编码方式，默认为 UTF-8。
+readAsBinaryString(Blob): 将 Blob 对象或文件中的数据读取为二进制字符串，通常用该方法将文件提交到服务器端，服务器端可以通过这段字符串存储文件。
+readAsDataURL(Blob): 将 Blob 对象或文件中的数据读取为 DataURL 字符串，该方法就是将数据以一种特殊格式的 URL 地址形式直接读入页面。
+readAsArrayBuffer(Blob): 将 Blob 对象或文件中的数据读取为一个 ArrayBuffer 对象。
+abort(): 不包含参数，中断读取操作。
+下面演示如何在网页中读取并显示图像文件、文本文件和二进制代码文件
+&amp;lt;input type=&amp;#34;file&amp;#34; id=&amp;#34;file&amp;#34; /&amp;gt; &amp;lt;input type=&amp;#34;button&amp;#34; value=&amp;#34;读取图像&amp;#34; onclick=&amp;#34;readAsDataURL()&amp;#34; /&amp;gt; &amp;lt;input type=&amp;#34;button&amp;#34; value=&amp;#34;读取二进制数据&amp;#34; onclick=&amp;#34;readAsBinaryString()&amp;#34; /&amp;gt; &amp;lt;input type=&amp;#34;button&amp;#34; value=&amp;#34;读取文本文件&amp;#34; onclick=&amp;#34;readAsText()&amp;#34; /&amp;gt; &amp;lt;div name=&amp;#34;result&amp;#34; id=&amp;#34;result&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;script&amp;gt; window.</description>
+    </item>
+    
+    <item>
+      <title>文件操作</title>
+      <link>/posts/108/</link>
+      <pubDate>Sat, 27 Jan 2024 22:20:05 +0800</pubDate>
+      
+      <guid>/posts/108/</guid>
+      <description>FileList File 控件新添 multiple 属性，允许用户在一个 File 控件内选择和提交多个文件。
+&amp;lt;input type=&amp;#34;file&amp;#34; multiple /&amp;gt; 示例
+&amp;lt;input type=&amp;#34;file&amp;#34; id=&amp;#34;file&amp;#34; multiple /&amp;gt; &amp;lt;input type=&amp;#34;button&amp;#34; onclick=&amp;#34;ShowFileName()&amp;#34; value=&amp;#34;文件上传&amp;#34; /&amp;gt; function ShowFileName() { for (var i = 0; i &amp;lt; document.getElementById(&amp;#34;file&amp;#34;).files.length; i++) { var file = document.getElementById(&amp;#34;file&amp;#34;).files[i]; console.log(file.name); } } Blob Blob 对象用于存储二进制数据，还可以设置存储数据的 MIME 类型，
+访问 Blob Blob 对象包含两个属性：
+size: 表示一个 Blob 对象的字节长度
+type: 表示 Blob 的 MIME 类型，如果为未知类型，则返回一个空字符串。
+下面演示如果获取文件域中第一个文件的 Blob 对象，并访问该文件的长度和文件类型
+function showFileType() { var file = document.</description>
+    </item>
+    
+    <item>
+      <title>Web Storage</title>
+      <link>/posts/107/</link>
+      <pubDate>Sat, 27 Jan 2024 22:01:54 +0800</pubDate>
+      
+      <guid>/posts/107/</guid>
+      <description>遍历 var storage = window.localStorage; for(var i = 0, len = storage.length; i++) { var key = storage.key(i); var value = storage.getItem(key); console.log(key + &amp;#34;=&amp;#34; + value); } 监测事件 web storage 定义 storage 事件，当键值改变或者调用 clear() 方法的时候，将触发 storage 事件。
+window.addEventListener(&amp;#34;storage&amp;#34;, handle_storage, false); function handle_storage(e) { var logged = &amp;#34;key:&amp;#34; + e.key + &amp;#34;,newValue:&amp;#34; + e.newValue + &amp;#34;,oldValue:&amp;#34; + e.oldValue + &amp;#34;,url:&amp;#34; + e.url + &amp;#34;,storageArea:&amp;#34; + e.storageArea; console.log(logged); } storage 事件对象属性</description>
+    </item>
+    
+    <item>
+      <title>使用 HTML5 音频和视频</title>
+      <link>/posts/106/</link>
+      <pubDate>Fri, 26 Jan 2024 20:22:30 +0800</pubDate>
+      
+      <guid>/posts/106/</guid>
+      <description>Audio &amp;lt;audio src=&amp;#34;&amp;#34; controls=&amp;#34;controls&amp;#34;&amp;gt;&amp;lt;/audio&amp;gt; audio 支持的属性值：
+属性 值 说明 autoplay autoplay 如果出现该属性，则音频在就绪后马上播放 controls controls 如果出现该属性，则向用户显示控件，比如播放按钮 loop loop 如果出现该属性，则每当音频结束时重新开始播放 preload preload 如果出现该属性，则音频在页面加载时进行加载，并预备播放。如果使用 autoplay，则忽略该属性。 audio 标签可以包含多个 source 标签，用来导入不同的音频文件，浏览器会自动选择第一个可识别的格式进行播放。
+&amp;lt;audio controls=&amp;#34;controls&amp;#34;&amp;gt; &amp;lt;source src=&amp;#34;medias/test.ogg&amp;#34; type=&amp;#34;audio/ogg&amp;#34; /&amp;gt; &amp;lt;source src=&amp;#34;medias/test.mp3&amp;#34; type=&amp;#34;audio/mpeg&amp;#34; /&amp;gt; 你的浏览器不支持 audio 标签 &amp;lt;/audio&amp;gt; &amp;lt;audio autoplay loop&amp;gt; &amp;lt;source src=&amp;#34;medias/test.ogg&amp;#34; type=&amp;#34;audio/ogg&amp;#34; /&amp;gt; &amp;lt;source src=&amp;#34;medias/test.mp3&amp;#34; type=&amp;#34;audio/mpeg&amp;#34; /&amp;gt; 你的浏览器不支持 audio 标签 &amp;lt;/audio&amp;gt; Video &amp;lt;video src=&amp;#34;&amp;#34; controls=&amp;#34;controls&amp;#34;&amp;gt;&amp;lt;/video&amp;gt; video 支持的属性值：
+属性 值 说明 autoplay autoplay 如果出现该属性，则视频在就绪后马上播放 controls controls 如果出现该属性，则向用户显示控件，比如播放按钮 loop loop 如果出现该属性，则当媒介文件完成播放后再次开始播放 muted muted 设置视频的音频输出应该被静音 poster URL 设置视频下载时显示的图像，或者在用户单击 “播放” 按钮前显示的图像 preload preload 如果出现该属性，则视频在页面加载时进行加载，并预备播放。如果使用 “autoplay”，则忽略该属性 &amp;lt;video controls autoplay&amp;gt; &amp;lt;source src=&amp;#34;medias/trailer.</description>
+    </item>
+    
+    <item>
+      <title>利用 Performance API 分析网站性能</title>
+      <link>/posts/105/</link>
+      <pubDate>Sat, 20 Jan 2024 22:57:31 +0800</pubDate>
+      
+      <guid>/posts/105/</guid>
+      <description>window.performace.timing 对象包含了完整的网页加载性能数据，
+页面加载的第一个时间点就是 navigationStart，表示上一个页面的 unload 事件触发，接下来的时间点是 fetchStart，表示开始获取当前页面内容。fetchStart 时间点和 navigationStart 时间点之间的时间差是浏览器内核为加载新页面做的一些准备工作耗时。
+获取页面内容的第一步是查询是否有跟页面相关的资源缓存，查询完毕后，会触发开始 DNS 解析的时间点 domainLookupStart。domainLookupStart 时间点和 fetchStart 时间点之间的时间差就是查询缓存所消耗的时间。
+DNS 解析结束的时间点是 domainLookupEnd。domainLookupEnd 时间点和 domainLookupStart时间点之间的时间差是 DNS 解析消耗的时间。
+DNS 解析技术之后会开始建立 TCP 连接，TCP 连接开始和结束的时间分别是 connectStart 和 connectEnd。connectStart 时间点紧接着 domainLookupEnd 时间点， connectEnd 时间点和 connectStart 时间点之间的时间差是建立 TCP 消耗的时间。
+TCP 连接建立之后，开始发送请求内容至服务端，这个时间点是 requestStart。服务端接收到完整的请求并处理完毕后，会将响应结果返回给客户端，开始发送响应结果的时间点为 responseStart。浏览器收到完整的响应结果之后，会触发 responseEnd 时间点。
+浏览器接收到响应结果之后，会开始 DOM 解析，这个时间点是 domLoading， DOM 解析完成的时间点是 domInteractive。DOM 解析完成是指 DOM 树构建完成，页面依赖的外部资源，如 CSS、JavaScript、图片等，还未开始加载。
+注意： domLoading 时间点不一定在 responseEnd 时间点之后，有可能浏览器只接收了部分响应数据就开始解析 DOM 树。
+DOM 树解析完成之后，会开始按照顺序运行页面脚本和加载依赖外部资源，其中 JavaScript 资源会同步加载和执行。一旦所有页面脚本运行完毕，会触发 DOMContentLoaded 事件，这个时间点是 domContentLoadedStart。</description>
+    </item>
+    
+    <item>
+      <title>Drag 和 Drop 介绍</title>
+      <link>/posts/104/</link>
+      <pubDate>Sat, 20 Jan 2024 22:20:41 +0800</pubDate>
+      
+      <guid>/posts/104/</guid>
+      <description>页面中的圆形元素允许可拖动，将圆形元素拖动到正方形元素之上，并且释放元素，如果正方形元素内容为 “green”，则两者匹配成功，圆形元素消失不见，正方形元素内容更改为 “correct”。
+&amp;lt;div class=&amp;#34;draggable&amp;#34;&amp;gt; &amp;lt;!-- draggable 为 true，表示元素可拖动 --&amp;gt; &amp;lt;div draggable=&amp;#34;true&amp;#34;&amp;gt;绿色&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; &amp;lt;div class=&amp;#34;text&amp;#34;&amp;gt; &amp;lt;div&amp;gt;red&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;green&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; var draggableColor = $(&amp;#34;.draggable &amp;gt; div&amp;#34;); var greenText = $(&amp;#34;.text &amp;gt; div:nth-child(2)&amp;#34;); draggableColor.on(&amp;#34;dragstart&amp;#34;, function (event) { // 注册拖拽开始事件 event.dataTransfer.setData(&amp;#34;ele&amp;#34;, &amp;#34;.draggable &amp;gt; div&amp;#34;); // 保存数据 }); greenText .on(&amp;#34;dragover&amp;#34;, function (event) { event.preventDefault(); // 阻止浏览器默认行为 }) .on(&amp;#34;drop&amp;#34;, function (event) { var dragTarget = event.dataTransfer.getData(&amp;#34;ele&amp;#34;); $(dragTarget).css(&amp;#34;visibility&amp;#34;, &amp;#34;hidden&amp;#34;); $(this).text(&amp;#34;correct&amp;#34;); }); 注意： dragover 事件中必须阻止浏览器默认行为，否则后续的 drop 事件将不会被触发。</description>
+    </item>
+    
+    <item>
+      <title>History API 与单页应用</title>
+      <link>/posts/103/</link>
+      <pubDate>Sat, 20 Jan 2024 21:52:20 +0800</pubDate>
+      
+      <guid>/posts/103/</guid>
+      <description>单页应用，是指 web 应用可以无刷新在不同的页面间切换，并且页面访问记录会被浏览器保存，从而支持浏览器的前进、后退和刷新等操作。
+本实例将使用 History API 实现一个单页应用，页面访问路径为 “/green”，当使用路径 “/green” 来访问页面时，页面展示效果为 “green” 菜单项被选中，并且右边内容区域显示文字 “this is a green page”。
+注意： 单击不同菜单选项进行页面切换时，浏览器不会重新加载页面。
+&amp;lt;div class=&amp;#34;wrapper&amp;#34;&amp;gt; &amp;lt;ul class=&amp;#34;navigator&amp;#34;&amp;gt; &amp;lt;li class=&amp;#34;nav-item&amp;#34;&amp;gt;green&amp;lt;/li&amp;gt; &amp;lt;li class=&amp;#34;nav-item&amp;#34;&amp;gt;blue&amp;lt;/li&amp;gt; &amp;lt;li class=&amp;#34;nav-item&amp;#34;&amp;gt;red&amp;lt;/li&amp;gt; &amp;lt;/ul&amp;gt; &amp;lt;div class=&amp;#34;content&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; var menu = $(&amp;#34;ul.navigator &amp;gt; li&amp;#34;); var content = $(&amp;#34;div.content&amp;#34;); function initPage(page) { menu.removeClass(&amp;#34;selected-item&amp;#34;); menu .filter(function () { return $(this).text().toLowerCase().trim() === page; }) .addClass(&amp;#34;selected-item&amp;#34;); content.text(&amp;#34;this is a &amp;#34; + page + &amp;#34; page&amp;#34;); } // 根据当前 URL 初始化页面 initPage(location.</description>
+    </item>
+    
+    <item>
+      <title>使用音频和视频</title>
+      <link>/posts/102/</link>
+      <pubDate>Sat, 20 Jan 2024 21:28:50 +0800</pubDate>
+      
+      <guid>/posts/102/</guid>
+      <description>音频 &amp;lt;audio controls&amp;gt; &amp;lt;source src=&amp;#34;vincent.ogg&amp;#34; /&amp;gt; &amp;lt;source src=&amp;#34;vincent.mp3&amp;#34; /&amp;gt; 你的浏览器不支持 Audio 标记 &amp;lt;/audio&amp;gt; Audio 元素控制行为的属性如下：
+controls: 显示音频控件 autoplay: 是否自动播放，默认为 false loop: 是否循环播放，默认为 false preload: 预先加载的方式 none: 表示不预加载 metadata: 表示只加载音频的元数据 auto: 默认值，表示预加载整个音频 volumn: 音量，值在 0 ~ 1 之间 视频 &amp;lt;video width=&amp;#34;400&amp;#34; height=&amp;#34;300&amp;#34; controls&amp;gt; &amp;lt;source src=&amp;#34;dizzy.mp4&amp;#34; type=&amp;#34;video/mp4&amp;#34; /&amp;gt; &amp;lt;source src=&amp;#34;dizzy.webm&amp;#34; type=&amp;#34;video/webm&amp;#34; /&amp;gt; &amp;lt;source src=&amp;#34;dizzy.ogv&amp;#34; type=&amp;#34;video/ogg&amp;#34; /&amp;gt; &amp;lt;p&amp;gt;你的浏览器不支持 HTML5 视频&amp;lt;/p&amp;gt; &amp;lt;/video&amp;gt; 通过 API 控制 Video 的播放时间位置：
+&amp;lt;input type=&amp;#34;number&amp;#34; name=&amp;#34;time&amp;#34; value=&amp;#34;10&amp;#34; id=&amp;#34;time&amp;#34; /&amp;gt; &amp;lt;button id=&amp;#34;btnSeek&amp;#34;&amp;gt;GetInfo&amp;lt;/button&amp;gt; var video = document.</description>
+    </item>
+    
+    <item>
+      <title>获取上传进度的几种方式</title>
+      <link>/posts/101/</link>
+      <pubDate>Sat, 20 Jan 2024 21:07:24 +0800</pubDate>
+      
+      <guid>/posts/101/</guid>
+      <description>前端使用 axios 实现监听上传进度 咱们先使用axios实现监听上传进度如下：
+axios .post(&amp;#34;/api/file/uploadfile&amp;#34;, form, { headers: { &amp;#34;Content-Type&amp;#34;: &amp;#34;multipart/form-data&amp;#34;, }, onUploadProgress: (progressEvent) =&amp;gt; { if (progressEvent.lengthComputable) { this.progresss = Math.round( (progressEvent.loaded / progressEvent.total) * 100 ); } }, }) .then((res) =&amp;gt; { // ... }); 前端使用ajax获取上传进度 前端使用ajax如何获取上传进度呢？ 如下：
+const xhr = new XMLHttpRequest(); xhr.upload.addEventListener(&amp;#34;progress&amp;#34;, (event) =&amp;gt; { if (event.lengthComputable) { const progressPercentage = Math.round((event.loaded / event.total) * 100); console.log(`上传进度: ${progressPercentage}%`); } }); 前端使用fetch API获取上传进度 如何使用fetch API获取上传的进度呢？如下：
+const file = document.</description>
+    </item>
+    
+    <item>
+      <title>Set 和 WeakSet 的用法和区别</title>
       <link>/posts/100/</link>
       <pubDate>Mon, 01 Jan 2024 11:40:54 +0800</pubDate>
       
@@ -42,7 +158,7 @@ jscpd 的配置选项可以通过以下两种方式创建，增加的内容都�
     </item>
     
     <item>
-      <title>改变axios的用法后，我的工作效率提升了3倍(alova)</title>
+      <title>改变 axios 的用法后，我的工作效率提升了3倍(alova)</title>
       <link>/posts/98/</link>
       <pubDate>Fri, 29 Dec 2023 21:23:15 +0800</pubDate>
       
