@@ -7,7 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Sun, 28 Jan 2024 20:52:12 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 29 Jan 2024 22:39:12 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>通知 Notification</title>
+      <link>/posts/110/</link>
+      <pubDate>Mon, 29 Jan 2024 22:39:12 +0800</pubDate>
+      
+      <guid>/posts/110/</guid>
+      <description>HTML5 通知 API 设计策略：无论用户访问哪个页面，只要有消息，都能推送给用户看到。因此，HTML5 通知生成的消息不依附于某个页面，仅仅依附于浏览器。
+用户可以通过 Notification 对象的 permission 属性来判断用户是否给予让浏览器显示通知的权限
+【未完待续】</description>
+    </item>
+    
     <item>
       <title>FileReader</title>
       <link>/posts/109/</link>
