@@ -31,7 +31,7 @@
 
 <html
   class="not-ready text-sm lg:text-base"
-  style="--bg: #fff"
+  style="--bg: "
   lang="en"
 >
   <head>
@@ -171,7 +171,7 @@ div:nth-child(1) { box-shadow: 0 0 0 10px #1c318d, 0 0 0 20px #3955c7, 0 0 0 30p
 
     
     const metaTheme = document.querySelector('meta[name="theme-color"]');
-    const lightBg = `"#fff"`.replace(/"/g, '');
+    const lightBg = ` null `.replace(/"/g, '');
     const setDark = (isDark) => {
       isDark = true;
       metaTheme.setAttribute('content', isDark ? '#000' : lightBg);

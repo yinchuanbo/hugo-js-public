@@ -31,7 +31,7 @@
 
 <html
   class="not-ready text-sm lg:text-base"
-  style="--bg: #fff"
+  style="--bg: "
   lang="en"
 >
   <head>
@@ -179,7 +179,7 @@ let user = { name: &#34;John&#34;, surname: &#34;Smith&#34;, }; 现在我们想�
 
     
     const metaTheme = document.querySelector('meta[name="theme-color"]');
-    const lightBg = `"#fff"`.replace(/"/g, '');
+    const lightBg = ` null `.replace(/"/g, '');
     const setDark = (isDark) => {
       isDark = true;
       metaTheme.setAttribute('content', isDark ? '#000' : lightBg);

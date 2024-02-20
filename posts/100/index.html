@@ -31,7 +31,7 @@
 
 <html
   class="not-ready text-sm lg:text-base"
-  style="--bg: #fff"
+  style="--bg: "
   lang="en"
 >
   <head>
@@ -179,7 +179,7 @@ Set 的去重功能非常有用，可以方便地从数组中去除重复的值
 
     
     const metaTheme = document.querySelector('meta[name="theme-color"]');
-    const lightBg = `"#fff"`.replace(/"/g, '');
+    const lightBg = ` null `.replace(/"/g, '');
     const setDark = (isDark) => {
       isDark = true;
       metaTheme.setAttribute('content', isDark ? '#000' : lightBg);

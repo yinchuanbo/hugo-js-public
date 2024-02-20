@@ -31,7 +31,7 @@
 
 <html
   class="not-ready text-sm lg:text-base"
-  style="--bg: #fff"
+  style="--bg: "
   lang="en"
 >
   <head>
@@ -179,7 +179,7 @@ var o = Object.create( {}, { a: { writable: true, configurable: true, value: &#3
 
     
     const metaTheme = document.querySelector('meta[name="theme-color"]');
-    const lightBg = `"#fff"`.replace(/"/g, '');
+    const lightBg = ` null `.replace(/"/g, '');
     const setDark = (isDark) => {
       isDark = true;
       metaTheme.setAttribute('content', isDark ? '#000' : lightBg);

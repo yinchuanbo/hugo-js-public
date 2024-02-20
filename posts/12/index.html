@@ -31,7 +31,7 @@
 
 <html
   class="not-ready text-sm lg:text-base"
-  style="--bg: #fff"
+  style="--bg: "
   lang="en"
 >
   <head>
@@ -271,7 +271,7 @@ try-catch 只能捕获到同步的运行时错误，对语法和异步错误却�
 
     
     const metaTheme = document.querySelector('meta[name="theme-color"]');
-    const lightBg = `"#fff"`.replace(/"/g, '');
+    const lightBg = ` null `.replace(/"/g, '');
     const setDark = (isDark) => {
       isDark = true;
       metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
