@@ -29,7 +29,13 @@ var s1 = new String(1); // 构造字符串 var s2 = &amp;#34;1&amp;#34;; console
       <pubDate>Sat, 02 Mar 2024 21:23:27 +0800</pubDate>
       
       <guid>/posts/124/</guid>
-      <description></description>
+      <description>继承 @extend 在使用的选择器中插入被继承的选择器样式。
+.icon { color: red; } .error-icon { @extend .icon; } .success-icon { @extend .icon; } 转化后：
+.icon, .error-icon, .success-icon { color: red; } 混入（Mixin） @mixin 定义可重复使用的样式片段，使用 @include，可以将定义的 Mixin 导入。
+@mixin icon-style { color: red; } .error-icon { @include icon-style; } .success-icon { @include icon-style; } 转化后：
+.error-icon { color: red; } .success-icon { color: red; } 在一个混入中也可以引入其他混入。
+@mixin special-icon { @include icon-style; @include special-style; } 在混入中传递变量
+@mixin icon($bg-color: grey) { background-color: $bg-color; } .</description>
     </item>
     
     <item>
