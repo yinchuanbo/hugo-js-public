@@ -7,7 +7,154 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Tue, 20 Feb 2024 14:05:11 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 03 Mar 2024 21:31:33 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>操作字符串</title>
+      <link>/posts/125/</link>
+      <pubDate>Sun, 03 Mar 2024 21:31:33 +0800</pubDate>
+      
+      <guid>/posts/125/</guid>
+      <description>字符串操作基础 定义字符串 1. 字符串直接量
+使用双引号或单引号包含任意长度的文本。
+var s = &amp;#34;true&amp;#34;; // 把布尔值转换为字符串 var s = &amp;#34;123&amp;#34;; // 把数值转换为字符串 var s = &amp;#34;[1,2,3]&amp;#34;; // 把数值转换为字符串 var s = &amp;#34;{x:1, y:2}&amp;#34;; // 把对象转换为字符串 var s = &amp;#34;console.log(&amp;#39;Hello, World&amp;#39;)&amp;#34;; // 把可表达式转换为字符串 对于字符串化脚本，可以调用全局方法 eval() 执行字符代码
+var s = &amp;#34;console.log(&amp;#39;Hello, World&amp;#39;)&amp;#34;; eval(s); 2. 构造字符串
+使用 String() 类型函数可以构造字符串，该函数可以接收一个参数，并把它作为值来初始化字符串。
+var s = new String(); // 创建一个空字符串对象，引用类型，并赋值给变量 s var s = new String(&amp;#34;我是构造字符串&amp;#34;); // 创建字符串对象，初始化之后赋值给变量 s 下面比较构造字符串和字符串直接量的数据类型值的不同：
+var s1 = new String(1); // 构造字符串 var s2 = &amp;#34;1&amp;#34;; console.</description>
+    </item>
+    
+    <item>
+      <title>SCSS</title>
+      <link>/posts/124/</link>
+      <pubDate>Sat, 02 Mar 2024 21:23:27 +0800</pubDate>
+      
+      <guid>/posts/124/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Git开发工作流程</title>
+      <link>/posts/123/</link>
+      <pubDate>Sat, 02 Mar 2024 10:11:57 +0800</pubDate>
+      
+      <guid>/posts/123/</guid>
+      <description>一、开发分支模型分类 目前部门使用的主要是四种：dev(开发)、test(测试)、uat(预发布)、release(生产)
+二、开发主体流程 需求评审
+开发排期
+编码开发
+冒烟测试（自检查）
+冒烟通过，提交测试，合并代码到测试分支，部署测试环境
+测试环境测试，开发修 bug
+测试完成，提交预发布环境，合并代码到预发布分支，部署到预发布环境
+预发布环境测试，开发修 bug
+测试完成，产品验收
+验收完成，提交生产，合并代码到生产分支，部署生产环境
+生产运营（客户）验收
+验收完成，结项
+具体操作 1. 拉取代码 一般会在本地默认创建一个 master 分支
+git clone https://code.xxx.com/xxx/xxx.git 2. 初次开发需求前，要先拉取生成/预发布分支，然后基于这个分支之上，创建自己的特性分支进行开发 git fetch origin release:release git checkout release git checkout -b feat-0131-jie 此时，在你本地已经有一个 release 分支对应着远程仓库 release 分支，还有一个内容基于 release 分支的特性分支，之后便可以在这个特性分支上进行需求开发，
+如果不是初次开发，本地已经有生产/预发布分支，则需要重新拉取远程的最新代码，然后再创建
+# tips: 输入已有的分支名时，可以只输入前几个字符，然后按 tab 自动补充 git checkout release git pull origin release git checkout -b feat-0229-jie 注意1: 分支名称是有规范和含义的，不能乱取
+推荐格式：分支责任-需求日期/需求号-开发人姓名，一般按部门规范来，常见的有以下几种：
+feat: 新功能
+fix: 修补 bug</description>
+    </item>
+    
+    <item>
+      <title>Js 技巧</title>
+      <link>/posts/122/</link>
+      <pubDate>Sat, 02 Mar 2024 09:55:06 +0800</pubDate>
+      
+      <guid>/posts/122/</guid>
+      <description>动态对象键 const dynamicKey = &amp;#34;dynamicProperty&amp;#34;; const obj = { [dynamicKey]: &amp;#34;这是一个动态的属性&amp;#34;, }; console.log(obj.dynamicProperty); // 这是一个动态的属性 私有字段 现在，Js 类支持使用 # 符号的私有字段，私有字段不能从类外部访问，从而提供封装和信息隐藏。
+class Counter { #count = 0; increment() { this.#count++; } getCount() { return this.#count; } } const counter = new Counter(); counter.increment(); console.log(counter.getCount()); // 1 Promise.allSettled() 这个方法返回一个 Promise，该 Promise 在所有给定的 Promise 已经 resolve 或 reject 后 resolve，提供每个 Promise 的结果数组，
+const promises = [Promise.resolve(&amp;#34;Resolved&amp;#34;), Promise.reject(&amp;#34;Rejected&amp;#34;)]; Promise.allSettled(promises).then((results) =&amp;gt; { console.log(results); }); flatMap flatMap 方法将 map() 和 flat() 的效果结合到一个方法中。</description>
+    </item>
+    
+    <item>
+      <title>语句和程序结构</title>
+      <link>/posts/121/</link>
+      <pubDate>Thu, 29 Feb 2024 21:07:48 +0800</pubDate>
+      
+      <guid>/posts/121/</guid>
+      <description>流程控制 break 语句 break 语句能够结束当前 for、for/in、while、do/while 或者 switch 语句的执行；同时 break 也可以接受一个可选的标签名，来决定跳出的结构语句。语法格式如下：
+break label; 下面示例设计在客户端查找 document 的 bgColor 属性，如果完全遍历 document 对象，会浪费时间，因此设计一个条件，判断所枚举的属性名是都等于 “bgColor”，如果相等，则使用 break 语句跳出循环。
+for (i in document) { if (i.toString() == &amp;#34;bgColor&amp;#34;) { document.write(&amp;#34;document.&amp;#34; + i + &amp;#34;=&amp;#34; + document[i] + &amp;#34;&amp;lt;br /&amp;gt;&amp;#34;); break; } } 在下面嵌套结构中，break 语句并没有跳出 for/in 结构，仅仅退出 switch 结构。
+for (i in document) { switch (i.toString()) { case &amp;#34;bgColor&amp;#34;: document.write(&amp;#34;document.&amp;#34; + i + &amp;#34;=&amp;#34; + document[i] + &amp;#34;&amp;lt;br /&amp;gt;&amp;#34;); break; default: document.</description>
+    </item>
+    
+    <item>
+      <title>运算符和表达式</title>
+      <link>/posts/120/</link>
+      <pubDate>Sun, 25 Feb 2024 09:51:47 +0800</pubDate>
+      
+      <guid>/posts/120/</guid>
+      <description>运算符 左值、赋值及其副作用 var a = 0; a++; console.log(a); // 1 var a = 1; a = (a++) + (++a) - (a++) - (++a); console.log(a) 拆解表达式：
+var a = 1; // 初始值为 1 var b = a++; // a 先赋值给 b，在递加变为 2 var c = ++a; // a 先递加变为 3，再赋 3 给 c var d = a++; // a 赋 3 给 d，在递加变为 4 var e = ++a; // a 先递加变为 5，在赋 5 给 e console.</description>
+    </item>
+    
+    <item>
+      <title>类型转换</title>
+      <link>/posts/119/</link>
+      <pubDate>Sat, 24 Feb 2024 09:56:01 +0800</pubDate>
+      
+      <guid>/posts/119/</guid>
+      <description>转换为字符串 常用值转换为字符串说明如下：
+1 =&amp;gt; &amp;#34;1&amp;#34; 0 =&amp;gt; &amp;#34;0&amp;#34; true =&amp;gt; &amp;#34;true&amp;#34; false =&amp;gt; &amp;#34;false&amp;#34; &amp;#34;&amp;#34; =&amp;gt; &amp;#34;&amp;#34; undefined =&amp;gt; &amp;#34;undefined&amp;#34; null =&amp;gt; &amp;#34;null&amp;#34; NaN =&amp;gt; &amp;#34;NaN&amp;#34; Infinity =&amp;gt; &amp;#34;Infinity&amp;#34; 把值转换为字符串的常用方法有 2 种：
+使用加号运算符 当值与空字符串相加运算时，Js 会自动把值转换为字符串。 (1) 数字转换为字符串，
+var n = 123; n = n + &amp;#34;&amp;#34;; console.log(typeof n); // &amp;#34;string&amp;#34; (2) 把布尔值转换为字符串
+var b = true; b = b + &amp;#34;&amp;#34;; console.log(b); // &amp;#34;true&amp;#34; (3) 把数组转换为字符串
+var a = [1, 2, 3]; a = a + &amp;#34;&amp;#34;; console.</description>
+    </item>
+    
+    <item>
+      <title>类型检测</title>
+      <link>/posts/118/</link>
+      <pubDate>Fri, 23 Feb 2024 22:11:00 +0800</pubDate>
+      
+      <guid>/posts/118/</guid>
+      <description>使用 contructor contructor 是 Object 类型的原型属性，它能够返回当前对象的构造器（类型函数）。
+利用该属性，可以检测复合型数据的类型，如对象、数组和函数等。
+下面代码可以检测对象和数组的类型，以此可以过滤对象、数组
+var o = {}; var a = []; console.log(o.constructor == Object); // o 是对象 console.log(a.constructor == Array); // a 是数组 结合 typeof 运算符和 constructor 原型属性，可以检测不同类型的数据：
+值(value) typeof value value.contructor var value=1 &amp;ldquo;number&amp;rdquo; Number var value=&amp;ldquo;a&amp;rdquo; &amp;ldquo;string&amp;rdquo; String var value=true &amp;ldquo;boolean&amp;rdquo; Boolean var value={} &amp;ldquo;object&amp;rdquo; Object var value=new Object() &amp;ldquo;object&amp;rdquo; Object var value=[] &amp;ldquo;object&amp;rdquo; Array var value=new Array() &amp;ldquo;object&amp;rdquo; Array var value=function(){} &amp;ldquo;function&amp;rdquo; Function function className(){};var value=new ClassName() &amp;ldquo;object&amp;rdquo; className undefined 和 null 没有 constructor 属性，不能够直接读取，否则会抛出异常。因此，一般应先检测值为 undefined 和 null 等特殊值，然后再调用 constructor 属性。</description>
+    </item>
+    
+    <item>
+      <title>严格模式</title>
+      <link>/posts/117/</link>
+      <pubDate>Fri, 23 Feb 2024 21:53:14 +0800</pubDate>
+      
+      <guid>/posts/117/</guid>
+      <description>启用严格模式 在代码首部添加以下一行字符串，即可开启严格模式。
+&amp;#34;use strict&amp;#34;; 首部就是指其前面没有任何有效的 Js 代码，例如，以下用法都不会触发严格模式。
+&amp;ldquo;use strict&amp;rdquo; 前有可执行的代码 var width = 10; &amp;#34;use strict&amp;#34;; // 无效 globalVar = 100; &amp;ldquo;use strict&amp;rdquo; 前有空语句 ; &amp;#34;use strict&amp;#34;; // 无效 globalVar = 100; 或者
+;&amp;#34;use strict&amp;#34;; // 无效 globalVar = 100; 注意：
+注释语句不作为有效的 Js 代码，例如，下面用法会触发严格模式。
+// 严格模式 &amp;#34;use strict&amp;#34;; // 有效 globalVar = 100; 1. 全局模式
+将 &amp;ldquo;use strict&amp;rdquo; 放在脚本文件的第一行，则整个脚本都将以严格模式运行，如果不在第一行，则整个脚本将以正常模式运行。
+下面示例在页面中添加两个 Js 代码块，第一个代码块将开启严格模式，第二个代码块将按正常模式解析。
+&amp;lt;script&amp;gt; &amp;#34;use strict&amp;#34;; console.log(&amp;#34;这是严格模式&amp;#34;); &amp;lt;/script&amp;gt; &amp;lt;script&amp;gt; console.log(&amp;#34;这是正常模式&amp;#34;); &amp;lt;/script&amp;gt; 2.</description>
+    </item>
+    
+    <item>
+      <title>数据类型</title>
+      <link>/posts/116/</link>
+      <pubDate>Fri, 23 Feb 2024 20:37:31 +0800</pubDate>
+      
+      <guid>/posts/116/</guid>
+      <description>基本类型 JavaScript 的基本数据类型
+null: 控制，表示非对象
+undefined: 未定义的值，表示未赋值的初始化值
+number: 数字
+string: 字符串
+boolean: 布尔值
+object: 对象，表示复合结构的数据集
+使用 typeof 运算符可以检测数据的基本类型。
+console.log(typeof 1); // &amp;#34;number&amp;#34; console.log(typeof &amp;#34;1&amp;#34;); // &amp;#34;string&amp;#34; console.log(typeof true); // &amp;#34;boolean&amp;#34; console.log(typeof {}); // &amp;#34;object&amp;#34; console.log(typeof []); // &amp;#34;object&amp;#34; console.log(typeof function () {}); // &amp;#34;function&amp;#34; console.log(typeof null); // &amp;#34;object&amp;#34; console.log(typeof undefined); // &amp;#34;undefined&amp;#34; 由于 null 值返回类型为 Object，使用下面自定义函数可以避开因为 null 值影响基本类型检测。
+function typeOf(o) { return o === null ? &amp;#34;null&amp;#34; : typeof o; } console.</description>
+    </item>
+    
     <item>
       <title>CSS修改滚动条样式 scrollbar</title>
       <link>/posts/114/</link>
