@@ -126,7 +126,7 @@ var s = &#34;console.log(&#39;Hello, World&#39;)&#34;; eval(s); 2. 构造字符�
 var s = new String(); // 创建一个空字符串对象，引用类型，并赋值给变量 s var s = new String(&#34;我是构造字符串&#34;); // 创建字符串对象，初始化之后赋值给变量 s 下面比较构造字符串和字符串直接量的数据类型值的不同：
 var s1 = new String(1); // 构造字符串 var s2 = &#34;1&#34;; console."><meta itemprop="datePublished" content="2024-03-03T21:31:33+08:00" />
 <meta itemprop="dateModified" content="2024-03-03T21:31:33+08:00" />
-<meta itemprop="wordCount" content="1104">
+<meta itemprop="wordCount" content="1199">
 <meta itemprop="keywords" content="" />
   
   <meta name="twitter:card" content="summary"/>
@@ -541,8 +541,27 @@ var s1 = new String(1); // 构造字符串 var s2 = &#34;1&#34;; console."/>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">split</span>();
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">constructor</span> <span style="color:#f92672">==</span> Array); <span style="color:#75715e">// true，说明是 Array 实例
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">length</span>); <span style="color:#75715e">// 1
-</span></span></span></code></pre></div><p>[&hellip;未完待续&hellip;]</p>
-</section>
+</span></span></span></code></pre></div><p>如果参数为正则表达式，则 split() 能够以匹配文本作为分隔符进行切分。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;a2b3c4d5e678f12g&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">split</span>(<span style="color:#e6db74">/\d+/</span>); <span style="color:#75715e">// 把以匹配的数字分隔符来切分字符串
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">a</span>); <span style="color:#75715e">//  [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;, &#39;f&#39;, &#39;g&#39;]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">length</span>); <span style="color:#75715e">// 7
+</span></span></span></code></pre></div><p>如果正则表达式匹配的文本位于字符串的边沿，则 split() 也执行切分操作，且为数组添加一个空元素。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;122a2b3c4d5e678f12g&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">split</span>(<span style="color:#e6db74">/\d+/</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">a</span>); <span style="color:#75715e">// [&#39;&#39;, &#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;, &#39;f&#39;, &#39;g&#39;]
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">length</span>);
+</span></span></code></pre></div><p>如果在字符串中指定的分隔符没有找到，则返回一个包含整个字符串的数组。</p>
+<p>split() 支持第二个参数，该参数是一个可选的整数，用来指定返回数组的最大长度。</p>
+<p>如果设置了该参数，则返回的数组长度不会大于这个参数指定的值，如果没有设置该参数，那么整个字符串都被分割，不会考虑数组长度。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;JavaScript&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">split</span>(<span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#ae81ff">4</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">a</span>); <span style="color:#75715e">// [&#39;J&#39;, &#39;a&#39;, &#39;v&#39;, &#39;a&#39;]
+</span></span></span></code></pre></div><p>如果想使返回的数组包含分隔符或分隔符的一个或多个部分，可以使用带子表达式的正则表达式来实现。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;aa2bb3cc4dd5e678f12g&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">split</span>(<span style="color:#e6db74">/(\d)/</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">a</span>); <span style="color:#75715e">//  [&#39;aa&#39;, &#39;2&#39;, &#39;bb&#39;, &#39;3&#39;, &#39;cc&#39;, &#39;4&#39;, &#39;dd&#39;, &#39;5&#39;, &#39;e&#39;, &#39;6&#39;, &#39;&#39;, &#39;7&#39;, &#39;&#39;, &#39;8&#39;, &#39;f&#39;, &#39;1&#39;, &#39;&#39;, &#39;2&#39;, &#39;g&#39;]
+</span></span></span></code></pre></div></section>
 
   
   
