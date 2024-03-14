@@ -7,7 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Sun, 03 Mar 2024 21:31:33 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 12 Mar 2024 19:46:23 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用数组</title>
+      <link>/posts/126/</link>
+      <pubDate>Tue, 12 Mar 2024 19:46:23 +0800</pubDate>
+      
+      <guid>/posts/126/</guid>
+      <description>定义数组 构造数组 使用 new 运算符调用 Array() 类型函数时，可以构造一个新数组。
+var a = new Array(); // 空数组 传递多个数值，可以创建一个实数组
+var a = new Array(1, true, &amp;#34;string&amp;#34;, [1, 2], { x: 1, y: 2 }); 传递一个数值参数，可以定义数组的长度，即包含元素的个数。
+var a = new Array(5); // [&amp;#34;&amp;#34;, &amp;#34;&amp;#34;, &amp;#34;&amp;#34;, &amp;#34;&amp;#34;, &amp;#34;&amp;#34;] 数组直接量 var a = []; var a = [1, true, &amp;#34;0&amp;#34;, [1, 0], { x: 1, y: 0 }]; 关联数组 如果数组的下标值超出范围，如负数、浮点数、布尔值、对象或其他值，JavaScript 会自动把它转换为一个字符串，并定义为关联数组。
+在下面示例中，数组下标 false、true 将不会被强制转换为数值 0、1，JavaScript 会把变量 a 视为对象，false 和 true 转换的字符串被视为对象的属性名。</description>
+    </item>
+    
     <item>
       <title>操作字符串</title>
       <link>/posts/125/</link>
