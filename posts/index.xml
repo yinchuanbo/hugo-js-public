@@ -7,18 +7,29 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Tue, 12 Mar 2024 19:46:23 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 16 Mar 2024 22:07:00 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>使用数组</title>
+      <title>统一 Node 版本</title>
+      <link>/posts/127/</link>
+      <pubDate>Sat, 16 Mar 2024 22:07:00 +0800</pubDate>
+      
+      <guid>/posts/127/</guid>
+      <description>1. package.json 的 engines 字段 在项目的 package.json 文件中，可以使用 engines 字段来指定所需的 Node 版本，在该字段中，可以定义一个范围或者具体的版本号来限制 Node 的版本。
+// 指定特定版本号 { //... &amp;#34;engines&amp;#34;: { &amp;#34;node&amp;#34;: &amp;#34;14.17.0&amp;#34; } } // 指定版本号范围 { //... &amp;#34;engines&amp;#34;: { &amp;#34;node&amp;#34;: &amp;#34;&amp;gt;=12.0.0 &amp;lt;16.0.0&amp;#34; } } // 波浪线符号：表示项目需要 Node 版本为 14.17.x { //... &amp;#34;engines&amp;#34;: { &amp;#34;node&amp;#34;: &amp;#34;~14.17.0&amp;#34; } } // 插入符号：表示项目需要 Node 版本为 14.x.x { //... &amp;#34;engines&amp;#34;: { &amp;#34;node&amp;#34;: &amp;#34;^14.17.0&amp;#34; } } 但是，我们在使用 npm install 时，发现 engines 配置并没有起作用，然后换 yarn 安装，发现 engines 配置又起作用了。</description>
+    </item>
+    
+    <item>
+      <title>使用函数</title>
       <link>/posts/126/</link>
       <pubDate>Tue, 12 Mar 2024 19:46:23 +0800</pubDate>
       
       <guid>/posts/126/</guid>
-      <description>定义数组 构造数组 使用 new 运算符调用 Array() 类型函数时，可以构造一个新数组。
-var a = new Array(); // 空数组 传递多个数值，可以创建一个实数组
-var a = new Array(1, true, &amp;#34;string&amp;#34;, [1, 2], { x: 1, y: 2 }); 传递一个数值参数，可以定义数组的长度，即包含元素的个数。
-var a = new Array(5); // [&amp;#34;&amp;#34;, &amp;#34;&amp;#34;, &amp;#34;&amp;#34;, &amp;#34;&amp;#34;, &amp;#34;&amp;#34;] 数组直接量 var a = []; var a = [1, true, &amp;#34;0&amp;#34;, [1, 0], { x: 1, y: 0 }]; 关联数组 如果数组的下标值超出范围，如负数、浮点数、布尔值、对象或其他值，JavaScript 会自动把它转换为一个字符串，并定义为关联数组。
-在下面示例中，数组下标 false、true 将不会被强制转换为数值 0、1，JavaScript 会把变量 a 视为对象，false 和 true 转换的字符串被视为对象的属性名。</description>
+      <description>调用函数 函数调用 下面示例中，使用小括号调用函数，然后直接把返回值传入函数，进行第二次运算，这样可以节省两个临时变量。
+function f(x, y) { return x * y; } console.log(f(f(5, 6), f(7, 8))); // 1680 如果函数返回值为一个函数，则在调用时可以使用多个小括号反复调用。
+function f(x, y) { return function () { return x * y; }; } console.log(f(7, 8)()); // 56 设计递归调用函数，即在函数内调用自身，这样可以反复调用，但最终返回的都是函数自身。
+function f() { return f; } console.log(f()()()()()()()()()()()()); // 返回函数自身 函数的返回值 在函数体内，使用 return 语句可以设置函数的返回值，一旦执行 return 语句，将停止函数的运行。并运算和返回 return 后面的表达式的值，如果函数不包含 return 语句，则执行完函数体内的每条语句后，返回 undefined。
+下面代码定义函数的返回值为函数：
+function f() { return function (x, y) { return x + y; }; } 使用 call 和 apply 调用 call 和 apply 是 Function 的原型方法，它们能够将特定函数当做一个方法绑定到指定对象上，并进行调用。</description>
     </item>
     
     <item>
