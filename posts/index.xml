@@ -7,7 +7,45 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>Copyright © 2008–2019, Steve Francia and the lee.so; all rights reserved.</copyright>
-    <lastBuildDate>Sat, 16 Mar 2024 22:07:00 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 17 Mar 2024 20:17:34 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>动态执行 js 的方法</title>
+      <link>/posts/130/</link>
+      <pubDate>Sun, 17 Mar 2024 20:17:34 +0800</pubDate>
+      
+      <guid>/posts/130/</guid>
+      <description>如何创建一个函数，将一个字符串当做代码执行？
+eval 方法 特点：同步，作用域是当前运行的作用域。
+var log = &amp;#34;全局---我是动态执行的 js 打印&amp;#34;; function exec(code) { var log = &amp;#34;局部---log我是动态执行的js打印&amp;#34;; eval(code); } exec(&amp;#34;console.log(log)&amp;#34;); console.log(&amp;#34;sync&amp;#34;); 结果：
+局部&amp;mdash;log 我是动态执行的 js 打印 sync
+setTimeout 特点：setTimeout 第一个参数是可以串字符串的，它会自动的将字符串当作代码看来运行，异步，作用域是全局作用域，不受当前作用域影响。
+var log = &amp;#34;全局---我是动态执行的 js 打印&amp;#34;; function exec(code) { var log = &amp;#34;局部---log我是动态执行的js打印&amp;#34;; setTimeout(code); } exec(&amp;#34;console.log(log)&amp;#34;); console.log(&amp;#34;sync&amp;#34;); 结果：
+sync 全局&amp;mdash;我是动态执行的 js 打印
+创建 script 标签，添加到页面 特点：会产生一个 script 元素，同步，作用域是全局作用域，不受当前作用域影响。
+var log = &amp;#34;全局---我是动态执行的 js 打印&amp;#34;; function exec(code) { var log = &amp;#34;局部---log我是动态执行的js打印&amp;#34;; const script = document.</description>
+    </item>
+    
+    <item>
+      <title>超有用的 Web API</title>
+      <link>/posts/129/</link>
+      <pubDate>Sun, 17 Mar 2024 16:57:01 +0800</pubDate>
+      
+      <guid>/posts/129/</guid>
+      <description>Screen Wake Lock API Screen Wake Lock API 提供了一种方式，使得当应用程序需要保持运行时，能够防止设备因为闲置而自动调低亮度或锁定屏幕。
+这对于如视频会议、演示文稿、实时游戏、在线教育等需要用户持续关注且不允许屏幕熄灭的应用场景尤其有用。
+通过这个 API，即使在没有用户交互的情况下，开发者也能确保屏幕始终保持开启状态。
+&amp;lt;button onclick=&amp;#34;onLockScreen()&amp;#34;&amp;gt;锁屏&amp;lt;/button&amp;gt; &amp;lt;button onclick=&amp;#34;onUnlockScreen()&amp;#34;&amp;gt;释放&amp;lt;/button&amp;gt; &amp;lt;div id=&amp;#34;statusElem&amp;#34;&amp;gt;&amp;lt;/div&amp;gt; let wakeLock = null; async function onLockScreen() { try { wakeLock = await navigator.wakeLock.request(&amp;#34;screen&amp;#34;); statusElem.textContent = &amp;#34;唤醒锁已激活&amp;#34;; wakeLock.addEventListener(&amp;#34;release&amp;#34;, () =&amp;gt; { statusElem.textContent = &amp;#34;唤醒锁已释放&amp;#34;; }); } catch (err) { statusElem.textContent = `${err.name}, ${err.message}`; } } async function onUnlockScreen() { if (!wakeLock) return; wakeLock.release().then(() =&amp;gt; { wakeLock = null; }); } Cookie Store API 按照以往，开发者如何获取 cookie 信息呢？当前是 document.</description>
+    </item>
+    
+    <item>
+      <title>JS复制粘贴兼容处理</title>
+      <link>/posts/128/</link>
+      <pubDate>Sat, 16 Mar 2024 23:00:24 +0800</pubDate>
+      
+      <guid>/posts/128/</guid>
+      <description>const copyText = async (val) =&amp;gt; { try { if (navigator.clipboard &amp;amp;&amp;amp; navigator.permissions) { await navigator.clipboard.writeText(val); return; // 如果成功，直接返回 } // 降级方案 const textArea = document.createElement(&amp;#34;textarea&amp;#34;); textArea.val = val; textArea.style.width = 0; textArea.style.position = &amp;#34;fixed&amp;#34;; textArea.style.left = &amp;#34;-999px&amp;#34;; textArea.style.top = &amp;#34;10px&amp;#34;; textArea.setAttribute(&amp;#34;readonly&amp;#34;, &amp;#34;readonly&amp;#34;); document.body.appendChild(textArea); textArea.select(); // 尝试执行赋值操作 const success = document.execCommand(&amp;#34;copy&amp;#34;); if (!success) { throw new Error(&amp;#34;无法复制文本&amp;#34;); } // 清理 document.body.removeChild(textArea); } catch (err) { console.log(&amp;#34;复制失败:&amp;#34;, err); } }; </description>
+    </item>
+    
     <item>
       <title>统一 Node 版本</title>
       <link>/posts/127/</link>

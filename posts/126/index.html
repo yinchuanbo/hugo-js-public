@@ -123,7 +123,7 @@ function f() { return f; } console.log(f()()()()()()()()()()()()); // 返回函�
 下面代码定义函数的返回值为函数：
 function f() { return function (x, y) { return x &#43; y; }; } 使用 call 和 apply 调用 call 和 apply 是 Function 的原型方法，它们能够将特定函数当做一个方法绑定到指定对象上，并进行调用。"><meta itemprop="datePublished" content="2024-03-12T19:46:23+08:00" />
 <meta itemprop="dateModified" content="2024-03-12T19:46:23+08:00" />
-<meta itemprop="wordCount" content="909">
+<meta itemprop="wordCount" content="1448">
 <meta itemprop="keywords" content="" />
   
   <meta name="twitter:card" content="summary"/>
@@ -445,7 +445,191 @@ function f() { return function (x, y) { return x &#43; y; }; } 使用 call 和 a
 </span></span><span style="display:flex;"><span>&lt;<span style="color:#f92672">button</span> <span style="color:#a6e22e">onclick</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;d()&#34;</span>&gt;递减&lt;/<span style="color:#f92672">button</span>&gt;
 </span></span></code></pre></div><p>在浏览器中浏览时，首先单击 “生成闭包” 时，生成一个闭包；单击 “查看 a 的值” 按钮，可以随时查看闭包内私有变量 a 的值，单击 “递增” “递减” 按钮时，可以动态修改闭包内变量 a 的值。</p>
 <h3 id="闭包的局限性">闭包的局限性</h3>
-<p>[&hellip;]</p>
+<p>闭包的价值是方便在表达式运算过程中存储数据，但是它的确定样式不容忽视的。</p>
+<ul>
+<li>
+<p>由于函数调用后，无法注销调用对象，会占用系统资源，在脚本中大量使用闭包，容易造成内存泄漏。解决办法，慎用闭包，不要滥用。</p>
+</li>
+<li>
+<p>由于闭包的作用，其保存的值时动态的，如果处理不当，容易出现异常或错误。</p>
+</li>
+</ul>
+<p>设计一个简单的选项卡效果：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tab_wrap&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">ul</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tab&#34;</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tab&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">li</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tab_1&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;hover&#34;</span>&gt;Tab1&lt;/<span style="color:#f92672">li</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">li</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tab_2&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;normal&#34;</span>&gt;Tab2&lt;/<span style="color:#f92672">li</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">li</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tab_3&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;normal&#34;</span>&gt;Tab3&lt;/<span style="color:#f92672">li</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#f92672">ul</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;content&#34;</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;content&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;content_1&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;show&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#f92672">img</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;images/1.jpg&#34;</span> <span style="color:#a6e22e">height</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;200&#34;</span> /&gt;
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;content_2&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;none&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#f92672">img</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;images/2.jpg&#34;</span> <span style="color:#a6e22e">height</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;200&#34;</span> /&gt;
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;content_3&#34;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;none&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#f92672">img</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;images/3.jpg&#34;</span> <span style="color:#a6e22e">height</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;200&#34;</span> /&gt;
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#f92672">div</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#f92672">div</span>&gt;
+</span></span></code></pre></div><p>下面看下 Js 脚本：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>window.<span style="color:#a6e22e">onload</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">tab</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;tab&#34;</span>).<span style="color:#a6e22e">getElementsByTagName</span>(<span style="color:#e6db74">&#34;li&#34;</span>),
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">content</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;content&#34;</span>).<span style="color:#a6e22e">getElementsByTagName</span>(<span style="color:#e6db74">&#34;div&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">tab</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">tab</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#34;mouseover&#34;</span>, <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">n</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">n</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">tab</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">n</span><span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">tab</span>[<span style="color:#a6e22e">n</span>].<span style="color:#a6e22e">className</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;normal&#34;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">content</span>[<span style="color:#a6e22e">n</span>].<span style="color:#a6e22e">className</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;none&#34;</span>;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">tab</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">className</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;hover&#34;</span>;
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">content</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">className</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;show&#34;</span>;
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>上面代码在运行的时候，会抛出异常：</p>
+<blockquote>
+<p>无法设置未定义或 null 引用的属性 &ldquo;className&rdquo;。</p>
+</blockquote>
+<p><strong>原因分析：</strong></p>
+<p>上面的 JS 代码是一个典型的的嵌套函数结构，外部函数为 load 事件处理函数，内部函数为 mouseover 事件处理函数，变量 i 为外部函数的私有变量。</p>
+<p>通过事件绑定，mouseover 事件处理函数被外界引用（li 元素），这样就形成了一个闭包体，虽然在 for 语句中为每个选项卡 li 分别绑定事件处理函数，但是这个操作是动态的，因此 <code>tab[i]</code> 中的 i 的值也是动态的，所以就会出现上述异常。</p>
+<p><strong>解决方法：</strong></p>
+<p>解决闭包缺陷，最简单的方法是阻断内部函数对外部函数的变量引用，这样就形成不了闭包体。</p>
+<p>针对本例子的缺陷，我们可以在内部函数（mouseover 事件处理函数）外边增加一层防火墙，不让其直接引用外部变量。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>window.<span style="color:#a6e22e">onload</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">tab</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;tab&#34;</span>).<span style="color:#a6e22e">getElementsByTagName</span>(<span style="color:#e6db74">&#34;li&#34;</span>),
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">content</span> <span style="color:#f92672">=</span> document.<span style="color:#a6e22e">getElementById</span>(<span style="color:#e6db74">&#34;content&#34;</span>).<span style="color:#a6e22e">getElementsByTagName</span>(<span style="color:#e6db74">&#34;div&#34;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">tab</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>    (<span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">j</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">tab</span>[<span style="color:#a6e22e">j</span>].<span style="color:#a6e22e">addEventListener</span>(<span style="color:#e6db74">&#34;mouseover&#34;</span>, <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">n</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">n</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">tab</span>.<span style="color:#a6e22e">length</span>; <span style="color:#a6e22e">n</span><span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">tab</span>[<span style="color:#a6e22e">n</span>].<span style="color:#a6e22e">className</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;normal&#34;</span>;
+</span></span><span style="display:flex;"><span>          <span style="color:#a6e22e">content</span>[<span style="color:#a6e22e">n</span>].<span style="color:#a6e22e">className</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;none&#34;</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">tab</span>[<span style="color:#a6e22e">j</span>].<span style="color:#a6e22e">className</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;hover&#34;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">content</span>[<span style="color:#a6e22e">j</span>].<span style="color:#a6e22e">className</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;show&#34;</span>;
+</span></span><span style="display:flex;"><span>      });
+</span></span><span style="display:flex;"><span>    })(<span style="color:#a6e22e">i</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>在 for 语句中，直接调用匿名函数，把外部函数的 i 变量传给调用函数，在调用函数中接收这个值，而不是引用外部变量，规避了闭包体带来的困惑。</p>
+<h2 id="函数式运算">函数式运算</h2>
+<h3 id="函数合成">函数合成</h3>
+<p>语法格式如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">f</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">compose</span>(<span style="color:#a6e22e">a</span>, <span style="color:#a6e22e">b</span>, <span style="color:#a6e22e">c</span>);
+</span></span></code></pre></div><p>例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">compose</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">g</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">x</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">f</span>(<span style="color:#a6e22e">g</span>(<span style="color:#a6e22e">x</span>));
+</span></span><span style="display:flex;"><span>  };
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">add</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">x</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">mul</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">x</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>;
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">compose</span>(<span style="color:#a6e22e">mul</span>, <span style="color:#a6e22e">add</span>)(<span style="color:#ae81ff">2</span>);
+</span></span></code></pre></div><p><strong>使用 compose 要注意以下 3 点：</strong></p>
+<ul>
+<li>
+<p>compose 的参数是函数，返回的也是一个函数。</p>
+</li>
+<li>
+<p>处理初始函数（最右侧的一个）外，其他函数的接收参数都是上一个函数的返回值，所以初始函数的参数可以是多元的，而其他函数的接收值是一元的。</p>
+</li>
+<li>
+<p>compose 函数可以接收任意的函数，所有参数都是函数，且执行方向为自右向左的。初始函数一定要放到参数的最右侧。</p>
+</li>
+</ul>
+<p>下面来完善 compose 实现，实现无限函数合成：</p>
+<p>既然函数以多米诺骨牌式执行，那么可以使用递归或迭代，在函数体内不断地执行 arguments 中的函数，将上一个函数的执行结果作为下一个执行函数的输入参数。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// 函数合成，从右到左合成函数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">compose</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_arguments</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">arguments</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">length</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">_arguments</span>.<span style="color:#a6e22e">length</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">index</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">length</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 检测参数，如果存在非函数参数，则抛出异常
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">while</span> (<span style="color:#a6e22e">index</span><span style="color:#f92672">--</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">typeof</span> <span style="color:#a6e22e">_arguments</span>[<span style="color:#a6e22e">index</span>] <span style="color:#f92672">!==</span> <span style="color:#e6db74">&#34;function&#34;</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> Error(<span style="color:#e6db74">&#34;参数必须为函数！&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">index</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">length</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>; <span style="color:#75715e">// 定位到最后一个参数下标
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 如果存在两个及以参数，则调用最后一个参数函数，并传入内层参数；否则直接返回第 1 个参数函数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">result</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">length</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">?</span> <span style="color:#a6e22e">_arguments</span>[<span style="color:#a6e22e">index</span>].<span style="color:#a6e22e">apply</span>(<span style="color:#66d9ef">this</span>, <span style="color:#a6e22e">arguments</span>)
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">:</span> <span style="color:#a6e22e">arguments</span>[<span style="color:#ae81ff">0</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> (<span style="color:#a6e22e">index</span><span style="color:#f92672">--</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// 把右侧的执行结果作为参数传给左侧参数函数，并调用
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#a6e22e">result</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">_arguments</span>[<span style="color:#a6e22e">index</span>].<span style="color:#a6e22e">call</span>(<span style="color:#66d9ef">this</span>, <span style="color:#a6e22e">result</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">result</span>;
+</span></span><span style="display:flex;"><span>  };
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 反向函数合成，即从左到右合成函数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">composeLeft</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">compose</span>.<span style="color:#a6e22e">apply</span>(<span style="color:#66d9ef">null</span>, [].<span style="color:#a6e22e">reverse</span>.<span style="color:#a6e22e">call</span>(<span style="color:#a6e22e">arguments</span>));
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>在上面实现代码中，compose 实现是从右到左进行合成，也提供了从左到右的合成，即 composeLeft，同时在 compose 体内添加了一层函数的校验，允许传递一个或多个参数。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">add</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">x</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span>;
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">mul</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">x</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>;
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">sub</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">x</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">5</span>;
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">div</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">x</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">5</span>;
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">fn</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">compose</span>(<span style="color:#a6e22e">add</span>, <span style="color:#a6e22e">mul</span>, <span style="color:#a6e22e">sub</span>, <span style="color:#a6e22e">div</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">fn</span>(<span style="color:#ae81ff">50</span>)); <span style="color:#75715e">// 30
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">fn</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">compose</span>(<span style="color:#a6e22e">add</span>, <span style="color:#a6e22e">compose</span>(<span style="color:#a6e22e">mul</span>, <span style="color:#a6e22e">sub</span>, <span style="color:#a6e22e">div</span>));
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">fn</span>(<span style="color:#ae81ff">50</span>)); <span style="color:#75715e">// 30
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">fn</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">compose</span>(<span style="color:#a6e22e">compose</span>(<span style="color:#a6e22e">add</span>, <span style="color:#a6e22e">mul</span>), <span style="color:#a6e22e">sub</span>, <span style="color:#a6e22e">div</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">fn</span>(<span style="color:#ae81ff">50</span>)); <span style="color:#75715e">// 30
+</span></span></span></code></pre></div><h3 id="函数柯里化">函数柯里化</h3>
+<p>所谓柯里化，就是把一个多参数的函数转换为单一参数函数，有了柯里化运算之后，我们就能做到所有函数只接收一个参数。</p>
+<p>下面是一个简单的求和函数 add():</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">add</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">x</span>, <span style="color:#a6e22e">y</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">y</span>;
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>每次调动 add()，需要同时传入两个参数，如果希望每次仅传入一个参数，可以这样进行柯里化。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">add</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">x</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">y</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">y</span>;
+</span></span><span style="display:flex;"><span>  };
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">add</span>(<span style="color:#ae81ff">2</span>)(<span style="color:#ae81ff">6</span>)); <span style="color:#75715e">// 8
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">add1</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">add</span>(<span style="color:#ae81ff">200</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">add1</span>(<span style="color:#ae81ff">2</span>)); <span style="color:#75715e">// 202
+</span></span></span></code></pre></div><p>从某种意义上讲，这是对参数的 “缓存”，是一种非常高效的函数式运算方法，柯里化在 DOM 的回调中非常实用。</p>
+<p><strong>实现代码</strong></p>
+<p>设想 curry 可以接收一个函数，即原始函数，返回的也是一个函数，即柯里化函数。这个返回的柯里化函数在执行的过程中会不断地返回一个存储了传入参数的函数，直到触发了原始函数执行的条件，</p>
+<p>例如，设计一个 <code>add()</code> 函数，计算两个参数之和</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">add</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">x</span>, <span style="color:#a6e22e">y</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">y</span>;
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>柯里化函数：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">curryAdd</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">curry</span>(<span style="color:#a6e22e">add</span>);
+</span></span></code></pre></div><p>这个 add 需要两个参数，但是执行 curryAdd 时，可以传入更少的参数。当传入的参数少于 add 需要的参数时，add 函数并不会立即执行，curryAdd 就会将这个参数记录下来，并且返回另外一个函数，这个函数可以继续执行传入参数。如果传入参数的总数等于 add 所需参数的总数，则执行原始参数，返回想要的结果，如果没有参数限制，最后根据空的小括号作为执行原始参数的条件，返回运算结果。</p>
+<p>curry 实现的封装代码如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// 柯里化函数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">curry</span>(<span style="color:#a6e22e">fn</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_argLen</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>.<span style="color:#a6e22e">length</span>; <span style="color:#75715e">// 记录原始函数的形参个数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_args</span> <span style="color:#f92672">=</span> [].<span style="color:#a6e22e">slice</span>.<span style="color:#a6e22e">call</span>(<span style="color:#a6e22e">arguments</span>, <span style="color:#ae81ff">1</span>); <span style="color:#75715e">// 把传入的第2个及以后参数转换为数组
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">wrap</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 把当前参数转换为数组，与前面参数进行合并
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">_args</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">_args</span>.<span style="color:#a6e22e">concat</span>([].<span style="color:#a6e22e">slice</span>.<span style="color:#a6e22e">call</span>(<span style="color:#a6e22e">arguments</span>));
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>【185】</p>
 </section>
 
   
