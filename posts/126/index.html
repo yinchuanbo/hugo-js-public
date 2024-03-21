@@ -123,7 +123,7 @@ function f() { return f; } console.log(f()()()()()()()()()()()()); // 返回函�
 下面代码定义函数的返回值为函数：
 function f() { return function (x, y) { return x &#43; y; }; } 使用 call 和 apply 调用 call 和 apply 是 Function 的原型方法，它们能够将特定函数当做一个方法绑定到指定对象上，并进行调用。"><meta itemprop="datePublished" content="2024-03-12T19:46:23+08:00" />
 <meta itemprop="dateModified" content="2024-03-12T19:46:23+08:00" />
-<meta itemprop="wordCount" content="1448">
+<meta itemprop="wordCount" content="1715">
 <meta itemprop="keywords" content="" />
   
   <meta name="twitter:card" content="summary"/>
@@ -626,10 +626,91 @@ function f() { return function (x, y) { return x &#43; y; }; } 使用 call 和 a
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">wrap</span>() {
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 把当前参数转换为数组，与前面参数进行合并
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">_args</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">_args</span>.<span style="color:#a6e22e">concat</span>([].<span style="color:#a6e22e">slice</span>.<span style="color:#a6e22e">call</span>(<span style="color:#a6e22e">arguments</span>));
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">act</span>() {
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// 把当前参数转换为数组，与前面参数进行合并
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#a6e22e">_args</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">_args</span>.<span style="color:#a6e22e">concat</span>([].<span style="color:#a6e22e">slice</span>.<span style="color:#a6e22e">call</span>(<span style="color:#a6e22e">arguments</span>));
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// 如果传入参数总和大于等于原始参数的个数，触发执行条件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#66d9ef">if</span> (
+</span></span><span style="display:flex;"><span>        (<span style="color:#a6e22e">_argLen</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">arguments</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>        (<span style="color:#a6e22e">_argLen</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">_args</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">&gt;=</span> <span style="color:#a6e22e">_argLen</span>)
+</span></span><span style="display:flex;"><span>      ) {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 执行原始函数，并把每次传入参数传入进去，返回执行结果，停止 curry
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fn</span>.<span style="color:#a6e22e">apply</span>(<span style="color:#66d9ef">null</span>, <span style="color:#a6e22e">_args</span>);
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">arguments</span>.<span style="color:#a6e22e">callee</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 如果传入参数大于等于原始函数的参数个数，即触发了执行条件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (
+</span></span><span style="display:flex;"><span>      (<span style="color:#a6e22e">_argLen</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">arguments</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>      (<span style="color:#a6e22e">_argLen</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">_args</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">&gt;=</span> <span style="color:#a6e22e">_argLen</span>)
+</span></span><span style="display:flex;"><span>    ) {
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// 执行原始函数，并把每次传入参数传入进去，返回执行结果，停止 curry
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fn</span>.<span style="color:#a6e22e">apply</span>(<span style="color:#66d9ef">null</span>, <span style="color:#a6e22e">_args</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">act</span>.<span style="color:#a6e22e">toString</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fn</span>.<span style="color:#a6e22e">toString</span>();
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">act</span>; <span style="color:#75715e">// 返回处理函数
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">wrap</span>; <span style="color:#75715e">// 返回 curry 函数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>设计求和函数，没有形参限制，柯里化函数将根据空小括号作为最后调用原始函数的条件。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// 求和函数，参数不限
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">add</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> [].<span style="color:#a6e22e">slice</span>.<span style="color:#a6e22e">call</span>(<span style="color:#a6e22e">arguments</span>).<span style="color:#a6e22e">reduce</span>(<span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">a</span>, <span style="color:#a6e22e">b</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> (<span style="color:#66d9ef">typeof</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;number&#34;</span> <span style="color:#f92672">?</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>) <span style="color:#f92672">+</span> (<span style="color:#66d9ef">typeof</span> <span style="color:#a6e22e">b</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;number&#34;</span> <span style="color:#f92672">?</span> <span style="color:#a6e22e">b</span> <span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>  });
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">curried</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">curry</span>(<span style="color:#a6e22e">add</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">curried</span>(<span style="color:#ae81ff">1</span>)(<span style="color:#ae81ff">2</span>)(<span style="color:#ae81ff">3</span>)()); <span style="color:#75715e">// 6
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">curried</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">curry</span>(<span style="color:#a6e22e">add</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">curried</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>)(<span style="color:#ae81ff">4</span>)()); <span style="color:#75715e">// 10
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">curried</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">curry</span>(<span style="color:#a6e22e">add</span>, <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">curried</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>)(<span style="color:#ae81ff">3</span>)(<span style="color:#ae81ff">3</span>)()); <span style="color:#75715e">// 10
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">curried</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">curry</span>(<span style="color:#a6e22e">add</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">5</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">curried</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>)(<span style="color:#ae81ff">5</span>)()); <span style="color:#75715e">// 21
+</span></span></span></code></pre></div><p>设计求和函数，返回 3 个参数之和</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">add</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">a</span>, <span style="color:#a6e22e">b</span>, <span style="color:#a6e22e">c</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">b</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">c</span>;
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">curried</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">curry</span>(<span style="color:#a6e22e">add</span>, <span style="color:#ae81ff">2</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">curried</span>(<span style="color:#ae81ff">1</span>)(<span style="color:#ae81ff">2</span>)); <span style="color:#75715e">// 5
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">curried</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">curry</span>(<span style="color:#a6e22e">add</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">curried</span>(<span style="color:#ae81ff">2</span>)); <span style="color:#75715e">// 5
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">curried</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">curry</span>(<span style="color:#a6e22e">add</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">curried</span>(<span style="color:#ae81ff">1</span>)(<span style="color:#ae81ff">2</span>)(<span style="color:#ae81ff">6</span>)); <span style="color:#75715e">// 9
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">curried</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">curry</span>(<span style="color:#a6e22e">add</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">curried</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">6</span>)); <span style="color:#75715e">// 9
+</span></span></span></code></pre></div><h2 id="高阶函数">高阶函数</h2>
+<h3 id="回调函数">回调函数</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">map</span>(<span style="color:#a6e22e">array</span>, <span style="color:#a6e22e">func</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">res</span> <span style="color:#f92672">=</span> [];
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#66d9ef">in</span> <span style="color:#a6e22e">array</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">func</span>(<span style="color:#a6e22e">array</span>[<span style="color:#a6e22e">i</span>]));
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">res</span>;
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>【185】</p>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">map</span>([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>], <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">n</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">n</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">n</span>;
+</span></span><span style="display:flex;"><span>  })
+</span></span><span style="display:flex;"><span>);
+</span></span></code></pre></div><h3 id="单例模式">单例模式</h3>
+<p>单例模式可以确保一个类型只有一个实例对象</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">getSingle</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">fn</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ret</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">function</span> () {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ret</span> <span style="color:#f92672">||</span> (<span style="color:#a6e22e">ret</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">fn</span>.<span style="color:#a6e22e">apply</span>(<span style="color:#66d9ef">this</span>, <span style="color:#a6e22e">arguments</span>));
+</span></span><span style="display:flex;"><span>  };
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>[ &hellip; ]</p>
 </section>
 
   
